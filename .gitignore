@@ -1,0 +1,24 @@
+# Secrets
+.env
+
+# Course data (not committed; see README for where to get it)
+data/
+
+# Run outputs, derived data, caches
+runs/*
+!runs/.gitkeep
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+
+# Kit archive (contents already unpacked into the repo)
+ace-ai-kit.zip
