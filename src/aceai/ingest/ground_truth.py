@@ -1,4 +1,6 @@
-"""Ground-truth structure of a course: units -> modules -> raw LO ids, as the authors wrote it.
+"""Ground-truth structure of a course: units -> modules -> LOs, as the authors wrote it.
+
+Each LO is stored as its raw id (the key everything joins on) plus its text, for readability.
 
 Order is the CSV row order (units, modules within a unit, LOs within a module). Names are kept
 exactly as written. Syllabus broad LOs are not part of the CSV structure; they are listed
@@ -28,10 +30,22 @@ class _Model(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
 
+class GTLO(_Model):
+    """One LO in the ground truth. `id` is the raw id and the key everything joins on; `text` is
+    the whitespace-normalized CSV text, stored only so the file can be read by eye."""
+
+    id: str
+    text: str
+
+
 class GTModule(_Model):
     module_type: ModuleType
     module_name: str
-    lo_ids: list[str]
+    los: list[GTLO]
+
+    @property
+    def lo_ids(self) -> list[str]:
+        return [lo.id for lo in self.los]
 
 
 class GTUnit(_Model):
@@ -43,7 +57,11 @@ class GTUnit(_Model):
 class GroundTruth(_Model):
     course: str
     units: list[GTUnit]
-    broad_lo_ids: dict[SyllabusLevel, list[str]]
+    broad_los: dict[SyllabusLevel, list[GTLO]]
+
+    @property
+    def broad_lo_ids(self) -> dict[SyllabusLevel, list[str]]:
+        return {lvl: [lo.id for lo in los] for lvl, los in self.broad_los.items()}
 
     def all_lo_ids(self) -> list[str]:
         detailed = [i for u in self.units for m in u.modules for i in m.lo_ids]
@@ -56,15 +74,15 @@ def extract_ground_truth(course: str, los: list[RawLO]) -> GroundTruth:
 
     Raises if a module's rows are not contiguous in the file, since the order would be ambiguous.
     """
-    units: list[tuple[int, str, list[tuple[ModuleType, str, list[str]]]]] = []
+    units: list[tuple[int, str, list[tuple[ModuleType, str, list[GTLO]]]]] = []
     seen_modules: set[tuple[int, ModuleType, str]] = set()
-    broad: dict[SyllabusLevel, list[str]] = {}
+    broad: dict[SyllabusLevel, list[GTLO]] = {}
     for lo in los:
         if lo.course != course:
             raise IngestError(f"{lo.raw_id} belongs to {lo.course}, not {course}")
         s = lo.source
         if isinstance(s, SyllabusSource):
-            broad.setdefault(s.level, []).append(lo.raw_id)
+            broad.setdefault(s.level, []).append(GTLO(id=lo.raw_id, text=lo.text))
             continue
         assert isinstance(s, CsvSource)
         if not units or units[-1][0] != s.unit_no:
@@ -78,18 +96,18 @@ def extract_ground_truth(course: str, los: list[RawLO]) -> GroundTruth:
                 raise IngestError(f"{course}: module {key} rows are not contiguous")
             seen_modules.add(key)
             modules.append((s.module_type, s.module_name, []))
-        modules[-1][2].append(lo.raw_id)
+        modules[-1][2].append(GTLO(id=lo.raw_id, text=lo.text))
     return GroundTruth(
         course=course,
         units=[
             GTUnit(
                 unit_no=no,
                 unit_name=name,
-                modules=[GTModule(module_type=t, module_name=n, lo_ids=ids) for t, n, ids in mods],
+                modules=[GTModule(module_type=t, module_name=n, los=gl) for t, n, gl in mods],
             )
             for no, name, mods in units
         ],
-        broad_lo_ids={lvl: broad[lvl] for lvl in SyllabusLevel if lvl in broad},
+        broad_los={lvl: broad[lvl] for lvl in SyllabusLevel if lvl in broad},
     )
 
 

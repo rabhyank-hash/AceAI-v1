@@ -6,7 +6,7 @@ import pytest
 from aceai.config import DATA_RAW
 from aceai.ingest import IngestError, load_all
 from aceai.ingest.agent1_input import Agent1Input, input_id, make_agent1_input, strip_lo_marker
-from aceai.ingest.ground_truth import extract_ground_truth
+from aceai.ingest.ground_truth import GroundTruth, extract_ground_truth
 from aceai.schemas import CsvSource, RawLO, SyllabusLevel, SyllabusSource
 
 
@@ -61,6 +61,18 @@ def test_ground_truth_structure(small_course):
     assert gt.units[0].modules[0].lo_ids == ["p-u00-concept-intro-lo01", "p-u00-concept-intro-lo02"]
     assert gt.broad_lo_ids == {SyllabusLevel.COURSE_GOAL: ["p-syllabus-course-goal-lo01"]}
     assert sorted(gt.all_lo_ids()) == sorted(lo.raw_id for lo in small_course)
+
+
+def test_ground_truth_stores_text_and_round_trips(small_course):
+    gt = extract_ground_truth("P", small_course)
+    text = {lo.raw_id: lo.text for lo in small_course}
+    for lo in gt.units[0].modules[0].los:
+        assert lo.text == text[lo.id]
+    dumped = json.loads(gt.model_dump_json())
+    first = dumped["units"][0]["modules"][0]["los"][0]
+    assert first == {"id": "p-u00-concept-intro-lo01", "text": text["p-u00-concept-intro-lo01"]}
+    assert "lo_ids" not in dumped["units"][0]["modules"][0]  # derived, not stored
+    assert GroundTruth.model_validate(dumped) == gt
 
 
 def test_ground_truth_rejects_non_contiguous_module(small_course):

@@ -160,7 +160,9 @@ processed on its own, so duplicates across courses are ignored.
 ### Ground truth
 
 `extract_ground_truth` reads each course's unit → module → LO structure in file order. Names are
-kept as written. Syllabus LOs are listed separately by level.
+kept as written. Syllabus LOs are listed separately by level. Each LO is stored as
+`{"id", "text"}`. The raw id is the key everything joins on, because texts are not unique within
+a course and change during processing. The text is stored only so the file can be read by eye.
 
 ### Agent 1 input
 
