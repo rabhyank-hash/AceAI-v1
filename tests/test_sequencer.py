@@ -10,7 +10,7 @@ from aceai.ingest.agent1_input import make_agent1_input
 from aceai.ingest.ground_truth import extract_ground_truth
 from aceai.llm.client import LLMClient
 from aceai.schemas import CsvSource
-from fakes import FakeSDK
+from fakes import FakeSDK, json_validate_error
 
 PROVIDER = ProviderConfig("fake", "http://fake/v1", "FAKE_KEY", "m", {})
 
@@ -18,6 +18,8 @@ PROVIDER = ProviderConfig("fake", "http://fake/v1", "FAKE_KEY", "m", {})
 @pytest.fixture(scope="module")
 def sample():
     """PPP units 1-2: detailed LOs only."""
+    if not any(DATA_RAW.glob("PPP_learning_objectives_*.csv")):
+        pytest.skip("PPP CSV not present in data/raw/")
     los = [
         lo
         for lo in load_all(DATA_RAW)["PPP"]
@@ -50,7 +52,7 @@ def perfect_reply(prepared, gt):
 
 
 def client_for(*replies):
-    script = [r if isinstance(r, str) else json.dumps(r) for r in replies]
+    script = [r if isinstance(r, str | Exception) else json.dumps(r) for r in replies]
     sdk = FakeSDK(script)
     return LLMClient(PROVIDER, cache_dir=None, sdk=sdk), sdk
 
@@ -106,6 +108,15 @@ def test_invalid_json_then_gives_up(sample):
     assert not run.ok and run.output is None and len(sdk.calls) == 2
     assert "not valid JSON" in sdk.calls[1]["messages"][-1]["content"]
     assert run.stopped_because == "errors remain after 1 repair round(s)"
+
+
+def test_provider_json_rejection_goes_to_repair(sample):
+    prepared, gt = sample
+    client, sdk = client_for(json_validate_error("{broken"), perfect_reply(prepared, gt))
+    run = sequence(client, prepared.payload, max_repairs=1)
+    assert run.ok and len(run.attempts) == 2
+    assert run.attempts[0].reply_text == "{broken" and "invalid JSON" in run.attempts[0].error
+    assert sdk.calls[1]["messages"][-2] == {"role": "assistant", "content": "{broken"}
 
 
 def test_assemble_merges_become_provenance(sample):
