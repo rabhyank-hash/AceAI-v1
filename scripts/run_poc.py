@@ -70,18 +70,37 @@ def report(run: Any, cmp: dict[str, Any] | None, id_map: dict[str, str], gt: Any
         err = f" ({s['error']})" if s["error"] else ""
         lines.append(f"| {a.index} | {s['n_errors']}{err} | {by} |")
     if cmp:
-        g, o = cmp["grouping"], cmp["order"]
         lines += [
             "",
             "## Comparison with the CSV structure",
             "",
-            f"- modules: {cmp['n_pred_modules']} predicted vs {cmp['n_gt_modules']} in the CSV",
+            f"- modules: {cmp['n_pred_modules']} predicted vs {cmp['n_gt_modules']} CSV modules "
+            f"in {cmp['n_gt_units']} CSV units",
             f"- surviving LOs: {cmp['n_surviving_los']} (detailed input LOs: {cmp['n_detailed']}, "
             f"placed in a module: {cmp['n_detailed_placed']})",
-            f"- grouping (pairwise): P {g['precision']}  R {g['recall']}  F1 {g['f1']}",
-            f"- order agreement: {o['agreement']} over {o['pairs']} pairs (random = 0.5)",
             f"- merges: {len(cmp['merges'])} "
             f"({sum(not m['same_gt_module'] for m in cmp['merges'])} across CSV modules)",
+            "",
+            "| vs CSV | precision | recall | F1 | ARI | order agreement (pairs) |",
+            "|---|---|---|---|---|---|",
+        ]
+        for level in ("module", "unit"):
+            g, o = cmp["grouping"][level], cmp["order"][level]
+            lines.append(
+                f"| {level} | {g['precision']} | {g['recall']} | {g['f1']} | {g['ari']} "
+                f"| {o['agreement']} ({o['pairs']}) |"
+            )
+        lines += [
+            "",
+            "Grouping is pairwise: two LOs are together if they share a module. ARI 0 = chance,"
+            " 1 = identical. Order agreement: random = 0.5; the CSV order is one valid order,"
+            " not the only one.",
+            "",
+            "The two numbers that are fair whatever module size the model picks: **module"
+            " recall** (does it keep the authors' modules together?) and **unit precision**"
+            " (does it avoid mixing topics from different units?). Module precision penalizes"
+            " merging a unit's CONCEPT and PROJECT modules; unit recall penalizes splitting a"
+            " unit into modules as the authors did.",
         ]
     if run.output is not None:
         lo_by_id = {lo.id: lo for lo in run.output.los}
@@ -205,7 +224,13 @@ def main() -> int:
     print("attempt errors:", [a.n_errors for a in run.attempts])
     print("usage:", usage)
     if cmp:
-        print("grouping:", cmp["grouping"], "order:", cmp["order"], "merges:", len(cmp["merges"]))
+        for level in ("module", "unit"):
+            g, o = cmp["grouping"][level], cmp["order"][level]
+            print(
+                f"vs CSV {level}: grouping P {g['precision']} R {g['recall']} F1 {g['f1']} "
+                f"ARI {g['ari']}; order agreement {o['agreement']}"
+            )
+        print("merges:", len(cmp["merges"]))
     print(f"report: {run_dir / 'report.md'}")
     return 0 if run.output is not None else 1
 

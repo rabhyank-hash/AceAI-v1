@@ -2,10 +2,17 @@
 
 Not the plan's evaluation metrics. Just enough to see whether a model is in the right ballpark:
 
-- grouping: pairwise co-membership precision / recall / F1. A pair of detailed LOs is "together"
-  if they share a module (predicted) or a CSV module (ground truth).
-- order: over LO pairs that are in different modules in both, the share the model puts in the
-  same relative order as the CSV. 0.5 is what a random module order would get.
+- grouping: pairwise co-membership precision / recall / F1, plus the adjusted Rand index (ARI:
+  0 = chance, 1 = identical partitions). A pair of detailed LOs is "together" if they share a
+  predicted module, or a CSV module / CSV unit (ground truth).
+- order: over LO pairs that are apart in both, the share the model puts in the same relative order
+  as the CSV. 0.5 is what a random module order would get.
+
+Each is reported at two ground-truth levels. "module" is the CSV module; "unit" is the CSV unit,
+which is fairer for topic grouping because a unit's CONCEPT, PRIMER and PROJECT modules share a
+topic, so a model that merges them is not wrong. The CSV order is one valid order, not the only
+one, so order agreement below 1 is not necessarily an error (dependency violations need labeled
+prerequisites, which the CSV does not have).
 - merges: which raw LOs were collapsed together, and whether they came from the same CSV module.
 
 Everything is keyed by raw id; the output is in Agent 1 input-id space and is mapped back with
@@ -21,15 +28,16 @@ from aceai.ingest.ground_truth import GroundTruth
 from aceai.schemas import SequencerOutput
 
 
-def _gt_positions(gt: GroundTruth) -> tuple[dict[str, int], list[str]]:
-    """raw id -> global CSV module index, plus a label per module index."""
-    pos, labels = {}, []
-    for unit in gt.units:
+def _gt_positions(gt: GroundTruth) -> tuple[dict[str, int], dict[str, int], list[str]]:
+    """raw id -> global CSV module index, raw id -> CSV unit index, and a label per module."""
+    mod_pos, unit_pos, labels = {}, {}, []
+    for u_idx, unit in enumerate(gt.units):
         for m in unit.modules:
             for rid in m.lo_ids:
-                pos[rid] = len(labels)
+                mod_pos[rid] = len(labels)
+                unit_pos[rid] = u_idx
             labels.append(f"u{unit.unit_no} {m.module_type.value} {m.module_name.strip()}")
-    return pos, labels
+    return mod_pos, unit_pos, labels
 
 
 def predicted_positions(output: SequencerOutput, id_map: dict[str, str]) -> dict[str, int]:
@@ -62,25 +70,63 @@ def _prf(tp: int, fp: int, fn: int) -> dict[str, float | int]:
     }
 
 
-def compare(output: SequencerOutput, id_map: dict[str, str], gt: GroundTruth) -> dict[str, Any]:
-    gt_pos, gt_labels = _gt_positions(gt)
-    pred_pos = predicted_positions(output, id_map)
-    detailed = sorted(r for r in gt_pos if r in pred_pos)
-    unplaced = sorted(r for r in gt_pos if r not in pred_pos)
+def _pairs(n: int) -> int:
+    return n * (n - 1) // 2
 
-    tp = fp = fn = 0
-    agree = disagree = 0
-    for a, b in combinations(detailed, 2):
-        same_gt = gt_pos[a] == gt_pos[b]
-        same_pred = pred_pos[a] == pred_pos[b]
+
+def adjusted_rand_index(a: list[int], b: list[int]) -> float:
+    """ARI of two labelings of the same items (Hubert & Arabie). 1 = identical, ~0 = chance."""
+    n = len(a)
+    if n < 2:
+        return 1.0
+    cells: dict[tuple[int, int], int] = {}
+    rows: dict[int, int] = {}
+    cols: dict[int, int] = {}
+    for x, y in zip(a, b, strict=True):
+        cells[x, y] = cells.get((x, y), 0) + 1
+        rows[x] = rows.get(x, 0) + 1
+        cols[y] = cols.get(y, 0) + 1
+    index = sum(_pairs(c) for c in cells.values())
+    sum_rows = sum(_pairs(c) for c in rows.values())
+    sum_cols = sum(_pairs(c) for c in cols.values())
+    expected = sum_rows * sum_cols / _pairs(n)
+    best = (sum_rows + sum_cols) / 2
+    if best == expected:  # both labelings trivial (all together or all apart)
+        return 1.0
+    return round((index - expected) / (best - expected), 3)
+
+
+def _score_level(ids: list[str], gt: dict[str, int], pred: dict[str, int]) -> tuple[dict, dict]:
+    """Grouping and order scores of `pred` against one ground-truth level."""
+    tp = fp = fn = agree = disagree = 0
+    for a, b in combinations(ids, 2):
+        same_gt, same_pred = gt[a] == gt[b], pred[a] == pred[b]
         tp += same_gt and same_pred
         fp += same_pred and not same_gt
         fn += same_gt and not same_pred
         if not same_gt and not same_pred:
-            if (gt_pos[a] < gt_pos[b]) == (pred_pos[a] < pred_pos[b]):
+            if (gt[a] < gt[b]) == (pred[a] < pred[b]):
                 agree += 1
             else:
                 disagree += 1
+    grouping = _prf(tp, fp, fn)
+    grouping["ari"] = adjusted_rand_index([gt[i] for i in ids], [pred[i] for i in ids])
+    order = {
+        "pairs": agree + disagree,
+        "agreement": round(agree / (agree + disagree), 3) if agree + disagree else None,
+    }
+    return grouping, order
+
+
+def compare(output: SequencerOutput, id_map: dict[str, str], gt: GroundTruth) -> dict[str, Any]:
+    gt_pos, gt_unit, gt_labels = _gt_positions(gt)
+    pred_pos = predicted_positions(output, id_map)
+    detailed = sorted(r for r in gt_pos if r in pred_pos)
+    unplaced = sorted(r for r in gt_pos if r not in pred_pos)
+
+    grouping, order = {}, {}
+    for level, truth in (("module", gt_pos), ("unit", gt_unit)):
+        grouping[level], order[level] = _score_level(detailed, truth, pred_pos)
 
     # Merges: surviving LOs with more than one raw source.
     inv = {v: k for k, v in id_map.items()}  # raw -> input id (for display)
@@ -126,14 +172,12 @@ def compare(output: SequencerOutput, id_map: dict[str, str], gt: GroundTruth) ->
         "n_detailed": len(gt_pos),
         "n_detailed_placed": len(detailed),
         "unplaced": [{"raw_id": r, "input_id": inv.get(r)} for r in unplaced],
-        "n_gt_modules": len({gt_pos[r] for r in gt_pos}),
+        "n_gt_modules": len(set(gt_pos.values())),
+        "n_gt_units": len(set(gt_unit.values())),
         "n_pred_modules": len(output.modules),
         "n_surviving_los": len(output.los),
-        "grouping": _prf(tp, fp, fn),
-        "order": {
-            "pairs": agree + disagree,
-            "agreement": round(agree / (agree + disagree), 3) if agree + disagree else None,
-        },
+        "grouping": grouping,
+        "order": order,
         "merges": merges,
         "broad": broad,
     }

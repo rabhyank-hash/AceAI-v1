@@ -4,7 +4,7 @@ import pytest
 
 from aceai.agents.sequencer import assemble, sequence
 from aceai.config import DATA_RAW, ProviderConfig
-from aceai.eval.compare import compare
+from aceai.eval.compare import adjusted_rand_index, compare
 from aceai.ingest import load_all
 from aceai.ingest.agent1_input import make_agent1_input
 from aceai.ingest.ground_truth import extract_ground_truth
@@ -63,7 +63,11 @@ def test_perfect_reply_passes_and_scores_one(sample):
     assert len(sdk.calls) == 1
     assert [m.order for m in run.output.modules] == list(range(1, len(run.output.modules) + 1))
     cmp = compare(run.output, prepared.id_map, gt)
-    assert cmp["grouping"]["f1"] == 1.0 and cmp["order"]["agreement"] == 1.0
+    assert cmp["grouping"]["module"]["f1"] == 1.0 and cmp["grouping"]["module"]["ari"] == 1.0
+    # CSV modules are finer than units: never mixing units (precision 1), but recall < 1.
+    assert cmp["grouping"]["unit"]["precision"] == 1.0
+    assert cmp["grouping"]["unit"]["recall"] < 1.0
+    assert cmp["order"]["module"]["agreement"] == cmp["order"]["unit"]["agreement"] == 1.0
     assert cmp["n_detailed_placed"] == cmp["n_detailed"] and not cmp["merges"]
 
 
@@ -139,5 +143,37 @@ def test_compare_counts_swapped_modules_and_merges(sample):
     client, _ = client_for(reply)
     run = sequence(client, prepared.payload)
     cmp = compare(run.output, prepared.id_map, gt)
-    assert cmp["grouping"]["f1"] == 1.0
-    assert cmp["order"]["agreement"] < 1.0
+    assert cmp["grouping"]["module"]["f1"] == 1.0
+    assert cmp["order"]["module"]["agreement"] < 1.0
+    # Modules 0 and 1 are both in unit 1, so unit-level order is unaffected.
+    assert cmp["order"]["unit"]["agreement"] == 1.0
+
+
+def test_merging_a_units_modules_is_right_at_unit_level(sample):
+    """One module per CSV unit: wrong at module level, perfect at unit level."""
+    prepared, gt = sample
+    reply = perfect_reply(prepared, gt)
+    per_unit, start = [], 0
+    for u in gt.units:
+        n = len(u.modules)
+        ids = [i for m in reply["modules"][start : start + n] for i in m["lo_ids"]]
+        per_unit.append({"id": f"U{u.unit_no}", "title": u.unit_name, "lo_ids": ids})
+        start += n
+    reply["modules"] = per_unit
+    client, _ = client_for(reply)
+    cmp = compare(sequence(client, prepared.payload).output, prepared.id_map, gt)
+    assert cmp["grouping"]["unit"]["f1"] == 1.0 and cmp["grouping"]["unit"]["ari"] == 1.0
+    assert cmp["grouping"]["module"]["precision"] < 1.0
+    assert cmp["grouping"]["module"]["recall"] == 1.0
+
+
+@pytest.mark.parametrize(
+    "a,b,expected",
+    [
+        ([0, 0, 1, 1], [5, 5, 7, 7], 1.0),  # same partition, different names
+        ([0, 0, 1, 1], [0, 1, 0, 1], -0.5),  # maximally crossed
+        ([0, 0, 0, 1, 1, 1], [0, 0, 1, 1, 2, 2], 0.242),
+    ],
+)
+def test_adjusted_rand_index(a, b, expected):
+    assert adjusted_rand_index(a, b) == expected
