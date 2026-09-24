@@ -20,7 +20,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from aceai.ingest.agent1_input import Agent1Input
-from aceai.llm.client import LLMClient, LLMError, estimate_tokens
+from aceai.llm.client import InvalidJSONReply, LLMClient, LLMError, estimate_tokens
 from aceai.schemas import SequencerOutput
 from aceai.tools import (
     build_module_graph,
@@ -235,20 +235,25 @@ def sequence(
             resp = client.chat(
                 messages, json_mode=True, max_tokens=budget, seed=seed, label=f"attempt_{i}"
             )
+        except InvalidJSONReply as e:
+            # The provider refused the reply as invalid JSON: treat it like any bad reply.
+            reply_text, reply, err = e.failed_generation, None, str(e)
         except LLMError as e:  # includes RequestTooLarge
             attempts.append(Attempt(i, None, None, None, {}, error=str(e)))
             stopped = f"LLM call failed: {e}"
             break
-        try:
-            reply = resp.parse_json()
-            err = None
-        except LLMError as e:
-            reply, err = None, str(e)
-        if resp.finish_reason == "length":
-            err = (err + "; " if err else "") + "reply truncated at max_tokens"
+        else:
+            reply_text = resp.content
+            try:
+                reply = resp.parse_json()
+                err = None
+            except LLMError as e:
+                reply, err = None, str(e)
+            if resp.finish_reason == "length":
+                err = (err + "; " if err else "") + "reply truncated at max_tokens"
         assembled = assemble(reply, payload) if reply is not None else None
         checks = run_checks(assembled.data, payload) if assembled else {}
-        attempts.append(Attempt(i, resp.content, reply, assembled, checks, error=err))
+        attempts.append(Attempt(i, reply_text, reply, assembled, checks, error=err))
 
         if assembled is None:
             issues = f"- your reply was not valid JSON: {err}"
@@ -261,7 +266,7 @@ def sequence(
             stopped = f"errors remain after {max_repairs} repair round(s)"
             break
         messages = messages + [
-            {"role": "assistant", "content": resp.content or ""},
+            {"role": "assistant", "content": reply_text or ""},
             {"role": "user", "content": REPAIR_PROMPT.format(issues=issues)},
         ]
 

@@ -8,8 +8,9 @@ re-check them there and edit this file rather than trusting the numbers below.
 from __future__ import annotations
 
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Any
 
 from dotenv import load_dotenv
 
@@ -40,6 +41,8 @@ class ProviderConfig:
     api_key_env: str
     default_model: str
     limits: dict[str, RateLimits]  # model -> limits
+    # model -> extra request params sent on every call (part of the cache key)
+    model_params: dict[str, dict[str, Any]] = field(default_factory=dict)
 
     def api_key(self) -> str:
         load_dotenv(PROJECT_ROOT / ".env")
@@ -60,16 +63,17 @@ PROVIDERS: dict[str, ProviderConfig] = {
         name="groq",
         base_url="https://api.groq.com/openai/v1",
         api_key_env="GROQ_API_KEY",
-        default_model="llama-3.3-70b-versatile",
-        # Free tier as last published; verify at https://console.groq.com/settings/limits
+        default_model="openai/gpt-oss-120b",
+        # Read from the x-ratelimit-limit-* response headers on 2026-09-23 (free tier). The headers
+        # do not report daily tokens; check https://console.groq.com/settings/limits.
+        # llama-3.3-70b-versatile (the model CLAUDE.md names) is no longer offered on this key.
         limits={
-            "llama-3.3-70b-versatile": RateLimits(
-                requests_per_minute=30,
-                requests_per_day=1_000,
-                tokens_per_minute=12_000,
-                tokens_per_day=100_000,
-            ),
+            "openai/gpt-oss-120b": RateLimits(requests_per_day=1_000, tokens_per_minute=8_000),
+            "qwen/qwen3.8-27b": RateLimits(requests_per_day=1_000, tokens_per_minute=8_000),
         },
+        # gpt-oss is a reasoning model; its hidden reasoning tokens count against the per-minute
+        # budget, so keep effort low.
+        model_params={"openai/gpt-oss-120b": {"reasoning_effort": "low"}},
     ),
     "openrouter": ProviderConfig(
         name="openrouter",

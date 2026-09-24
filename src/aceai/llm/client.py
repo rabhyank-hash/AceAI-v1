@@ -37,6 +37,17 @@ class RequestTooLarge(LLMError):
     """The request cannot fit the model's per-minute token budget; batch the input."""
 
 
+class InvalidJSONReply(LLMError):
+    """The provider rejected the model's reply in JSON mode (Groq: `json_validate_failed`).
+
+    `failed_generation` is the rejected text (may be empty, e.g. if max_tokens ran out first).
+    """
+
+    def __init__(self, message: str, failed_generation: str) -> None:
+        super().__init__(message)
+        self.failed_generation = failed_generation
+
+
 class LLMResponse(BaseModel):
     provider: str
     model: str
@@ -134,7 +145,10 @@ class LLMClient:
         use_cache: bool = True,
         label: str = "",
     ) -> LLMResponse:
-        params: dict[str, Any] = {"temperature": temperature}
+        params: dict[str, Any] = {
+            **self.provider.model_params.get(self.model, {}),
+            "temperature": temperature,
+        }
         if max_tokens is not None:
             params["max_tokens"] = max_tokens
         if seed is not None:
@@ -193,6 +207,14 @@ class LLMClient:
             except (openai.InternalServerError, openai.APIConnectionError) as e:
                 self._retry_or_raise(attempt, e, self._backoff(attempt))
                 continue
+            except openai.BadRequestError as e:
+                err = e.body.get("error", e.body) if isinstance(e.body, dict) else {}
+                if isinstance(err, dict) and err.get("code") == "json_validate_failed":
+                    raise InvalidJSONReply(
+                        f"provider rejected the reply as invalid JSON: {err.get('message')}",
+                        err.get("failed_generation") or "",
+                    ) from e
+                raise
             completion = raw.parse()
             choice = completion.choices[0]
             msg = choice.message

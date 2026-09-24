@@ -2,13 +2,14 @@ import pytest
 
 from aceai.config import ProviderConfig, RateLimits
 from aceai.llm.client import (
+    InvalidJSONReply,
     LLMClient,
     LLMError,
     RequestTooLarge,
     cache_key,
     parse_duration,
 )
-from fakes import FakeSDK, rate_limit_error
+from fakes import FakeSDK, json_validate_error, rate_limit_error
 
 PROVIDER = ProviderConfig(
     name="fake",
@@ -115,3 +116,28 @@ def test_invalid_json_reply_raises_with_text(tmp_path):
     client, _, _ = make(["not json"], tmp_path)
     with pytest.raises(LLMError, match="not json"):
         client.chat(MSGS).parse_json()
+
+
+def test_model_params_from_config_are_sent_and_cached_on(tmp_path):
+    provider = ProviderConfig(
+        name="fake",
+        base_url="http://fake/v1",
+        api_key_env="FAKE_KEY",
+        default_model="m",
+        limits={},
+        model_params={"m": {"reasoning_effort": "low"}},
+    )
+    sdk = FakeSDK(["ok"])
+    LLMClient(provider, cache_dir=tmp_path, sdk=sdk).chat(MSGS)
+    assert sdk.calls[0]["reasoning_effort"] == "low"
+    other = FakeSDK(["ok"])
+    LLMClient(PROVIDER, cache_dir=tmp_path, sdk=other).chat(MSGS)
+    assert len(other.calls) == 1  # different params -> different cache entry
+
+
+def test_provider_json_rejection_raises_with_failed_text(tmp_path):
+    client, sdk, sleeps = make([json_validate_error('{"a": ')], tmp_path)
+    with pytest.raises(InvalidJSONReply) as exc:
+        client.chat(MSGS, json_mode=True)
+    assert exc.value.failed_generation == '{"a": '
+    assert len(sdk.calls) == 1 and sleeps == []  # not retried: same prompt, same failure

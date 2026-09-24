@@ -38,3 +38,18 @@ class FakeSDK:
             headers={"x-ratelimit-remaining-tokens": "11000", "content-type": "json"},
             parse=lambda: completion(item),
         )
+
+
+def json_validate_error(failed_generation=""):
+    """Groq's 400 when a JSON-mode reply is not valid JSON."""
+    req = httpx2.Request("POST", "http://fake/v1/chat/completions")
+    body = {
+        "error": {
+            "message": "Failed to validate JSON.",
+            "type": "invalid_request_error",
+            "code": "json_validate_failed",
+            "failed_generation": failed_generation,
+        }
+    }
+    resp = httpx2.Response(400, json=body, request=req)
+    return openai.BadRequestError("json_validate_failed", response=resp, body=body)

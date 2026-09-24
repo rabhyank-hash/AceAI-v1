@@ -21,7 +21,7 @@ def main() -> None:
     r = client.chat(
         [{"role": "user", "content": 'Reply with the JSON object {"ok": true} and nothing else.'}],
         json_mode=True,
-        max_tokens=20,
+        max_tokens=500,  # reasoning models spend tokens before answering
     )
     print(f"{client.provider.name} / {client.model}: {r.content!r} (attempts {r.attempts})")
     print("usage:", r.usage)
