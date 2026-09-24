@@ -10,7 +10,18 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict
 
 from aceai.ingest.loader import IngestError
-from aceai.schemas import CsvSource, ModuleType, RawLO, SyllabusLevel, SyllabusSource
+from aceai.schemas import (
+    BloomLevel,
+    CsvSource,
+    LearningObjective,
+    Module,
+    ModuleType,
+    ProvenanceEntry,
+    RawLO,
+    SequencerOutput,
+    SyllabusLevel,
+    SyllabusSource,
+)
 
 
 class _Model(BaseModel):
@@ -79,4 +90,46 @@ def extract_ground_truth(course: str, los: list[RawLO]) -> GroundTruth:
             for no, name, mods in units
         ],
         broad_lo_ids={lvl: broad[lvl] for lvl in SyllabusLevel if lvl in broad},
+    )
+
+
+def ground_truth_to_output(
+    gt: GroundTruth, los: list[RawLO], placeholder_bloom: BloomLevel = BloomLevel.C1
+) -> SequencerOutput:
+    """The human structure as a `SequencerOutput`, e.g. for smoke-testing tools or as Agent 2 input.
+
+    Only the structure is real: modules in file order (ids `m01`, `m02`, ...), each LO kept under
+    its raw id, provenance raw id -> itself. The normalized fields (verb, Bloom level, track,
+    target concept) are placeholders, since no normalization has run. Syllabus broad LOs become
+    aggregate LOs with no children and no module (the CSV does not say what they contain), and there
+    are no prerequisite edges.
+    """
+    by_id = {lo.raw_id: lo for lo in los}
+    modules = []
+    for unit in gt.units:
+        for m in unit.modules:
+            idx = len(modules) + 1
+            modules.append(
+                Module(id=f"m{idx:02d}", title=m.module_name.strip(), order=idx, lo_ids=m.lo_ids)
+            )
+    broad = {i for ids in gt.broad_lo_ids.values() for i in ids}
+    out_los = []
+    for rid in gt.all_lo_ids():
+        text = by_id[rid].text
+        out_los.append(
+            LearningObjective(
+                id=rid,
+                raw_text=text,
+                source_ids=[rid],
+                verb=text.split()[0].lower(),
+                bloom_level=placeholder_bloom,
+                track="conceptual",
+                target_concept="(placeholder)",
+                scope="aggregate" if rid in broad else "atomic",
+            )
+        )
+    return SequencerOutput(
+        modules=modules,
+        los=out_los,
+        provenance=[ProvenanceEntry(raw_id=r, lo_id=r) for r in gt.all_lo_ids()],
     )
