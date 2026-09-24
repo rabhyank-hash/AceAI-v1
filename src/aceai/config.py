@@ -1,9 +1,101 @@
-"""Project paths and settings. Provider/rate-limit config is added with the LLM client (Step 6)."""
+"""Project paths and LLM provider settings.
 
+Providers are OpenAI-compatible endpoints; adding one is a new `PROVIDERS` entry plus its key in
+`.env`. Rate limits are the free-tier values shown in each provider's console. They change, so
+re-check them there and edit this file rather than trusting the numbers below.
+"""
+
+from __future__ import annotations
+
+import os
+from dataclasses import dataclass
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATA_RAW = PROJECT_ROOT / "data" / "raw"
 DATA_PROCESSED = PROJECT_ROOT / "data" / "processed"
 RUNS_DIR = PROJECT_ROOT / "runs"
 CACHE_DIR = PROJECT_ROOT / ".cache"
+LLM_CACHE_DIR = CACHE_DIR / "llm"
+
+DEFAULT_PROVIDER = "groq"
+
+
+@dataclass(frozen=True)
+class RateLimits:
+    """Per-model limits. None = unknown or not enforced; checks skip it."""
+
+    requests_per_minute: int | None = None
+    requests_per_day: int | None = None
+    tokens_per_minute: int | None = None
+    tokens_per_day: int | None = None
+
+
+@dataclass(frozen=True)
+class ProviderConfig:
+    name: str
+    base_url: str
+    api_key_env: str
+    default_model: str
+    limits: dict[str, RateLimits]  # model -> limits
+
+    def api_key(self) -> str:
+        load_dotenv(PROJECT_ROOT / ".env")
+        key = os.environ.get(self.api_key_env, "").strip()
+        if not key:
+            raise RuntimeError(
+                f"{self.api_key_env} is not set; add it to {PROJECT_ROOT / '.env'} "
+                "(see .env.example)"
+            )
+        return key
+
+    def limits_for(self, model: str) -> RateLimits:
+        return self.limits.get(model, RateLimits())
+
+
+PROVIDERS: dict[str, ProviderConfig] = {
+    "groq": ProviderConfig(
+        name="groq",
+        base_url="https://api.groq.com/openai/v1",
+        api_key_env="GROQ_API_KEY",
+        default_model="llama-3.3-70b-versatile",
+        # Free tier as last published; verify at https://console.groq.com/settings/limits
+        limits={
+            "llama-3.3-70b-versatile": RateLimits(
+                requests_per_minute=30,
+                requests_per_day=1_000,
+                tokens_per_minute=12_000,
+                tokens_per_day=100_000,
+            ),
+        },
+    ),
+    "openrouter": ProviderConfig(
+        name="openrouter",
+        base_url="https://openrouter.ai/api/v1",
+        api_key_env="OPENROUTER_API_KEY",
+        default_model="meta-llama/llama-3.3-70b-instruct:free",
+        limits={},
+    ),
+    "mistral": ProviderConfig(
+        name="mistral",
+        base_url="https://api.mistral.ai/v1",
+        api_key_env="MISTRAL_API_KEY",
+        default_model="mistral-large-latest",
+        limits={},
+    ),
+    "deepseek": ProviderConfig(
+        name="deepseek",
+        base_url="https://api.deepseek.com/v1",
+        api_key_env="DEEPSEEK_API_KEY",
+        default_model="deepseek-chat",
+        limits={},
+    ),
+}
+
+
+def get_provider(name: str = DEFAULT_PROVIDER) -> ProviderConfig:
+    if name not in PROVIDERS:
+        raise KeyError(f"unknown provider {name!r}; have {sorted(PROVIDERS)}")
+    return PROVIDERS[name]
