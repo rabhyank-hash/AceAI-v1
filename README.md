@@ -1,5 +1,8 @@
 # ACE-AI: Training Plan Generation
 
+> Branch `agent_v2`: plan v2 and its prototype. Start with [docs/poc_report.md](docs/poc_report.md).
+> Plan v1 and the v1 implementation are on `agent1-poc`.
+
 TEEL Lab, Carnegie Mellon University.
 
 ACE-AI turns a set of Learning Objectives (LOs) into a training plan with two LLM agents:
@@ -85,14 +88,17 @@ src/aceai/
     graph.py            check_cycles, check_module_order, topo_sort_modules, build_module_graph
     results.py          shared ToolResult / Issue types
   llm/client.py         provider-agnostic chat client
-  agents/sequencer.py   Agent 1 proof of concept: prompt, assembly, check-and-repair loop
+  agents/sequencer.py   Agent 1 v1: prompt, assembly, check-and-repair loop
+  agents/sequencer_v2.py  Agent 1 v2 prototype: consensus grouping, voted module order
   eval/compare.py       comparison with the CSV structure
   eval/draw.py          module graph as a Mermaid diagram
 scripts/
   profile_data.py       writes data/processed/profile.md
   build_ground_truth.py writes data/processed/ground_truth/<course>.json
   llm_smoke.py          one tiny request: checks key, model and rate limits
-  run_poc.py            runs Agent 1 on a course sample and writes runs/<timestamp>_<course>/
+  run_poc.py            runs Agent 1 v1 on a course sample and writes runs/<timestamp>_<course>/
+  run_v2.py             runs the v2 prototype from k v1 grouping runs
+  run_v2_experiment.sh  the pre-registered v2 experiment, end to end
   summarize_runs.py     one table over several runs
   draw_graph.py         redraws the module graph of existing runs
   consistency.py        run-to-run consistency of two or more runs
@@ -101,7 +107,8 @@ scripts/
   make_label_sheets.py  blank module-order labeling sheets in annotations/ (git-ignored)
 docs/implementation_plan.md  the implementation plan (tracked version of the Drive document)
 docs/evaluation.md      evaluation framework
-docs/poc_report.md      proof-of-concept report
+docs/poc_report.md      report: v1 implementation and tests, failures, plan v2, prototype, metrics
+docs/v2_preregistration.md  hypotheses and criteria for the v2 prototype, fixed before running
 experiments/<name>/     experiment records: configs, scores, structures (no LO text)
 tests/                  pytest suite; LLM tests use a fake SDK (tests/fakes.py)
 data/raw/               input CSVs (git-ignored)

@@ -1,6 +1,6 @@
 """Agent 1 v2 prototype run (docs/v2_preregistration.md).
 
-    python scripts/run_v2.py --course DataEng --label v2A --order-seeds 0 1 2 \\
+    python scripts/run_v2.py --course DataEng --label v2_s0 --order-seeds 0 1 2 \\
         --grouping-runs runs/<v1 seed 0> runs/<v1 seed 1> runs/<v1 seed 2>
 
 Grouping runs must be v1 runs of the same course and sample. Writes runs/<timestamp>_<course>/
