@@ -261,12 +261,11 @@ def test_order_uses_order_field_not_list_position():
     assert codes(r) == ["module_depends_on_later_module"]
 
 
-def test_bloom_decrease_is_warning():
+def test_bloom_order_is_not_checked():
+    """Plan v2: Bloom level is not a learning order."""
     los = [lo("a", bloom="C3"), lo("b", bloom="C1"), lo("c", bloom="C4")]
     r = check_module_order([mod("m1", 1, ["a", "b", "c"])], los)
-    assert r.ok
-    assert codes(r, "warnings") == ["bloom_decreases_in_module"]
-    assert "a (C3) -> b (C1)" in r.warnings[0].message
+    assert r.ok and not r.warnings
 
 
 # --- module graph -------------------------------------------------------------------------------

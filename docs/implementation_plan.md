@@ -2,9 +2,27 @@
 
 *Prepared by Ruchi, TEEL Lab / CMU. September 2026.*
 
-> Version 1: the plan as written in the Google Drive document of the same name, copied into the
-> repository on 26 September 2026 so that changes to it can be tracked in git. The content is
-> unchanged. Implementation status against this plan is in [poc_report.md](poc_report.md).
+> **Version 2** (branch `agent_v2`, 26 September 2026). Version 1 is the Google Drive document of
+> the same name, tracked on branch `agent1-poc`. The evidence for these changes is in
+> [poc_report.md](poc_report.md) §1–2; see `git diff agent1-poc agent_v2 -- docs/implementation_plan.md`.
+>
+> **Changes from v1**
+>
+> 1. **Consistency by construction (new principle, §2).** The v1 proof of concept showed that one
+>    large LLM judgment gives a different course for every input order (only 10–24% of
+>    prerequisite edges repeat between runs). In v2 every LLM judgment is small, is asked several
+>    times under different presentation orders, and is aggregated by code.
+> 2. **Grouping by consensus (§4 step 4).** The LLM groups LOs several times on different input
+>    orders; code builds one grouping from how often each pair of LOs lands together.
+> 3. **Prerequisites at module level (§4 step 5).** Prerequisites are judged between modules
+>    (few, coarse, stable), per target module and repeated under different orders, then decided by
+>    majority. v1 inferred them between individual LOs before grouping.
+> 4. **Ties broken by aggregated preference, then fixed rules (§4 step 6).** v1 let the agent pick
+>    among valid orders.
+> 5. **Bloom level is not an ordering signal (§3, §4).** It stays the depth scale for Agent 2.
+>    "Ordered internally by increasing Bloom level" is removed.
+> 6. **Test courses (§4) and evaluation (§6):** the six SAIL courses; run-to-run consistency is
+>    Agent 1's primary criterion.
 
 ## 1. The problem
 
@@ -60,6 +78,13 @@ separate also means each agent can be evaluated independently: Agent 1 purely on
 sequence is coherent and dependency-respecting; Agent 2 purely on whether its trade-offs were
 good, given a skeleton that is already known to be structurally sound.
 
+**Consistency by construction (v2).** A course structure is only useful, and only evaluable, if
+the same LOs give the same structure regardless of the order they arrive in. Therefore every LLM
+judgment in Agent 1 is small and well defined (e.g. "which of these modules must come before this
+one?"), is asked several times under different presentation orders, and is aggregated by
+deterministic code (majority votes, consensus clustering). Everything that follows from the
+aggregated judgments (ordering, tie-breaking, cycle resolution) is done by code with fixed rules.
+
 One rule keeps this honest: Agent 2 may only compress *contiguous* spans of the sequence. Merging
 two objectives that Agent 1 placed far apart would be a structural edit disguised as constraint
 optimization. (**Open:** whether a contiguous span may cross a module boundary, and how
@@ -79,6 +104,10 @@ scope for this system anyway.
 
 **Open:** confirm Bloom C1–C6 as the scale, and decide how ambiguous verbs (e.g. "discuss", "use")
 are resolved.
+
+**v2:** Bloom level is a depth scale only. It classifies the kind of thinking an LO asks for, not
+when it can be learned, so it is not used to order LOs or modules: a higher-level LO can come
+before a lower-level one.
 
 ## 4. Agent 1 in detail: from a mixed LO list to a tree
 
@@ -105,33 +134,42 @@ do the mechanical checks.
    (conceptual) and "use iteration to solve a problem" (applied) look similar but are different
    coverage and both survive. (**Open:** confirm this combined rule.) *Tool:* provenance check
    that every raw LO maps to exactly one surviving LO, so nothing is lost.
-4. **Infer prerequisites (LLM)** between the deduplicated atomic LOs, each edge with a one-line
-   rationale. *Tool:* cycle check on the prerequisite graph; if a cycle is found, it goes back to
-   the agent to resolve.
-5. **Group into modules (LLM)** by topic, anchored on aggregate LOs where they exist, ordered
-   internally by increasing Bloom level. *Tool:* check that no module requires its own later
-   content.
-6. **Order modules (tool)**: a topological sort of the module dependency graph produces the final
-   order; where the graph allows several valid orders, the agent picks one and states why.
+4. **Group into modules (LLM, repeated; code aggregates).** The LLM groups the LOs by topic,
+   anchored on aggregate LOs where they exist, k times (e.g. 3–5) on different input orders. Code
+   counts, for every pair of LOs, the share of runs that put them in the same module, and clusters
+   that co-association matrix deterministically (average linkage, threshold 0.5): consensus
+   clustering. *Tool:* provenance and coverage checks on the consensus grouping.
+5. **Infer module prerequisites (LLM, repeated; code aggregates).** For each module, the LLM sees
+   all modules (as lists of LOs, under neutral labels) and names the modules a learner must have
+   learned before it (`required_before`) and the ones it would still teach first without a hard
+   dependency (`better_before`), with a one-line rationale. Each module is asked under several
+   presentation orders (module order, labels and LO order shuffled). Code keeps a prerequisite
+   edge when a strict majority of asks name it. *Tool:* cycle check on the module graph.
+6. **Order modules (tool).** A topological sort of the aggregated module graph gives the order.
+   Cycles are broken by removing the edge with the lowest vote share. Where several orders are
+   valid, ties are broken by fixed rules, in order: the aggregated `better_before` preference
+   (the module preferred over more of the other available modules goes first); then modules with
+   a larger share of conceptual LOs first; then a stable key.
+7. **Order LOs within each module (code).** LO prerequisites inside a module are kept when a
+   majority of the grouping runs state them; LOs are ordered topologically, ties broken by
+   conceptual before applied, then a stable key.
 
 The output is a tree: module nodes (headed by a course-level LO where one applies) containing
 their atomic LOs, with a record of which original raw LOs fed into each deduplicated one, so
 nothing is silently lost.
 
-**Test cases.** Two real, human-built module structures serve as ground truth:
-
-- **Practical Programming with Python (PPP)** — the full syllabus: 129 LOs at mixed levels (5
-  course goals, 9 conceptual LOs, 8 project-level LOs, 50 module LOs, 57 per-project LOs) across 8
-  modules and 8 projects, with 8-week and 15-week schedule options. First experiment.
-- **Udacity AI Programming with Python nanodegree** — second test case, to check Agent 1 isn't
-  tuned to one course.
+**Test cases (v2).** Six SAIL courses with human-built unit → module → LO structures serve as
+ground truth: Practical Programming with Python (PPP; 202 detailed LOs plus 22 syllabus LOs),
+AI Practitioner, Cloud Admin, Cloud DevOps, Cloud Native and Data Engineering (918 detailed LOs in
+total). Only PPP has course-level syllabus LOs. (v1 named PPP and a Udacity nanodegree.)
 
 For each, the LOs are flattened and shuffled before being fed in, and the question is whether
 Agent 1 recovers something close to the human module structure.
 
 **Working assumption on scale:** Accenture LO sets will be course-sized, similar to PPP (on the
-order of 100–150 LOs). At that size the agent can reason over the whole list at once, so Agent 1
-uses no embedding or retrieval step. If real LO sets turn out to be much larger (e.g.
+order of 100–250 LOs). v2 does not rely on the model reasoning over the whole list in one reply:
+grouping runs see the whole list, but ordering is decided by many small, repeated module-level
+judgments. Agent 1 uses no embedding or retrieval step. If real LO sets turn out to be much larger (e.g.
 catalog-scale), an embedding tool that shortlists candidate duplicates and containment pairs for
 the agent to judge is the first thing to add.
 
@@ -196,8 +234,11 @@ The deterministic checker needs computable time and cost. Options I am consideri
 
 Two separate evaluations, matching the two agents.
 
-**Agent 1** — compared against the human-built module structures of PPP and the Udacity
-nanodegree (module assignment agreement, order agreement, dependency violations). Baselines: (a)
+**Agent 1 (v2)** — first, **run-to-run consistency**: the same LOs in different input orders
+must give the same grouping and order (grouping ARI and order agreement between independent
+runs). Then quality against the human-built structures of the six courses: module assignment
+agreement (BCubed), order agreement, and dependency violations against labeled module-order
+pairs. Full framework: [evaluation.md](evaluation.md). Baselines: (a)
 embeddings + clustering — group LOs into modules by topic similarity with no LLM judgment, then
 order them by a topological sort over the same prerequisite graph — which Agent 1 must beat to
 show that LLM judgment adds value; (b) a graph-based curriculum-sequencing method from the
@@ -247,7 +288,8 @@ connecting to a downstream activity-selection stage.
 ## 8. Platform and infrastructure (deferred)
 
 The platform is not being decided yet; it will be settled once the schema (Phase 0) and the
-Agent 1 design are stable. The LLM and the agent framework are also not chosen yet. Whatever we
+Agent 1 design are stable. The agent framework is not chosen yet. For development, the LLM is `openai/gpt-oss-120b`
+(open weights) on Groq; v2's repeated small calls need more than the free tier's rate limits. Whatever we
 choose must provide: access to a capable LLM with tool calling (both agents run on it), storage
 for LO/Module/Constraint/Plan data and the prerequisite graph, orchestration for a multi-step
 pipeline with an iterative loop and human-review pause points, a place to log every compression
@@ -277,3 +319,7 @@ built on it.
    only evaluate final plans?
 10. Scale assumption: Accenture LO sets are course-sized like PPP — to be confirmed once real sets
     are available.
+11. (v2) May a detailed LO be made the parent of other detailed LOs (containment)? If yes, it must
+    still appear in the teaching order, e.g. as a module head.
+12. (v2) The fixed tie-breaking rules after the aggregated preference: is "more conceptual first"
+    the right second rule?

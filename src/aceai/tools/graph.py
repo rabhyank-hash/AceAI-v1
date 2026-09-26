@@ -160,14 +160,13 @@ def check_module_order(modules: list[Module], los: list[LearningObjective]) -> M
 
     Errors: a module declares a dependency on a later module; an LO depends on an LO in a later
     module; an LO depends on a later LO in its own module (order = position in `lo_ids`).
-    Warnings: Bloom level decreases between consecutive LOs of a module (plan: modules are
-    ordered internally by increasing Bloom level).
+    Bloom level is not checked: it classifies the kind of thinking an LO asks for, not when it
+    can be learned (plan v2), so a higher level may come before a lower one.
     """
     log = IssueLog()
     ordered = _sorted_modules(modules)
     pos = {m.id: i for i, m in enumerate(ordered)}
     where = _membership(modules)
-    by_id = {lo.id: lo for lo in los}
 
     for m in ordered:
         for dep in m.depends_on:
@@ -202,19 +201,6 @@ def check_module_order(modules: list[Module], los: list[LearningObjective]) -> M
                         [lo.id, dep, a],
                     )
 
-    for m in ordered:
-        seq = [by_id[i] for i in m.lo_ids if i in by_id]
-        drops = [
-            f"{x.id} ({x.bloom_level}) -> {y.id} ({y.bloom_level})"
-            for x, y in itertools.pairwise(seq)
-            if y.bloom_level < x.bloom_level
-        ]
-        if drops:
-            log.warn(
-                "bloom_decreases_in_module",
-                f"Module {m.id}: Bloom level drops at " + "; ".join(drops) + ".",
-                [m.id],
-            )
     return log.finish(ModuleOrderResult())
 
 
