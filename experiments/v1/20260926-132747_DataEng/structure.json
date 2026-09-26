@@ -1,0 +1,566 @@
+{
+ "modules": [
+  {
+   "id": "M1",
+   "title": "Data Types and Storage Foundations",
+   "order": 1,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-03638c",
+    "LO-42056a",
+    "LO-546fa3",
+    "LO-6cf5a5"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M2",
+   "title": "Relational Databases and Schema",
+   "order": 2,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-386ac3",
+    "LO-aad72f",
+    "LO-68e737"
+   ],
+   "depends_on": [
+    "M1"
+   ]
+  },
+  {
+   "id": "M4",
+   "title": "Linux Command\u2011Line Data Processing",
+   "order": 3,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-b4a107",
+    "LO-f40300"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M5",
+   "title": "Pandas Fundamentals",
+   "order": 4,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-baa488",
+    "LO-3a4850",
+    "LO-ef3761",
+    "LO-7e4edd",
+    "LO-8589d4"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M6",
+   "title": "Data Extraction and Multi\u2011DataFrame Queries",
+   "order": 5,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-195d05",
+    "LO-810198"
+   ],
+   "depends_on": [
+    "M5"
+   ]
+  },
+  {
+   "id": "M7",
+   "title": "Jupyter Notebook Overview",
+   "order": 6,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-f789ea"
+   ],
+   "depends_on": [
+    "M5"
+   ]
+  },
+  {
+   "id": "M8",
+   "title": "Data Modeling Importance",
+   "order": 7,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-78cd30"
+   ],
+   "depends_on": [
+    "M2"
+   ]
+  },
+  {
+   "id": "M3",
+   "title": "Data Engineering Role and Impact",
+   "order": 8,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-27431d",
+    "LO-919a9b",
+    "LO-a49de3"
+   ],
+   "depends_on": [
+    "M8"
+   ]
+  },
+  {
+   "id": "M9",
+   "title": "Data Security and Compliance",
+   "order": 9,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-35e321"
+   ],
+   "depends_on": [
+    "M1"
+   ]
+  },
+  {
+   "id": "M10",
+   "title": "Data Structure Granularity",
+   "order": 10,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-801048"
+   ],
+   "depends_on": [
+    "M8"
+   ]
+  }
+ ],
+ "los": [
+  {
+   "id": "LO-03638c",
+   "source_ids": [
+    "LO-03638c"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-42056a",
+   "source_ids": [
+    "LO-42056a"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-03638c"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-546fa3",
+   "source_ids": [
+    "LO-546fa3"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-42056a"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-6cf5a5",
+   "source_ids": [
+    "LO-6cf5a5"
+   ],
+   "bloom_level": "C4",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-546fa3"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-386ac3",
+   "source_ids": [
+    "LO-386ac3"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-546fa3"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-aad72f",
+   "source_ids": [
+    "LO-aad72f"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-386ac3"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-68e737",
+   "source_ids": [
+    "LO-68e737"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-386ac3"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-27431d",
+   "source_ids": [
+    "LO-27431d"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-78cd30"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-919a9b",
+   "source_ids": [
+    "LO-919a9b"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-27431d"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-a49de3",
+   "source_ids": [
+    "LO-a49de3"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-78cd30"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-b4a107",
+   "source_ids": [
+    "LO-b4a107"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-f40300",
+   "source_ids": [
+    "LO-f40300"
+   ],
+   "bloom_level": "C4",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-b4a107"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-baa488",
+   "source_ids": [
+    "LO-baa488"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-3a4850",
+   "source_ids": [
+    "LO-3a4850"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-baa488"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-ef3761",
+   "source_ids": [
+    "LO-ef3761"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-3a4850"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-7e4edd",
+   "source_ids": [
+    "LO-7e4edd"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-3a4850"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-8589d4",
+   "source_ids": [
+    "LO-8589d4"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-ef3761"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-195d05",
+   "source_ids": [
+    "LO-195d05"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-ef3761"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-810198",
+   "source_ids": [
+    "LO-810198"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-195d05"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-f789ea",
+   "source_ids": [
+    "LO-f789ea"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-3a4850"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-78cd30",
+   "source_ids": [
+    "LO-78cd30"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-386ac3"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-35e321",
+   "source_ids": [
+    "LO-35e321"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-546fa3"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-801048",
+   "source_ids": [
+    "LO-801048"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-78cd30"
+   ],
+   "priority": null,
+   "depth_floor": null
+  }
+ ],
+ "provenance": [
+  {
+   "raw_id": "LO-03638c",
+   "lo_id": "LO-03638c"
+  },
+  {
+   "raw_id": "LO-42056a",
+   "lo_id": "LO-42056a"
+  },
+  {
+   "raw_id": "LO-546fa3",
+   "lo_id": "LO-546fa3"
+  },
+  {
+   "raw_id": "LO-6cf5a5",
+   "lo_id": "LO-6cf5a5"
+  },
+  {
+   "raw_id": "LO-386ac3",
+   "lo_id": "LO-386ac3"
+  },
+  {
+   "raw_id": "LO-aad72f",
+   "lo_id": "LO-aad72f"
+  },
+  {
+   "raw_id": "LO-68e737",
+   "lo_id": "LO-68e737"
+  },
+  {
+   "raw_id": "LO-27431d",
+   "lo_id": "LO-27431d"
+  },
+  {
+   "raw_id": "LO-919a9b",
+   "lo_id": "LO-919a9b"
+  },
+  {
+   "raw_id": "LO-a49de3",
+   "lo_id": "LO-a49de3"
+  },
+  {
+   "raw_id": "LO-b4a107",
+   "lo_id": "LO-b4a107"
+  },
+  {
+   "raw_id": "LO-f40300",
+   "lo_id": "LO-f40300"
+  },
+  {
+   "raw_id": "LO-baa488",
+   "lo_id": "LO-baa488"
+  },
+  {
+   "raw_id": "LO-3a4850",
+   "lo_id": "LO-3a4850"
+  },
+  {
+   "raw_id": "LO-ef3761",
+   "lo_id": "LO-ef3761"
+  },
+  {
+   "raw_id": "LO-7e4edd",
+   "lo_id": "LO-7e4edd"
+  },
+  {
+   "raw_id": "LO-8589d4",
+   "lo_id": "LO-8589d4"
+  },
+  {
+   "raw_id": "LO-195d05",
+   "lo_id": "LO-195d05"
+  },
+  {
+   "raw_id": "LO-810198",
+   "lo_id": "LO-810198"
+  },
+  {
+   "raw_id": "LO-f789ea",
+   "lo_id": "LO-f789ea"
+  },
+  {
+   "raw_id": "LO-78cd30",
+   "lo_id": "LO-78cd30"
+  },
+  {
+   "raw_id": "LO-35e321",
+   "lo_id": "LO-35e321"
+  },
+  {
+   "raw_id": "LO-801048",
+   "lo_id": "LO-801048"
+  }
+ ]
+}

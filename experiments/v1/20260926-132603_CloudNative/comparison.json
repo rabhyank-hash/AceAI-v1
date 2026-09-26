@@ -1,0 +1,240 @@
+{
+  "coverage": {
+    "placed": 44,
+    "total": 44,
+    "complete": true
+  },
+  "n_detailed": 44,
+  "n_detailed_placed": 44,
+  "unplaced": [],
+  "n_gt_modules": 3,
+  "n_gt_units": 1,
+  "n_pred_modules": 5,
+  "n_surviving_los": 28,
+  "grouping": {
+    "module": {
+      "precision": 0.491,
+      "recall": 0.333,
+      "f1": 0.397,
+      "tp": 140,
+      "fp": 145,
+      "fn": 281,
+      "ari": 0.058,
+      "bcubed": {
+        "precision": 0.567,
+        "recall": 0.48,
+        "f1": 0.52
+      }
+    },
+    "unit": {
+      "precision": 1.0,
+      "recall": 0.301,
+      "f1": 0.463,
+      "tp": 285,
+      "fp": 0,
+      "fn": 661,
+      "ari": 0.0,
+      "bcubed": {
+        "precision": 1.0,
+        "recall": 0.317,
+        "f1": 0.482
+      }
+    }
+  },
+  "order": {
+    "module": {
+      "pairs": 380,
+      "agreement": 0.497,
+      "skipped_unplaced_pairs": 0
+    },
+    "unit": {
+      "pairs": 0,
+      "agreement": null,
+      "skipped_unplaced_pairs": 0
+    }
+  },
+  "merges": [
+    {
+      "lo_id": "LO-082f58",
+      "raw_ids": [
+        "cloudnative-u00-concept-containers-docker-and-kubernetes-lo20",
+        "cloudnative-u00-primer-kubernetes-and-container-orchestration-lo03",
+        "cloudnative-u00-primer-kubernetes-and-container-orchestration-lo05"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Containers: Docker and Kubernetes",
+        "u0 PRIMER Kubernetes and Container Orchestration"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-09c309",
+      "raw_ids": [
+        "cloudnative-u00-concept-containers-docker-and-kubernetes-lo09",
+        "cloudnative-u00-primer-intro-to-containers-and-docker-lo07"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Containers: Docker and Kubernetes",
+        "u0 PRIMER Intro to Containers and Docker"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-2d5bab",
+      "raw_ids": [
+        "cloudnative-u00-concept-containers-docker-and-kubernetes-lo10",
+        "cloudnative-u00-primer-intro-to-containers-and-docker-lo10"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Containers: Docker and Kubernetes",
+        "u0 PRIMER Intro to Containers and Docker"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-4a1b30",
+      "raw_ids": [
+        "cloudnative-u00-concept-containers-docker-and-kubernetes-lo17",
+        "cloudnative-u00-primer-kubernetes-and-container-orchestration-lo01"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Containers: Docker and Kubernetes",
+        "u0 PRIMER Kubernetes and Container Orchestration"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-6513cf",
+      "raw_ids": [
+        "cloudnative-u00-concept-containers-docker-and-kubernetes-lo04",
+        "cloudnative-u00-primer-intro-to-containers-and-docker-lo04"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Containers: Docker and Kubernetes",
+        "u0 PRIMER Intro to Containers and Docker"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-76b59a",
+      "raw_ids": [
+        "cloudnative-u00-concept-containers-docker-and-kubernetes-lo02",
+        "cloudnative-u00-primer-intro-to-containers-and-docker-lo02"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Containers: Docker and Kubernetes",
+        "u0 PRIMER Intro to Containers and Docker"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-7f60fa",
+      "raw_ids": [
+        "cloudnative-u00-concept-containers-docker-and-kubernetes-lo19",
+        "cloudnative-u00-primer-kubernetes-and-container-orchestration-lo04"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Containers: Docker and Kubernetes",
+        "u0 PRIMER Kubernetes and Container Orchestration"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-804797",
+      "raw_ids": [
+        "cloudnative-u00-concept-containers-docker-and-kubernetes-lo06",
+        "cloudnative-u00-primer-intro-to-containers-and-docker-lo08"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Containers: Docker and Kubernetes",
+        "u0 PRIMER Intro to Containers and Docker"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-9db252",
+      "raw_ids": [
+        "cloudnative-u00-concept-containers-docker-and-kubernetes-lo01",
+        "cloudnative-u00-primer-intro-to-containers-and-docker-lo01"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Containers: Docker and Kubernetes",
+        "u0 PRIMER Intro to Containers and Docker"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-9e8327",
+      "raw_ids": [
+        "cloudnative-u00-concept-containers-docker-and-kubernetes-lo11",
+        "cloudnative-u00-primer-intro-to-containers-and-docker-lo11"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Containers: Docker and Kubernetes",
+        "u0 PRIMER Intro to Containers and Docker"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-a119e6",
+      "raw_ids": [
+        "cloudnative-u00-concept-containers-docker-and-kubernetes-lo18",
+        "cloudnative-u00-primer-kubernetes-and-container-orchestration-lo02"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Containers: Docker and Kubernetes",
+        "u0 PRIMER Kubernetes and Container Orchestration"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-a5a712",
+      "raw_ids": [
+        "cloudnative-u00-concept-containers-docker-and-kubernetes-lo05",
+        "cloudnative-u00-primer-intro-to-containers-and-docker-lo05"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Containers: Docker and Kubernetes",
+        "u0 PRIMER Intro to Containers and Docker"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-ad008e",
+      "raw_ids": [
+        "cloudnative-u00-concept-containers-docker-and-kubernetes-lo07",
+        "cloudnative-u00-primer-intro-to-containers-and-docker-lo09"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Containers: Docker and Kubernetes",
+        "u0 PRIMER Intro to Containers and Docker"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-c5e935",
+      "raw_ids": [
+        "cloudnative-u00-concept-containers-docker-and-kubernetes-lo03",
+        "cloudnative-u00-primer-intro-to-containers-and-docker-lo03"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Containers: Docker and Kubernetes",
+        "u0 PRIMER Intro to Containers and Docker"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-e7dd52",
+      "raw_ids": [
+        "cloudnative-u00-concept-containers-docker-and-kubernetes-lo08",
+        "cloudnative-u00-primer-intro-to-containers-and-docker-lo06"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Containers: Docker and Kubernetes",
+        "u0 PRIMER Intro to Containers and Docker"
+      ],
+      "same_gt_module": false
+    }
+  ],
+  "broad": []
+}

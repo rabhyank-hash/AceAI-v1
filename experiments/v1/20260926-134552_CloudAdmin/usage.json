@@ -1,0 +1,21 @@
+[
+ {
+  "label": "attempt_0",
+  "cached": false,
+  "completion_tokens": 1386,
+  "prompt_tokens": 1384,
+  "total_tokens": 2770,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 104,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.184053487,
+  "prompt_time": 0.081543832,
+  "completion_time": 2.886882093,
+  "total_time": 2.968425925
+ }
+]

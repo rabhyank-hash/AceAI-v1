@@ -1,0 +1,450 @@
+{
+ "modules": [
+  {
+   "id": "M1",
+   "title": "Foundations of Cloud Computing",
+   "order": 1,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-c39ade",
+    "LO-8b248e",
+    "LO-bad1fc",
+    "LO-261cab",
+    "LO-4ee82e"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M2",
+   "title": "Azure Overview",
+   "order": 2,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-49a73c",
+    "LO-00b69b",
+    "LO-6355ad",
+    "LO-65e71c",
+    "LO-033b79"
+   ],
+   "depends_on": [
+    "M1"
+   ]
+  },
+  {
+   "id": "M3",
+   "title": "Azure Practical Setup",
+   "order": 3,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-4944b8",
+    "LO-eac576",
+    "LO-c04744"
+   ],
+   "depends_on": [
+    "M2"
+   ]
+  },
+  {
+   "id": "M4",
+   "title": "Cloud Economics & SLA",
+   "order": 4,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-deebe2",
+    "LO-80afe1",
+    "LO-fee0fc",
+    "LO-84bfc5"
+   ],
+   "depends_on": [
+    "M1"
+   ]
+  },
+  {
+   "id": "M5",
+   "title": "Azure Pricing & Resource Management",
+   "order": 5,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-fd41c0",
+    "LO-b45384"
+   ],
+   "depends_on": [
+    "M2"
+   ]
+  }
+ ],
+ "los": [
+  {
+   "id": "LO-c39ade",
+   "source_ids": [
+    "LO-c39ade"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-8b248e",
+   "source_ids": [
+    "LO-8b248e"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-c39ade"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-bad1fc",
+   "source_ids": [
+    "LO-bad1fc"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-c39ade"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-261cab",
+   "source_ids": [
+    "LO-261cab"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-c39ade"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-4ee82e",
+   "source_ids": [
+    "LO-4ee82e"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-261cab"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-49a73c",
+   "source_ids": [
+    "LO-49a73c",
+    "LO-8932af"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-c39ade"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-00b69b",
+   "source_ids": [
+    "LO-00b69b"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-49a73c"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-6355ad",
+   "source_ids": [
+    "LO-6355ad"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-49a73c"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-65e71c",
+   "source_ids": [
+    "LO-65e71c"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-49a73c"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-033b79",
+   "source_ids": [
+    "LO-033b79"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-65e71c"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-4944b8",
+   "source_ids": [
+    "LO-4944b8"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-49a73c"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-eac576",
+   "source_ids": [
+    "LO-eac576"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-4944b8",
+    "LO-6355ad"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-c04744",
+   "source_ids": [
+    "LO-c04744"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-4944b8"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-deebe2",
+   "source_ids": [
+    "LO-deebe2"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-c39ade"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-80afe1",
+   "source_ids": [
+    "LO-80afe1"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-deebe2"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-fee0fc",
+   "source_ids": [
+    "LO-fee0fc",
+    "LO-9a0953"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-c39ade"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-84bfc5",
+   "source_ids": [
+    "LO-84bfc5"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-261cab"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-fd41c0",
+   "source_ids": [
+    "LO-fd41c0"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-6355ad"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-b45384",
+   "source_ids": [
+    "LO-b45384"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-65e71c"
+   ],
+   "priority": null,
+   "depth_floor": null
+  }
+ ],
+ "provenance": [
+  {
+   "raw_id": "LO-c39ade",
+   "lo_id": "LO-c39ade"
+  },
+  {
+   "raw_id": "LO-8b248e",
+   "lo_id": "LO-8b248e"
+  },
+  {
+   "raw_id": "LO-bad1fc",
+   "lo_id": "LO-bad1fc"
+  },
+  {
+   "raw_id": "LO-261cab",
+   "lo_id": "LO-261cab"
+  },
+  {
+   "raw_id": "LO-4ee82e",
+   "lo_id": "LO-4ee82e"
+  },
+  {
+   "raw_id": "LO-49a73c",
+   "lo_id": "LO-49a73c"
+  },
+  {
+   "raw_id": "LO-8932af",
+   "lo_id": "LO-49a73c"
+  },
+  {
+   "raw_id": "LO-00b69b",
+   "lo_id": "LO-00b69b"
+  },
+  {
+   "raw_id": "LO-6355ad",
+   "lo_id": "LO-6355ad"
+  },
+  {
+   "raw_id": "LO-65e71c",
+   "lo_id": "LO-65e71c"
+  },
+  {
+   "raw_id": "LO-033b79",
+   "lo_id": "LO-033b79"
+  },
+  {
+   "raw_id": "LO-4944b8",
+   "lo_id": "LO-4944b8"
+  },
+  {
+   "raw_id": "LO-eac576",
+   "lo_id": "LO-eac576"
+  },
+  {
+   "raw_id": "LO-c04744",
+   "lo_id": "LO-c04744"
+  },
+  {
+   "raw_id": "LO-deebe2",
+   "lo_id": "LO-deebe2"
+  },
+  {
+   "raw_id": "LO-80afe1",
+   "lo_id": "LO-80afe1"
+  },
+  {
+   "raw_id": "LO-fee0fc",
+   "lo_id": "LO-fee0fc"
+  },
+  {
+   "raw_id": "LO-9a0953",
+   "lo_id": "LO-fee0fc"
+  },
+  {
+   "raw_id": "LO-84bfc5",
+   "lo_id": "LO-84bfc5"
+  },
+  {
+   "raw_id": "LO-fd41c0",
+   "lo_id": "LO-fd41c0"
+  },
+  {
+   "raw_id": "LO-b45384",
+   "lo_id": "LO-b45384"
+  }
+ ]
+}

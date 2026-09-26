@@ -1,0 +1,105 @@
+{
+  "coverage": {
+    "placed": 23,
+    "total": 23,
+    "complete": true
+  },
+  "n_detailed": 23,
+  "n_detailed_placed": 23,
+  "unplaced": [],
+  "n_gt_modules": 7,
+  "n_gt_units": 2,
+  "n_pred_modules": 6,
+  "n_surviving_los": 19,
+  "grouping": {
+    "module": {
+      "precision": 0.308,
+      "recall": 0.533,
+      "f1": 0.39,
+      "tp": 16,
+      "fp": 36,
+      "fn": 14,
+      "ari": 0.282,
+      "bcubed": {
+        "precision": 0.517,
+        "recall": 0.716,
+        "f1": 0.6
+      }
+    },
+    "unit": {
+      "precision": 0.577,
+      "recall": 0.244,
+      "f1": 0.343,
+      "tp": 30,
+      "fp": 22,
+      "fn": 93,
+      "ari": 0.076,
+      "bcubed": {
+        "precision": 0.739,
+        "recall": 0.322,
+        "f1": 0.448
+      }
+    }
+  },
+  "order": {
+    "module": {
+      "pairs": 187,
+      "agreement": 0.54,
+      "skipped_unplaced_pairs": 0
+    },
+    "unit": {
+      "pairs": 108,
+      "agreement": 0.574,
+      "skipped_unplaced_pairs": 0
+    }
+  },
+  "merges": [
+    {
+      "lo_id": "LO-02b95d",
+      "raw_ids": [
+        "ai-practitioner-u00-concept-matrices-basics-lo01",
+        "ai-practitioner-u00-concept-matrices-basics-lo02"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Matrices Basics"
+      ],
+      "same_gt_module": true
+    },
+    {
+      "lo_id": "LO-46ddb3",
+      "raw_ids": [
+        "ai-practitioner-u01-primer-numpy-and-linear-algebra-lo03",
+        "ai-practitioner-u01-primer-numpy-and-linear-algebra-lo04"
+      ],
+      "gt_modules": [
+        "u1 PRIMER NumPy and Linear Algebra"
+      ],
+      "same_gt_module": true
+    },
+    {
+      "lo_id": "LO-ee4470",
+      "raw_ids": [
+        "ai-practitioner-u00-primer-data-structures-in-python-lo02",
+        "ai-practitioner-u00-primer-data-types-in-python-lo02"
+      ],
+      "gt_modules": [
+        "u0 PRIMER Data Structures in Python",
+        "u0 PRIMER Data Types in Python"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-f21ac5",
+      "raw_ids": [
+        "ai-practitioner-u00-primer-data-structures-in-python-lo01",
+        "ai-practitioner-u00-primer-data-types-in-python-lo01"
+      ],
+      "gt_modules": [
+        "u0 PRIMER Data Structures in Python",
+        "u0 PRIMER Data Types in Python"
+      ],
+      "same_gt_module": false
+    }
+  ],
+  "broad": []
+}

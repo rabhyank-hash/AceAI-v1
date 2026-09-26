@@ -1,0 +1,84 @@
+[
+ {
+  "label": "attempt_0",
+  "cached": true,
+  "completion_tokens": 2928,
+  "prompt_tokens": 1952,
+  "total_tokens": 4880,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 88,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": {
+   "audio_tokens": null,
+   "cache_write_tokens": null,
+   "cached_tokens": 256,
+   "image_tokens": null,
+   "text_tokens": null
+  },
+  "queue_time": 0.132316974,
+  "prompt_time": 0.074715464,
+  "completion_time": 6.637168972,
+  "total_time": 6.711884436
+ },
+ {
+  "label": "attempt_1",
+  "cached": false,
+  "completion_tokens": 2786,
+  "prompt_tokens": 4305,
+  "total_tokens": 7091,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 1521,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.033574936,
+  "prompt_time": 0.215290546,
+  "completion_time": 5.819320977,
+  "total_time": 6.034611523
+ },
+ {
+  "label": "attempt_2",
+  "cached": false,
+  "completion_tokens": 514,
+  "prompt_tokens": 3443,
+  "total_tokens": 3957,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 249,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.195900193,
+  "prompt_time": 0.53816471,
+  "completion_time": 1.059566709,
+  "total_time": 1.597731419
+ },
+ {
+  "label": "attempt_3",
+  "cached": false,
+  "completion_tokens": 593,
+  "prompt_tokens": 3102,
+  "total_tokens": 3695,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 422,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.005102168,
+  "prompt_time": 0.151013509,
+  "completion_time": 1.242191131,
+  "total_time": 1.39320464
+ }
+]

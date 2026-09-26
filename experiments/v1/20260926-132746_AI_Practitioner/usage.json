@@ -1,0 +1,84 @@
+[
+ {
+  "label": "attempt_0",
+  "cached": true,
+  "completion_tokens": 2828,
+  "prompt_tokens": 1508,
+  "total_tokens": 4336,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 1143,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.239151393,
+  "prompt_time": 0.086353333,
+  "completion_time": 5.898334436,
+  "total_time": 5.984687769
+ },
+ {
+  "label": "attempt_1",
+  "cached": true,
+  "completion_tokens": 587,
+  "prompt_tokens": 2483,
+  "total_tokens": 3070,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 475,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.197655651,
+  "prompt_time": 0.116792963,
+  "completion_time": 1.229063287,
+  "total_time": 1.34585625
+ },
+ {
+  "label": "attempt_2",
+  "cached": true,
+  "completion_tokens": 1016,
+  "prompt_tokens": 2478,
+  "total_tokens": 3494,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 703,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": {
+   "audio_tokens": null,
+   "cache_write_tokens": null,
+   "cached_tokens": 256,
+   "image_tokens": null,
+   "text_tokens": null
+  },
+  "queue_time": 0.231053824,
+  "prompt_time": 0.111577549,
+  "completion_time": 2.1700412,
+  "total_time": 2.281618749
+ },
+ {
+  "label": "attempt_3",
+  "cached": true,
+  "completion_tokens": 260,
+  "prompt_tokens": 2360,
+  "total_tokens": 2620,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 222,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.140746239,
+  "prompt_time": 0.125706531,
+  "completion_time": 0.539356729,
+  "total_time": 0.66506326
+ }
+]

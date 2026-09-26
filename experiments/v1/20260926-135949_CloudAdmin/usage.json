@@ -1,0 +1,15 @@
+[
+ {
+  "label": "attempt_0",
+  "cached": false,
+  "completion_tokens": 2677,
+  "prompt_tokens": 1362,
+  "total_tokens": 4039,
+  "completion_tokens_details": null,
+  "prompt_tokens_details": null,
+  "queue_time": 0.116739796,
+  "prompt_time": 0.109371162,
+  "completion_time": 6.426617593,
+  "total_time": 6.535988755
+ }
+]

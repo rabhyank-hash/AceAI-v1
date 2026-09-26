@@ -1,0 +1,83 @@
+{
+  "coverage": {
+    "placed": 23,
+    "total": 23,
+    "complete": true
+  },
+  "n_detailed": 23,
+  "n_detailed_placed": 23,
+  "unplaced": [],
+  "n_gt_modules": 7,
+  "n_gt_units": 2,
+  "n_pred_modules": 21,
+  "n_surviving_los": 21,
+  "grouping": {
+    "module": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 2,
+      "fn": 30,
+      "ari": -0.015,
+      "bcubed": {
+        "precision": 0.913,
+        "recall": 0.304,
+        "f1": 0.457
+      }
+    },
+    "unit": {
+      "precision": 1.0,
+      "recall": 0.016,
+      "f1": 0.032,
+      "tp": 2,
+      "fp": 0,
+      "fn": 121,
+      "ari": 0.017,
+      "bcubed": {
+        "precision": 1.0,
+        "recall": 0.1,
+        "f1": 0.182
+      }
+    }
+  },
+  "order": {
+    "module": {
+      "pairs": 221,
+      "agreement": 0.493,
+      "skipped_unplaced_pairs": 0
+    },
+    "unit": {
+      "pairs": 130,
+      "agreement": 0.415,
+      "skipped_unplaced_pairs": 0
+    }
+  },
+  "merges": [
+    {
+      "lo_id": "LO-e41077",
+      "raw_ids": [
+        "ai-practitioner-u00-primer-data-structures-in-python-lo01",
+        "ai-practitioner-u00-primer-data-types-in-python-lo01"
+      ],
+      "gt_modules": [
+        "u0 PRIMER Data Structures in Python",
+        "u0 PRIMER Data Types in Python"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-ee4470",
+      "raw_ids": [
+        "ai-practitioner-u00-primer-data-structures-in-python-lo02",
+        "ai-practitioner-u00-primer-data-types-in-python-lo02"
+      ],
+      "gt_modules": [
+        "u0 PRIMER Data Structures in Python",
+        "u0 PRIMER Data Types in Python"
+      ],
+      "same_gt_module": false
+    }
+  ],
+  "broad": []
+}

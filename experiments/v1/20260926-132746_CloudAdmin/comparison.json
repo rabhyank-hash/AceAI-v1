@@ -1,0 +1,83 @@
+{
+  "coverage": {
+    "placed": 21,
+    "total": 21,
+    "complete": true
+  },
+  "n_detailed": 21,
+  "n_detailed_placed": 21,
+  "unplaced": [],
+  "n_gt_modules": 5,
+  "n_gt_units": 1,
+  "n_pred_modules": 5,
+  "n_surviving_los": 19,
+  "grouping": {
+    "module": {
+      "precision": 0.487,
+      "recall": 0.345,
+      "f1": 0.404,
+      "tp": 19,
+      "fp": 20,
+      "fn": 36,
+      "ari": 0.239,
+      "bcubed": {
+        "precision": 0.606,
+        "recall": 0.502,
+        "f1": 0.549
+      }
+    },
+    "unit": {
+      "precision": 1.0,
+      "recall": 0.186,
+      "f1": 0.313,
+      "tp": 39,
+      "fp": 0,
+      "fn": 171,
+      "ari": 0.0,
+      "bcubed": {
+        "precision": 1.0,
+        "recall": 0.224,
+        "f1": 0.367
+      }
+    }
+  },
+  "order": {
+    "module": {
+      "pairs": 135,
+      "agreement": 0.659,
+      "skipped_unplaced_pairs": 0
+    },
+    "unit": {
+      "pairs": 0,
+      "agreement": null,
+      "skipped_unplaced_pairs": 0
+    }
+  },
+  "merges": [
+    {
+      "lo_id": "LO-49a73c",
+      "raw_ids": [
+        "cloudadmin-u00-concept-cloud-overview-lo06",
+        "cloudadmin-u00-primer-an-introduction-to-azure-lo02"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Cloud Overview",
+        "u0 PRIMER An Introduction to Azure"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-fee0fc",
+      "raw_ids": [
+        "cloudadmin-u00-concept-cloud-overview-lo08",
+        "cloudadmin-u00-primer-an-introduction-to-azure-lo01"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Cloud Overview",
+        "u0 PRIMER An Introduction to Azure"
+      ],
+      "same_gt_module": false
+    }
+  ],
+  "broad": []
+}

@@ -1,0 +1,513 @@
+{
+ "modules": [
+  {
+   "id": "M1",
+   "title": "Introduction to DevOps",
+   "order": 1,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-f21cd9",
+    "LO-ec7a4e",
+    "LO-d88d63",
+    "LO-a81493",
+    "LO-3e1a71"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M2",
+   "title": "Cloud Computing Fundamentals",
+   "order": 2,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-125afe",
+    "LO-a9d83d"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M3",
+   "title": "Microsoft Azure Overview and Account Setup",
+   "order": 3,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-c7d588",
+    "LO-29caa6",
+    "LO-0deb31"
+   ],
+   "depends_on": [
+    "M2"
+   ]
+  },
+  {
+   "id": "M4",
+   "title": "Automation and Release Practices",
+   "order": 4,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-b04da2",
+    "LO-56d89e",
+    "LO-8a1110",
+    "LO-be0b43",
+    "LO-ceb5ca"
+   ],
+   "depends_on": [
+    "M1"
+   ]
+  },
+  {
+   "id": "M5",
+   "title": "Error Handling and Release Quality",
+   "order": 5,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-441de8",
+    "LO-7fd446",
+    "LO-9634f3",
+    "LO-d2e9c4",
+    "LO-f47fd0",
+    "LO-ea7bde"
+   ],
+   "depends_on": [
+    "M1",
+    "M4"
+   ]
+  },
+  {
+   "id": "M6",
+   "title": "Monitoring Azure Resources",
+   "order": 6,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-2c486b"
+   ],
+   "depends_on": [
+    "M3"
+   ]
+  }
+ ],
+ "los": [
+  {
+   "id": "LO-f21cd9",
+   "source_ids": [
+    "LO-f21cd9"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-ec7a4e",
+   "source_ids": [
+    "LO-ec7a4e"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-f21cd9"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-d88d63",
+   "source_ids": [
+    "LO-d88d63"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-f21cd9"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-a81493",
+   "source_ids": [
+    "LO-a81493",
+    "LO-d3cc65"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-d88d63"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-3e1a71",
+   "source_ids": [
+    "LO-3e1a71"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-d88d63"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-125afe",
+   "source_ids": [
+    "LO-125afe"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-a9d83d",
+   "source_ids": [
+    "LO-a9d83d"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-125afe"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-c7d588",
+   "source_ids": [
+    "LO-c7d588"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-125afe"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-29caa6",
+   "source_ids": [
+    "LO-29caa6"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-c7d588"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-0deb31",
+   "source_ids": [
+    "LO-0deb31"
+   ],
+   "bloom_level": "C6",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-125afe"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-b04da2",
+   "source_ids": [
+    "LO-b04da2"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-d88d63"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-56d89e",
+   "source_ids": [
+    "LO-56d89e"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-b04da2"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-8a1110",
+   "source_ids": [
+    "LO-8a1110"
+   ],
+   "bloom_level": "C4",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-b04da2"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-be0b43",
+   "source_ids": [
+    "LO-be0b43"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-8a1110"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-ceb5ca",
+   "source_ids": [
+    "LO-ceb5ca"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-b04da2"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-441de8",
+   "source_ids": [
+    "LO-441de8"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-56d89e"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-7fd446",
+   "source_ids": [
+    "LO-7fd446"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-441de8"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-9634f3",
+   "source_ids": [
+    "LO-9634f3"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-441de8"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-d2e9c4",
+   "source_ids": [
+    "LO-d2e9c4"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-9634f3"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-f47fd0",
+   "source_ids": [
+    "LO-f47fd0"
+   ],
+   "bloom_level": "C4",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-d2e9c4"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-ea7bde",
+   "source_ids": [
+    "LO-ea7bde"
+   ],
+   "bloom_level": "C4",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-a81493",
+    "LO-56d89e"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-2c486b",
+   "source_ids": [
+    "LO-2c486b"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-0deb31"
+   ],
+   "priority": null,
+   "depth_floor": null
+  }
+ ],
+ "provenance": [
+  {
+   "raw_id": "LO-f21cd9",
+   "lo_id": "LO-f21cd9"
+  },
+  {
+   "raw_id": "LO-ec7a4e",
+   "lo_id": "LO-ec7a4e"
+  },
+  {
+   "raw_id": "LO-d88d63",
+   "lo_id": "LO-d88d63"
+  },
+  {
+   "raw_id": "LO-a81493",
+   "lo_id": "LO-a81493"
+  },
+  {
+   "raw_id": "LO-d3cc65",
+   "lo_id": "LO-a81493"
+  },
+  {
+   "raw_id": "LO-3e1a71",
+   "lo_id": "LO-3e1a71"
+  },
+  {
+   "raw_id": "LO-125afe",
+   "lo_id": "LO-125afe"
+  },
+  {
+   "raw_id": "LO-a9d83d",
+   "lo_id": "LO-a9d83d"
+  },
+  {
+   "raw_id": "LO-c7d588",
+   "lo_id": "LO-c7d588"
+  },
+  {
+   "raw_id": "LO-29caa6",
+   "lo_id": "LO-29caa6"
+  },
+  {
+   "raw_id": "LO-0deb31",
+   "lo_id": "LO-0deb31"
+  },
+  {
+   "raw_id": "LO-b04da2",
+   "lo_id": "LO-b04da2"
+  },
+  {
+   "raw_id": "LO-56d89e",
+   "lo_id": "LO-56d89e"
+  },
+  {
+   "raw_id": "LO-8a1110",
+   "lo_id": "LO-8a1110"
+  },
+  {
+   "raw_id": "LO-be0b43",
+   "lo_id": "LO-be0b43"
+  },
+  {
+   "raw_id": "LO-ceb5ca",
+   "lo_id": "LO-ceb5ca"
+  },
+  {
+   "raw_id": "LO-441de8",
+   "lo_id": "LO-441de8"
+  },
+  {
+   "raw_id": "LO-7fd446",
+   "lo_id": "LO-7fd446"
+  },
+  {
+   "raw_id": "LO-9634f3",
+   "lo_id": "LO-9634f3"
+  },
+  {
+   "raw_id": "LO-d2e9c4",
+   "lo_id": "LO-d2e9c4"
+  },
+  {
+   "raw_id": "LO-f47fd0",
+   "lo_id": "LO-f47fd0"
+  },
+  {
+   "raw_id": "LO-ea7bde",
+   "lo_id": "LO-ea7bde"
+  },
+  {
+   "raw_id": "LO-2c486b",
+   "lo_id": "LO-2c486b"
+  }
+ ]
+}

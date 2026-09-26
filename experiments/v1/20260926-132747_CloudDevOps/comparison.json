@@ -1,0 +1,70 @@
+{
+  "coverage": {
+    "placed": 23,
+    "total": 23,
+    "complete": true
+  },
+  "n_detailed": 23,
+  "n_detailed_placed": 23,
+  "unplaced": [],
+  "n_gt_modules": 3,
+  "n_gt_units": 1,
+  "n_pred_modules": 6,
+  "n_surviving_los": 22,
+  "grouping": {
+    "module": {
+      "precision": 0.932,
+      "recall": 0.261,
+      "f1": 0.408,
+      "tp": 41,
+      "fp": 3,
+      "fn": 116,
+      "ari": 0.187,
+      "bcubed": {
+        "precision": 0.899,
+        "recall": 0.353,
+        "f1": 0.507
+      }
+    },
+    "unit": {
+      "precision": 1.0,
+      "recall": 0.174,
+      "f1": 0.296,
+      "tp": 44,
+      "fp": 0,
+      "fn": 209,
+      "ari": 0.0,
+      "bcubed": {
+        "precision": 1.0,
+        "recall": 0.21,
+        "f1": 0.347
+      }
+    }
+  },
+  "order": {
+    "module": {
+      "pairs": 93,
+      "agreement": 0.527,
+      "skipped_unplaced_pairs": 0
+    },
+    "unit": {
+      "pairs": 0,
+      "agreement": null,
+      "skipped_unplaced_pairs": 0
+    }
+  },
+  "merges": [
+    {
+      "lo_id": "LO-a81493",
+      "raw_ids": [
+        "clouddevops-u01-concept-devops-and-importance-of-devops-lo14",
+        "clouddevops-u01-concept-devops-and-importance-of-devops-lo15"
+      ],
+      "gt_modules": [
+        "u1 CONCEPT DevOps and Importance of DevOps"
+      ],
+      "same_gt_module": true
+    }
+  ],
+  "broad": []
+}

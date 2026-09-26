@@ -1,0 +1,41 @@
+{
+  "ok": false,
+  "stopped_because": "errors remain after 4 repair round(s)",
+  "attempts": [
+    {
+      "index": 0,
+      "error": "provider rejected the reply as invalid JSON: Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.",
+      "n_errors": -1,
+      "errors_by_tool": {},
+      "skipped": null
+    },
+    {
+      "index": 1,
+      "error": "provider rejected the reply as invalid JSON: Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.",
+      "n_errors": -1,
+      "errors_by_tool": {},
+      "skipped": null
+    },
+    {
+      "index": 2,
+      "error": "provider rejected the reply as invalid JSON: Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.",
+      "n_errors": -1,
+      "errors_by_tool": {},
+      "skipped": null
+    },
+    {
+      "index": 3,
+      "error": "provider rejected the reply as invalid JSON: Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.",
+      "n_errors": -1,
+      "errors_by_tool": {},
+      "skipped": null
+    },
+    {
+      "index": 4,
+      "error": "provider rejected the reply as invalid JSON: Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.",
+      "n_errors": -1,
+      "errors_by_tool": {},
+      "skipped": null
+    }
+  ]
+}

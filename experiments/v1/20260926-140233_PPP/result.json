@@ -1,0 +1,13 @@
+{
+  "ok": false,
+  "stopped_because": "LLM call failed: giving up after 7 attempts: Error code: 429 - {'error': {'message': \"Request too large for model `qwen/qwen3.8-27b` in organization `org_01kezc1f6qfv9rm38js6m60ax8` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 2961. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\", 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+  "attempts": [
+    {
+      "index": 0,
+      "error": "giving up after 7 attempts: Error code: 429 - {'error': {'message': \"Request too large for model `qwen/qwen3.8-27b` in organization `org_01kezc1f6qfv9rm38js6m60ax8` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 2961. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\", 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+      "n_errors": -1,
+      "errors_by_tool": {},
+      "skipped": null
+    }
+  ]
+}

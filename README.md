@@ -43,7 +43,7 @@ Plan*, *ACE-AI Schema Concepts v1*, *ACE-AI Literature Survey*. `CLAUDE.md` is t
 | LO ingestion, data profile, ground truth | Done for all six courses |
 | Agent 1 code tools (6) | Done |
 | LLM client | Done |
-| Agent 1 prompts and loop | Proof of concept: one LLM call plus tool-driven repair, not yet the plan's six-step chain |
+| Agent 1 prompts and loop | Proof of concept: one LLM call plus targeted repair; module order set by topological sort of the model's prerequisites (plan step 6). Not yet the plan's six-step chain. Runs on a module sample of all six courses. |
 | Evaluation against the CSV structure | Grouping and order agreement done; dependency, merge and containment scores need labeled data |
 | Baselines | Not started |
 | Agent 2 | Not started |
@@ -87,11 +87,22 @@ src/aceai/
   llm/client.py         provider-agnostic chat client
   agents/sequencer.py   Agent 1 proof of concept: prompt, assembly, check-and-repair loop
   eval/compare.py       comparison with the CSV structure
+  eval/draw.py          module graph as a Mermaid diagram
 scripts/
   profile_data.py       writes data/processed/profile.md
   build_ground_truth.py writes data/processed/ground_truth/<course>.json
   llm_smoke.py          one tiny request: checks key, model and rate limits
-  run_poc.py            runs Agent 1 on a course or units and writes runs/<timestamp>_<course>/
+  run_poc.py            runs Agent 1 on a course sample and writes runs/<timestamp>_<course>/
+  summarize_runs.py     one table over several runs
+  draw_graph.py         redraws the module graph of existing runs
+  consistency.py        run-to-run consistency of two or more runs
+  analyze_experiments.py tables over runs/experiments.tsv (settings, seeds, consistency)
+  export_records.py     copies experiment records to experiments/<name>/ without LO text
+  make_label_sheets.py  blank module-order labeling sheets in annotations/ (git-ignored)
+docs/implementation_plan.md  the implementation plan (tracked version of the Drive document)
+docs/evaluation.md      evaluation framework
+docs/poc_report.md      proof-of-concept report
+experiments/<name>/     experiment records: configs, scores, structures (no LO text)
 tests/                  pytest suite; LLM tests use a fake SDK (tests/fakes.py)
 data/raw/               input CSVs (git-ignored)
 data/processed/         generated files (git-ignored)
@@ -235,15 +246,29 @@ converted to a `SequencerOutput` (`ground_truth_to_output`).
 the plan's six-step chain.
 
 1. **One call.** The model receives the shuffled LO list and returns JSON: per-LO normalization
-   (verb, Bloom level, track, target concept, scope), merges, parent links, prerequisites, and
-   modules in teaching order.
+   (verb, Bloom level, track, target concept, scope), merges, parent links, prerequisites, the
+   module each LO belongs to, and modules in teaching order.
 2. **Compact reply.** The model reuses an input id as each surviving LO's id and lists merged ids.
-   `assemble()` fills in the mechanical fields: `source_ids`, `raw_text`, module `order` and
-   provenance.
-3. **Check.** All six tools run on the assembled output.
-4. **Repair.** Errors (with their ids) go back to the model with its previous reply, up to
-   `max_repairs` rounds (default 2). A provider JSON rejection is treated as a bad reply. Reply
-   `max_tokens` is lowered to whatever the per-minute budget leaves.
+   Each atomic LO names its module; `assemble()` builds each module's `lo_ids` from those names,
+   in the order the LOs are listed, so an LO cannot be listed in two modules or forgotten in the
+   module lists. It also fills in `source_ids`, `raw_text`, module `order` and provenance.
+3. **Order by prerequisites (plan step 6).** For every LO the model states which LOs a learner
+   must master first, judged from the LO text. Code lifts these to module dependencies
+   (`build_module_graph`), sets the module order by topological sort (`topo_sort_modules`) and
+   orders LOs inside each module the same way. The model's own listing order is used only to
+   break ties where several orders are valid, and it explains its tie-breaking in
+   `order_rationale`, shown in the report.
+4. **Check.** All six tools run on the assembled output.
+5. **Targeted repair.** If any tool reports errors, the model gets a compact view of its current
+   plan (one line per LO: id, module, Bloom level, track, scope, parent, prerequisites, merges),
+   the module list, and the errors with the ids involved. It replies with a patch: only the LOs
+   and modules that change, matched by id, plus ids to remove and an optional new module order.
+   `apply_patch()` applies it mechanically. Each round sends the current plan, not the
+   conversation history, so request size stays constant. This follows the targeted retry of
+   Syahputra et al. [1]. Up to `max_repairs` rounds (default 2). A provider JSON rejection is
+   treated as a bad reply.
+
+Every input LO must end up in a module; a run with an unplaced LO is invalid.
 
 Temporary rules for open questions 1, 2 and 6 are in the prompt, not the code, and are marked for
 the proof of concept only:
@@ -256,13 +281,16 @@ the proof of concept only:
 
 ## Evaluation
 
-`src/aceai/eval/compare.py` compares an output with the CSV structure, per raw LO:
+The full framework (levels, metrics, reference data, what is implemented, labels needed) is in
+[docs/evaluation.md](docs/evaluation.md). `src/aceai/eval/compare.py` implements the parts that
+need no labels, per raw LO:
 
-- **Grouping**: pairwise precision, recall and F1 (a pair is "together" if both LOs are in the
-  same module), and the adjusted Rand index (ARI) [8]: 1 means identical groupings, about 0 means
-  chance.
+- **Coverage**: LOs placed in a module / LOs in. Below 100% the run is invalid.
+- **Grouping**: BCubed precision, recall and F1 (primary; per-LO averages, so large modules do
+  not dominate) [9]; the adjusted Rand index (ARI) [8], where 1 means identical groupings and
+  about 0 means chance; and pairwise precision and recall.
 - **Order agreement**: over pairs of LOs that are in different modules in both, the fraction
-  ordered the same way as the CSV. A random order scores 0.5.
+  ordered the same way as the CSV (Kendall's τ rescaled [10]). A random order scores 0.5.
 - **Merges**: which raw LOs were merged, and whether they came from the same CSV module.
 - **Syllabus LOs**: the scope and number of children for each.
 
@@ -283,6 +311,20 @@ record none of these, so they need labels:
 | Duplicate pairs | ~60 candidate pairs from the data profile | merge precision and recall |
 | Syllabus LO → CSV modules | PPP, 22 rows | containment precision and recall |
 
+### Module graph drawing
+
+`src/aceai/eval/draw.py` draws each run's module graph as a Mermaid flowchart, appended to
+`report.md` and written to `module_graph.md` and `module_graph.html` in the run directory.
+`scripts/draw_graph.py --latest` redraws existing runs.
+
+- Columns are topological steps: a module sits one step after the latest module it depends on.
+  Modules in the same step have no dependencies between them; these are the ties
+  `topo_sort_modules` reports.
+- Arrows point from a prerequisite to the module that needs it. Solid arrows come from LO-level
+  prerequisites (labelled with the number of LO links); dashed arrows are declared by the model
+  with no LO prerequisite behind them.
+- Colour is the CSV unit most of the module's LOs come from, labelled with how many.
+
 ### Planned baselines
 
 From the plan (§6) and the literature survey:
@@ -295,53 +337,104 @@ From the plan (§6) and the literature survey:
 ## Running Agent 1
 
 ```bash
+python scripts/run_poc.py --course CloudAdmin --modules 3 --max-repairs 4   # module sample
 python scripts/run_poc.py --course DataEng --all-units
 python scripts/run_poc.py --course PPP --units 0 1 2 --broad
 python scripts/run_poc.py --course PPP --units 0 1 2 --dry-run   # writes input and prompt, no API call
+python scripts/summarize_runs.py --latest                         # one table over the newest runs
 ```
 
-Options: `--course`, `--units` / `--all-units`, `--broad` (include syllabus LOs; off by default
-for partial samples because they cover the whole course), `--seed`, `--provider`, `--model`,
-`--max-repairs`, `--max-tokens`, `--no-cache`, `--dry-run`.
+Sample options (pick one): `--modules N` (the first N CSV modules in file order, extended module
+by module until the sample has `--min-los` LOs, default 20), `--units`, `--all-units`.
+Other options: `--broad` (include syllabus LOs; off by default for partial samples because they
+cover the whole course), `--seed`, `--provider`, `--model`, `--max-repairs`, `--max-tokens`,
+`--no-cache`, `--dry-run`.
 
 Output in `runs/<timestamp>_<course>/`:
 
 | Path | Contents |
 |---|---|
-| `report.md` | attempts, scores, and each predicted module with the CSV module of every LO |
-| `config.json` | course, units, seed, provider, model, prompt version, prompt token estimate |
+| `report.md` | coverage, attempts, scores, each predicted module with the CSV module of every LO, and the module graph |
+| `module_graph.md`, `module_graph.html` | the module graph as Mermaid, and as a standalone page |
+| `config.json` | course, sample, seed, provider, model, prompt version, prompt token estimate |
 | `input/` | model input, id map (not sent), text edits, ground truth, full prompt |
-| `attempts/NN/` | raw reply, assembled output, fill-in notes, all tool results, summary |
+| `attempts/NN/` | raw reply (a patch, on repair rounds), assembled full output, fill-in notes, tool results, summary |
 | `llm_calls.json` | every LLM call with usage and rate-limit headers |
-| `output.json`, `comparison.json` | final output and scores, when the output parses |
+| `result.json` | pass/fail, stop reason, errors per attempt |
+| `output.json`, `comparison.json` | output and scores from the last attempt that produced a usable plan |
 
 ### Token budget
 
-At 8,000 tokens per minute, only DataEng (57 LOs, about 2.1K prompt + 3.8K reply tokens) fits in
-one call. The larger courses need unit subsets, the multi-step chain, or a provider with higher
-limits. Repair rounds resend the previous reply and currently do not fit.
+Groq's free tier allows 8,000 tokens per minute. A first call for 20–60 LOs fits (about 1.5–2.5K
+prompt + 2–4K reply tokens); a repair round is about 3.5K prompt tokens. Whole courses above
+about 60 LOs need the multi-step chain or a provider with higher limits.
 
 ## Results so far
 
-**DataEng, all units, `gpt-oss-120b`, seed 0 (2026-09-23).** 2,091 prompt tokens, 3,802 reply
-tokens, about 8 s.
+### Proof of concept: module sample of every course (2026-09-26)
 
-- No cycles, no module depending on a later module. The one merge joined a MongoDB PRIMER LO
-  with a NoSQL PROJECT LO from the same unit.
-- 32 errors: 21 LOs placed in no module; 8 modules headed by an atomic LO (DataEng has no
-  course-level LOs); 2 LOs in two modules; 1 LO both merged and kept.
-- The repair round was refused as too large for the per-minute budget.
-- On the 36 placed LOs: module recall 0.52, unit precision 0.65, module ARI 0.37, order agreement
-  0.57 (module level). The model made 8 modules; the CSV has 14 in 5 units.
+`gpt-oss-120b` on Groq, seed 0, `--modules 3 --min-los 20 --max-repairs 4`, prompt `poc-3`
+(order set from the model's prerequisites). Generated with `scripts/summarize_runs.py --latest`.
 
-The errors are mostly about output format. Planned fixes:
+| Course | LOs | CSV modules / units | Model modules | Coverage | Checks | Attempts | BCubed F1 (module) | Module recall | Unit precision | Module ARI | Order agreement | LO prereq links | Merges |
+|---|---:|---:|---:|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| AI_Practitioner | 23 | 7 / 2 | 6 | 23/23 | pass | 4 | 0.6 | 0.533 | 0.577 | 0.282 | 0.54 | 23 | 4 |
+| CloudAdmin | 21 | 5 / 1 | 5 | 21/21 | pass | 2 | 0.549 | 0.345 | 1.0 | 0.239 | 0.659 | 19 | 2 |
+| CloudDevOps | 23 | 3 / 1 | 6 | 23/23 | pass | 2 | 0.507 | 0.261 | 1.0 | 0.187 | 0.527 | 21 | 1 |
+| CloudNative | 44 | 3 / 1 | 5 | 44/44 | pass | 4 | 0.52 | 0.333 | 1.0 | 0.058 | 0.497 | 18 | 15 |
+| DataEng | 23 | 7 / 3 | 10 | 23/23 | pass | 1 | 0.608 | 0.25 | 0.667 | 0.229 | 0.337 | 20 | 0 |
+| PPP | 28 | 5 / 2 | 13 | 28/28 | pass | 1 | 0.578 | 0.23 | 0.892 | 0.244 | 0.468 | 9 | 0 |
 
-1. Each LO names its module, and code builds `lo_ids`, so an LO cannot be unplaced or placed twice.
-2. The prompt requires `aggregate_lo_id` to be empty unless the LO is course-level, and forbids
-   keeping an LO that was merged away.
-3. Repair asks only for the changed LOs and modules, following the targeted retry of
-   Syahputra et al. [1].
-4. The report falls back to the last attempt that produced an output.
+**The pipeline works end to end.** All six courses produce a valid plan with every LO placed.
+DataEng and PPP pass on the first call; the others need 1–3 repair rounds.
+
+**Order now comes from prerequisites.** The model states 9–23 LO prerequisites per course, and
+every module dependency is backed by them. Module graphs have 2–4 topological steps.
+
+**Grouping improved; order agreement with the CSV did not.**
+
+- BCubed F1 against CSV modules is 0.51–0.61 for every course, up from 0.20–0.78 with prompt
+  `poc-2`, where module sizes were erratic (one 23-LO module, or modules of about 3 LOs).
+- Order agreement with the CSV is 0.34–0.66 (random is 0.5). The CSV order is one valid order,
+  and without labeled prerequisites we cannot tell whether the model's order is wrong or just
+  different. Unit-level prerequisite labels (see [docs/evaluation.md](docs/evaluation.md)) are
+  the next step.
+- PPP still has few prerequisites (9 links, 11 of 13 modules in the first step).
+- CloudAdmin, CloudDevOps and CloudNative samples fall inside one CSV unit, so unit precision is
+  1.0 by construction there; it only means something for AI_Practitioner, DataEng and PPP.
+- CloudNative's 15 merges match its exact-duplicate LOs (15 groups in the data profile).
+
+**Prompt `poc-2` → `poc-3`** (same sample and settings):
+
+| Course | BCubed F1 poc-2 → poc-3 | Order agreement poc-2 → poc-3 | LO prereq links poc-2 → poc-3 |
+|---|---|---|---|
+| AI_Practitioner | 0.468 → 0.600 | 0.543 → 0.540 | 18 → 23 |
+| CloudAdmin | 0.642 → 0.549 | 0.865 → 0.659 | 1 → 19 |
+| CloudDevOps | 0.778 → 0.507 | – → 0.527 | 0 → 21 |
+| CloudNative | 0.204 → 0.520 | 0.366 → 0.497 | 11 → 18 |
+| DataEng | 0.390 → 0.608 | 0.584 → 0.337 | 4 → 20 |
+| PPP | 0.335 → 0.578 | 0.434 → 0.468 | 0 → 9 |
+
+CloudDevOps's 0.778 under `poc-2` came from putting all 23 LOs in one module, which scores high
+only because one CSV module holds 18 of them.
+
+**Fixes made during these runs:**
+
+- Repair patches originally replaced the whole module list. The model sent only the changed
+  module and wiped the rest (CloudNative). Modules are now patched by id like LOs.
+- Schema errors named list positions (`los.25.verb`), which the model cannot map to an LO; they
+  now name the LO id. A prerequisite pointing at an LO that was merged away now names the LO it
+  was merged into.
+- An LO listing itself in its own `merged_ids` produced a schema error about `source_ids`, a
+  field the model never sees; its repair then deleted the LO. `assemble()` now drops such
+  self-references (and repeated ids) and logs a note.
+
+### Earlier: DataEng, all 57 LOs, first prompt (2026-09-23)
+
+The first prompt had the model list module members separately. 21 of 57 LOs were left out of
+every module, mostly C2 "describe / explain / explore" LOs from CONCEPT and PRIMER modules. With
+each LO naming its module (prompt `poc-2`), the same 57 LOs were all placed and passed every check
+on the first call.
 
 ## Differences from the plan
 
@@ -352,9 +445,9 @@ The errors are mostly about output format. Planned fixes:
 - **PPP size.** The plan describes PPP as 129 LOs across 8 modules and 8 projects; the CSV has 202
   detailed and 22 syllabus LOs across 10 units. To confirm which version is the reference.
 - **One call, not a chain.** The plan has six steps with a tool check after each. The proof of
-  concept makes one call, code runs the repair loop, and the model orders modules itself. In the
-  plan, `topo_sort_modules` sets the order and the agent only chooses among valid orders
-  (step 6).
+  concept does steps 1–5 in one call and code runs the repair loop. Step 6 follows the plan:
+  `topo_sort_modules` sets the order from the model's prerequisites and the model only chooses
+  among valid orders, with a short rationale.
 - **No prerequisite rationale.** The plan asks for a one-line rationale per prerequisite edge. The
   schema has no field for it yet.
 
@@ -383,8 +476,8 @@ pytest
 ruff check .
 ```
 
-116 tests: schemas (22), ingestion (22), ground truth and input leak checks (10), tools (30), LLM
-client (19), Agent 1 loop and metrics (11), scaffold (2). LLM tests replay scripted replies through
+130 tests: schemas (22), ingestion (22), ground truth and input leak checks (11), tools (32), LLM
+client (19), Agent 1 loop, metrics and drawing (22), scaffold (2). LLM tests replay scripted replies through
 a fake SDK and never call an API. Tests that need the course CSVs are skipped when `data/raw/` is
 empty.
 
@@ -405,8 +498,14 @@ empty.
    Assessing: A Revision of Bloom's Taxonomy of Educational Objectives*. Longman.
 8. Hubert, L., & Arabie, P. (1985). Comparing partitions. *Journal of Classification*, 2(1),
    193–218.
+9. Amigó, E., Gonzalo, J., Artiles, J., & Verdejo, F. (2009). A comparison of extrinsic
+   clustering evaluation metrics based on formal constraints. *Information Retrieval*, 12(4),
+   461–486.
+10. Lapata, M. (2006). Automatic evaluation of information ordering: Kendall's tau.
+    *Computational Linguistics*, 32(4), 471–484.
 
 [3], [4] and [6] are background. EduPlanner [3] and ISD-Agent-Bench [4] are related
 instructional-design agent work that operates at the lesson and content level. Rubrics as
-Rewards [6] is the planned pattern for Agent 2's soft-quality rubric. [7] and [8] are standard
-references not in the literature survey.
+Rewards [6] is the planned pattern for Agent 2's soft-quality rubric. [7]–[10] are standard
+references not in the literature survey. The evaluation framework's own references are in
+[docs/evaluation.md](docs/evaluation.md).

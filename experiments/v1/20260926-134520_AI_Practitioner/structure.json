@@ -1,0 +1,633 @@
+{
+ "modules": [
+  {
+   "id": "M1",
+   "title": "Special Matrices Overview",
+   "order": 1,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-fdb63c"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M2",
+   "title": "Vectorization Principles",
+   "order": 2,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-46ddb3"
+   ],
+   "depends_on": [
+    "M1"
+   ]
+  },
+  {
+   "id": "M3",
+   "title": "Fundamental Python Data Structures",
+   "order": 3,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-af481f"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M4",
+   "title": "Vectors and Matrices Foundations",
+   "order": 4,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-ef5403"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M5",
+   "title": "Python Data\u2011Analysis Libraries",
+   "order": 5,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-e67c69"
+   ],
+   "depends_on": [
+    "M4"
+   ]
+  },
+  {
+   "id": "M6",
+   "title": "Collaborative Filtering Methods",
+   "order": 6,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-1f987b"
+   ],
+   "depends_on": [
+    "M4"
+   ]
+  },
+  {
+   "id": "M7",
+   "title": "Matrix Interface Design",
+   "order": 7,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-26869c"
+   ],
+   "depends_on": [
+    "M4"
+   ]
+  },
+  {
+   "id": "M8",
+   "title": "Python Syntax for Data Structures",
+   "order": 8,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-ee4470"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M9",
+   "title": "Vectorizing Iterative Procedures",
+   "order": 9,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-a9f1bf"
+   ],
+   "depends_on": [
+    "M2"
+   ]
+  },
+  {
+   "id": "M10",
+   "title": "Key Data Structure Concepts",
+   "order": 10,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-e41077"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M11",
+   "title": "NumPy Array Basics",
+   "order": 11,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-8bf9fb"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M12",
+   "title": "Recommender Systems Role",
+   "order": 12,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-c47a12"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M13",
+   "title": "Matrix Mathematical Definition",
+   "order": 13,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-02b95d"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M14",
+   "title": "Data Structure Performance Comparison",
+   "order": 14,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-e6a467"
+   ],
+   "depends_on": [
+    "M3"
+   ]
+  },
+  {
+   "id": "M15",
+   "title": "Stride and Shape Vectors",
+   "order": 15,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-38af79"
+   ],
+   "depends_on": [
+    "M13"
+   ]
+  },
+  {
+   "id": "M16",
+   "title": "Sparse Matrix Techniques",
+   "order": 16,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-5fe122"
+   ],
+   "depends_on": [
+    "M13"
+   ]
+  },
+  {
+   "id": "M17",
+   "title": "NumPy Library Overview",
+   "order": 17,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-667cdd"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M18",
+   "title": "Applying Data Structures to Real Problems",
+   "order": 18,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-2fc172"
+   ],
+   "depends_on": [
+    "M3"
+   ]
+  },
+  {
+   "id": "M19",
+   "title": "Search and Graph Algorithms",
+   "order": 19,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-a1d710"
+   ],
+   "depends_on": [
+    "M3"
+   ]
+  },
+  {
+   "id": "M20",
+   "title": "Basic NumPy Operations",
+   "order": 20,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-f2dc6c"
+   ],
+   "depends_on": [
+    "M11"
+   ]
+  },
+  {
+   "id": "M21",
+   "title": "Python Best Practices",
+   "order": 21,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-1a440f"
+   ],
+   "depends_on": [
+    "M3"
+   ]
+  }
+ ],
+ "los": [
+  {
+   "id": "LO-fdb63c",
+   "source_ids": [
+    "LO-fdb63c"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-46ddb3",
+   "source_ids": [
+    "LO-46ddb3"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-fdb63c"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-af481f",
+   "source_ids": [
+    "LO-af481f"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-ef5403",
+   "source_ids": [
+    "LO-ef5403"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-e67c69",
+   "source_ids": [
+    "LO-e67c69"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-ef5403"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-1f987b",
+   "source_ids": [
+    "LO-1f987b"
+   ],
+   "bloom_level": "C4",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-ef5403"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-26869c",
+   "source_ids": [
+    "LO-26869c"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-ef5403"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-ee4470",
+   "source_ids": [
+    "LO-ee4470",
+    "LO-0cb0d7"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-a9f1bf",
+   "source_ids": [
+    "LO-a9f1bf"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-46ddb3"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-e41077",
+   "source_ids": [
+    "LO-e41077",
+    "LO-f21ac5"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-8bf9fb",
+   "source_ids": [
+    "LO-8bf9fb"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-c47a12",
+   "source_ids": [
+    "LO-c47a12"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-02b95d",
+   "source_ids": [
+    "LO-02b95d"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-e6a467",
+   "source_ids": [
+    "LO-e6a467"
+   ],
+   "bloom_level": "C4",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-af481f"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-38af79",
+   "source_ids": [
+    "LO-38af79"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-02b95d"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-5fe122",
+   "source_ids": [
+    "LO-5fe122"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-02b95d"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-667cdd",
+   "source_ids": [
+    "LO-667cdd"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-2fc172",
+   "source_ids": [
+    "LO-2fc172"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-af481f"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-a1d710",
+   "source_ids": [
+    "LO-a1d710"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-af481f"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-f2dc6c",
+   "source_ids": [
+    "LO-f2dc6c"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-8bf9fb"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-1a440f",
+   "source_ids": [
+    "LO-1a440f"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-af481f"
+   ],
+   "priority": null,
+   "depth_floor": null
+  }
+ ],
+ "provenance": [
+  {
+   "raw_id": "LO-fdb63c",
+   "lo_id": "LO-fdb63c"
+  },
+  {
+   "raw_id": "LO-46ddb3",
+   "lo_id": "LO-46ddb3"
+  },
+  {
+   "raw_id": "LO-af481f",
+   "lo_id": "LO-af481f"
+  },
+  {
+   "raw_id": "LO-ef5403",
+   "lo_id": "LO-ef5403"
+  },
+  {
+   "raw_id": "LO-e67c69",
+   "lo_id": "LO-e67c69"
+  },
+  {
+   "raw_id": "LO-1f987b",
+   "lo_id": "LO-1f987b"
+  },
+  {
+   "raw_id": "LO-26869c",
+   "lo_id": "LO-26869c"
+  },
+  {
+   "raw_id": "LO-ee4470",
+   "lo_id": "LO-ee4470"
+  },
+  {
+   "raw_id": "LO-0cb0d7",
+   "lo_id": "LO-ee4470"
+  },
+  {
+   "raw_id": "LO-a9f1bf",
+   "lo_id": "LO-a9f1bf"
+  },
+  {
+   "raw_id": "LO-e41077",
+   "lo_id": "LO-e41077"
+  },
+  {
+   "raw_id": "LO-f21ac5",
+   "lo_id": "LO-e41077"
+  },
+  {
+   "raw_id": "LO-8bf9fb",
+   "lo_id": "LO-8bf9fb"
+  },
+  {
+   "raw_id": "LO-c47a12",
+   "lo_id": "LO-c47a12"
+  },
+  {
+   "raw_id": "LO-02b95d",
+   "lo_id": "LO-02b95d"
+  },
+  {
+   "raw_id": "LO-e6a467",
+   "lo_id": "LO-e6a467"
+  },
+  {
+   "raw_id": "LO-38af79",
+   "lo_id": "LO-38af79"
+  },
+  {
+   "raw_id": "LO-5fe122",
+   "lo_id": "LO-5fe122"
+  },
+  {
+   "raw_id": "LO-667cdd",
+   "lo_id": "LO-667cdd"
+  },
+  {
+   "raw_id": "LO-2fc172",
+   "lo_id": "LO-2fc172"
+  },
+  {
+   "raw_id": "LO-a1d710",
+   "lo_id": "LO-a1d710"
+  },
+  {
+   "raw_id": "LO-f2dc6c",
+   "lo_id": "LO-f2dc6c"
+  },
+  {
+   "raw_id": "LO-1a440f",
+   "lo_id": "LO-1a440f"
+  }
+ ]
+}

@@ -3,6 +3,8 @@
 
 # Course data (not committed; see README for where to get it)
 data/
+# Labeling sheets contain course LO text
+annotations/
 
 # Run outputs, derived data, caches
 runs/*
