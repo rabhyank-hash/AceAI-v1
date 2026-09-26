@@ -142,11 +142,11 @@ Pending the v2 run. v1 values are from seeds 0–2 and will be recomputed over s
 |---|---|---|---|---|
 | DataEng | Order agreement between runs | 0.63 (0.60–0.67) | pending | ≥ 0.90 |
 | DataEng | Grouping ARI between runs | 0.24 (0.12–0.40) | pending | ≥ 0.60 |
-| DataEng | BCubed F1 vs CSV | 0.63 | pending | ≥ 0.58 |
+| DataEng | BCubed F1 vs CSV | 0.63 | pending | ≥ v1 − 0.05 (now 0.58) |
 | DataEng | Valid runs | 3/3 | pending | all |
 | PPP | Order agreement between runs | 0.81 (0.70–0.87) | pending | ≥ 0.90 |
 | PPP | Grouping ARI between runs | 0.43 (0.37–0.52) | pending | ≥ 0.60 |
-| PPP | BCubed F1 vs CSV | 0.59 | pending | ≥ 0.54 |
+| PPP | BCubed F1 vs CSV | 0.59 | pending | ≥ v1 − 0.05 (now 0.54) |
 | PPP | Valid runs | 3/3 | pending | all |
 
 ## Requirements
