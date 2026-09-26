@@ -2,7 +2,8 @@
 
 Not the plan's evaluation metrics. Just enough to see whether a model is in the right ballpark:
 
-- grouping: pairwise co-membership precision / recall / F1, plus the adjusted Rand index (ARI:
+- grouping: BCubed precision / recall / F1 (per-LO averages; the primary grouping score),
+  pairwise co-membership precision / recall / F1, and the adjusted Rand index (ARI:
   0 = chance, 1 = identical partitions). A pair of detailed LOs is "together" if they share a
   predicted module, or a CSV module / CSV unit (ground truth).
 - order: over LO pairs that are apart in both, the share the model puts in the same relative order
@@ -14,6 +15,10 @@ topic, so a model that merges them is not wrong. The CSV order is one valid orde
 one, so order agreement below 1 is not necessarily an error (dependency violations need labeled
 prerequisites, which the CSV does not have).
 - merges: which raw LOs were collapsed together, and whether they came from the same CSV module.
+- coverage: how many detailed LOs ended up in a module. Agent 1 must place every LO, so anything
+  below 100% makes the run invalid. Unplaced LOs are not dropped from scoring: for grouping each
+  counts as a module of its own (lowering recall); order agreement cannot rank them and reports
+  how many pairs were skipped.
 
 Everything is keyed by raw id; the output is in Agent 1 input-id space and is mapped back with
 `id_map`. Syllabus broad LOs have no CSV module, so they are reported separately.
@@ -96,24 +101,51 @@ def adjusted_rand_index(a: list[int], b: list[int]) -> float:
     return round((index - expected) / (best - expected), 3)
 
 
-def _score_level(ids: list[str], gt: dict[str, int], pred: dict[str, int]) -> tuple[dict, dict]:
-    """Grouping and order scores of `pred` against one ground-truth level."""
-    tp = fp = fn = agree = disagree = 0
+def bcubed(truth: list[int], pred: list[int]) -> dict[str, float]:
+    """BCubed precision / recall / F1 (Amigó et al., 2009), averaged over items. For each item:
+    precision = share of its predicted module that shares its true group; recall = share of its
+    true group that shares its predicted module. Unlike pairwise counts, large modules do not
+    dominate."""
+    n = len(truth)
+    if n == 0:
+        return {"precision": 0.0, "recall": 0.0, "f1": 0.0}
+    p_sum = r_sum = 0.0
+    for i in range(n):
+        same_pred = [j for j in range(n) if pred[j] == pred[i]]
+        same_true = [j for j in range(n) if truth[j] == truth[i]]
+        both = sum(1 for j in same_pred if truth[j] == truth[i])
+        p_sum += both / len(same_pred)
+        r_sum += both / len(same_true)
+    p, r = p_sum / n, r_sum / n
+    f = 2 * p * r / (p + r) if p + r else 0.0
+    return {"precision": round(p, 3), "recall": round(r, 3), "f1": round(f, 3)}
+
+
+def _score_level(
+    ids: list[str], gt: dict[str, int], pred: dict[str, int], placed: set[str]
+) -> tuple[dict, dict]:
+    """Grouping and order scores of `pred` against one ground-truth level. `pred` must label every
+    id; unplaced ids carry a label of their own, and are skipped for order."""
+    tp = fp = fn = agree = disagree = skipped = 0
     for a, b in combinations(ids, 2):
         same_gt, same_pred = gt[a] == gt[b], pred[a] == pred[b]
         tp += same_gt and same_pred
         fp += same_pred and not same_gt
         fn += same_gt and not same_pred
         if not same_gt and not same_pred:
-            if (gt[a] < gt[b]) == (pred[a] < pred[b]):
+            if a not in placed or b not in placed:
+                skipped += 1
+            elif (gt[a] < gt[b]) == (pred[a] < pred[b]):
                 agree += 1
             else:
                 disagree += 1
     grouping = _prf(tp, fp, fn)
     grouping["ari"] = adjusted_rand_index([gt[i] for i in ids], [pred[i] for i in ids])
+    grouping["bcubed"] = bcubed([gt[i] for i in ids], [pred[i] for i in ids])
     order = {
         "pairs": agree + disagree,
         "agreement": round(agree / (agree + disagree), 3) if agree + disagree else None,
+        "skipped_unplaced_pairs": skipped,
     }
     return grouping, order
 
@@ -121,12 +153,16 @@ def _score_level(ids: list[str], gt: dict[str, int], pred: dict[str, int]) -> tu
 def compare(output: SequencerOutput, id_map: dict[str, str], gt: GroundTruth) -> dict[str, Any]:
     gt_pos, gt_unit, gt_labels = _gt_positions(gt)
     pred_pos = predicted_positions(output, id_map)
-    detailed = sorted(r for r in gt_pos if r in pred_pos)
-    unplaced = sorted(r for r in gt_pos if r not in pred_pos)
+    detailed = sorted(gt_pos)
+    placed = {r for r in detailed if r in pred_pos}
+    unplaced = [r for r in detailed if r not in placed]
+    # Each unplaced LO gets a module label of its own (negative, so it never collides).
+    labels = dict(pred_pos)
+    labels.update({r: -1 - i for i, r in enumerate(unplaced)})
 
     grouping, order = {}, {}
     for level, truth in (("module", gt_pos), ("unit", gt_unit)):
-        grouping[level], order[level] = _score_level(detailed, truth, pred_pos)
+        grouping[level], order[level] = _score_level(detailed, truth, labels, placed)
 
     # Merges: surviving LOs with more than one raw source.
     inv = {v: k for k, v in id_map.items()}  # raw -> input id (for display)
@@ -169,8 +205,13 @@ def compare(output: SequencerOutput, id_map: dict[str, str], gt: GroundTruth) ->
             )
 
     return {
-        "n_detailed": len(gt_pos),
-        "n_detailed_placed": len(detailed),
+        "coverage": {
+            "placed": len(placed),
+            "total": len(detailed),
+            "complete": not unplaced,
+        },
+        "n_detailed": len(detailed),
+        "n_detailed_placed": len(placed),
         "unplaced": [{"raw_id": r, "input_id": inv.get(r)} for r in unplaced],
         "n_gt_modules": len(set(gt_pos.values())),
         "n_gt_units": len(set(gt_unit.values())),

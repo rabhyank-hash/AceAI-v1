@@ -387,3 +387,28 @@ def test_smoke_ppp_ground_truth():
     t = topo_sort_modules(out.modules, out.los)
     assert t.ok and t.matches_current_order
     assert len(t.order) == 33 and len(t.ties) == 32  # no edges yet: every position is a tie
+
+
+def test_schema_error_names_the_item_id():
+    data = {
+        "modules": [],
+        "provenance": [],
+        "los": [{"id": "A", "raw_text": "t", "source_ids": ["A"]}],
+    }
+    r = validate_output(data)
+    assert not r.ok
+    assert any(
+        e.code == "schema" and "item A: verb" in e.message and e.ids == ["A"] for e in r.errors
+    )
+
+
+def test_dependency_on_merged_lo_names_the_survivor():
+    out = SequencerOutput(
+        modules=[mod("m1", 1, ["a", "b"])],
+        los=[lo("a", sources=["r-a", "x"]), lo("b", deps=["x"])],
+        provenance=[],
+    )
+    r = validate_output(out)
+    errs = [e for e in r.errors if e.code == "dependency_on_merged_lo"]
+    assert len(errs) == 1 and "merged into a" in errs[0].message
+    assert not any(e.code == "unknown_dependency" for e in r.errors)

@@ -15,10 +15,30 @@ class ValidationResult(ToolResult):
     pass
 
 
-def _schema_errors(log: IssueLog, exc: ValidationError, what: str) -> None:
+def _item_id(data: Any, loc: tuple) -> str | None:
+    """The `id` of the list item a schema error points into (e.g. ("los", 25, "verb") -> the id
+    of los[25]), so the message can name the item instead of a list position."""
+    if len(loc) >= 2 and isinstance(data, dict) and isinstance(loc[1], int):
+        items = data.get(loc[0])
+        if isinstance(items, list) and 0 <= loc[1] < len(items) and isinstance(items[loc[1]], dict):
+            item_id = items[loc[1]].get("id")
+            return item_id if isinstance(item_id, str) else None
+    return None
+
+
+def _schema_errors(log: IssueLog, exc: ValidationError, what: str, data: Any = None) -> None:
     for err in exc.errors():
         loc = ".".join(str(p) for p in err["loc"]) or what
-        log.error("schema", f"{what}: {loc}: {err['msg']}")
+        item_id = _item_id(data, err["loc"])
+        if item_id:
+            field = ".".join(str(p) for p in err["loc"][2:]) or "(item)"
+            log.error(
+                "schema",
+                f"{what}: {err['loc'][0]} item {item_id}: {field}: {err['msg']}",
+                [item_id],
+            )
+        else:
+            log.error("schema", f"{what}: {loc}: {err['msg']}")
 
 
 def _parse(model: type[Any], data: Any, log: IssueLog, what: str) -> Any | None:
@@ -27,7 +47,7 @@ def _parse(model: type[Any], data: Any, log: IssueLog, what: str) -> Any | None:
     try:
         return model.model_validate(data)
     except ValidationError as exc:
-        _schema_errors(log, exc, what)
+        _schema_errors(log, exc, what, data)
         return None
 
 
@@ -52,7 +72,8 @@ def validate_lo(lo: LearningObjective | dict[str, Any]) -> ValidationResult:
 def validate_output(output: SequencerOutput | dict[str, Any]) -> ValidationResult:
     """Validate a whole Agent 1 output: schema, id uniqueness, references, and tree shape.
 
-    Errors: duplicate ids; unknown parent / dependency / module member / module head ids; a
+    Errors: duplicate ids; unknown parent / dependency / module member / module head ids (a
+    dependency on an id that was merged into another LO names the surviving LO); a
     parent that is not aggregate; an aggregate LO with no children; an LO that is its own
     ancestor; an atomic LO in no module; an LO in more than one module; modules not listed in
     ascending, unique `order`.
@@ -75,6 +96,8 @@ def validate_output(output: SequencerOutput | dict[str, Any]) -> ValidationResul
                 code = f"duplicate_{kind.lower()}_id"
                 log.error(code, f"{kind} id {dup} is used {n} times.", [dup])
     by_id = {lo.id: lo for lo in out.los}
+    # Source ids that no longer exist as LOs because they were merged into another LO.
+    merged_into = {src: lo.id for lo in out.los for src in lo.source_ids if src not in by_id}
     mod_set = set(mod_ids)
 
     # Parents, children, dependencies
@@ -105,7 +128,16 @@ def validate_output(output: SequencerOutput | dict[str, Any]) -> ValidationResul
                 [lo.id],
             )
         for dep in lo.depends_on:
-            if dep not in by_id:
+            if dep in by_id:
+                continue
+            if dep in merged_into:
+                log.error(
+                    "dependency_on_merged_lo",
+                    f"LO {lo.id} depends on {dep}, which was merged into {merged_into[dep]}; "
+                    f"depend on {merged_into[dep]} instead.",
+                    [lo.id, dep],
+                )
+            else:
                 log.error("unknown_dependency", f"LO {lo.id} depends on unknown LO {dep}.", [lo.id])
 
     # Ancestor cycles: walk up parent links.
