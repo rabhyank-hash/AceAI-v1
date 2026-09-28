@@ -208,7 +208,8 @@ def main() -> int:
         model = args.model or provider.default_model
         params = {**provider.model_params.get(model, {}), "reasoning_effort": args.reasoning_effort}
         provider = replace(provider, model_params={**provider.model_params, model: params})
-    client = LLMClient(provider, args.model, **client_kw)
+    # Wait out rate limits (incl. the daily token limit) instead of failing the run.
+    client = LLMClient(provider, args.model, max_retries=30, max_backoff=300, **client_kw)
 
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     run_dir = RUNS_DIR / f"{stamp}_{args.course}"

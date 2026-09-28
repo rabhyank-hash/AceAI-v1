@@ -64,3 +64,24 @@ Every run is reported. H1–H3 hold only if they hold on all six courses.
   labels are still needed.
 - The free tier's daily token limit may split the runs across days; the code does not change in
   between.
+
+## Amendment 1 (28 September 2026, before any run with prompt v3-2)
+
+Changes to the design above. Hypotheses H1–H4 and their thresholds are unchanged.
+
+- **Prompt v3-2** (commit `39102ff`): states that every LO must be included and none dropped,
+  merged or skipped. 3 of the first 50 answers with prompt v3-1 dropped an LO. The 10 v3-1 runs
+  are a pilot, reported separately.
+- **Courses and samples:** DataEng, CloudAdmin and CloudNative, each limited to its first 3 CSV
+  modules (`--modules 3 --min-los 0`): 11, 15 and 44 LOs (28 unique; 16 exact duplicates).
+  DataEng is the only first-3-module sample that spans two CSV units; CloudAdmin covers the cloud
+  domain (CloudDevOps shares two of its three modules); CloudNative tests the exact-duplicate
+  rule. PPP (9 LOs) and AI_Practitioner (8) are too small for pairwise scores.
+- **v1 reference on the same samples:** v1 (prompt poc-3) with seeds 0, 1, 2 per course. v1 values
+  from other samples are not used.
+- **Three independent v3 runs per course** (seeds 0–4, 5–9, 10–14; k = 5), giving 3 run pairs per
+  course for v3 as for v1. H1 is evaluated on the mean over the 3 pairs; the range is reported.
+- **H2** uses the mean BCubed F1 of the new v1 runs.
+- **Rate limits:** calls retry up to 30 times, up to 5 minutes apart, so asks are not lost to the
+  daily token limit.
+- **Labels:** `m3v1_s<seed>`, `m3v3_s<first seed>`, `m3v3k1_…`, `m3v3k3_…`.
