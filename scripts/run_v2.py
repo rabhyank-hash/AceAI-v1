@@ -54,8 +54,26 @@ def main() -> None:
         )
         if not same:
             raise SystemExit(f"{d} is not a v1 run of this course and sample")
-    if len({(c["model"], json.dumps(c.get("model_params"), sort_keys=True)) for c in configs}) != 1:
-        raise SystemExit("grouping runs use different models or settings")
+
+    # Compare what was actually sent (config.json of early runs lacks model_params). Seed and
+    # max_tokens differ by design.
+    def sent(d: Path) -> str:
+        calls = json.loads((d / "llm_calls.json").read_text())
+        params = {
+            json.dumps(
+                {k: v for k, v in c["params"].items() if k not in ("seed", "max_tokens")},
+                sort_keys=True,
+            )
+            for c in calls
+        }
+        return json.dumps(sorted(params))
+
+    settings = {
+        (c["model"], c["prompt_version"], sent(d))
+        for d, c in zip(args.grouping_runs, configs, strict=True)
+    }
+    if len(settings) != 1:
+        raise SystemExit(f"grouping runs use different models or settings: {settings}")
     runs = [
         SequencerOutput.model_validate_json((d / "output.json").read_text())
         for d in args.grouping_runs
