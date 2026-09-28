@@ -52,6 +52,7 @@ def metrics(run_dir: Path) -> dict | None:
         "valid": result["ok"] and c["coverage"]["complete"],
         "bcubed": c["grouping"]["module"]["bcubed"]["f1"],
         "order": c["order"]["module"]["agreement"],
+        "sequence": c.get("sequence", {}).get("agreement"),
         "links": sum(len(lo["depends_on"]) for lo in out["los"]),
         "steps": steps,
         "modules": c["n_pred_modules"],
@@ -79,17 +80,18 @@ def main() -> None:
         groups[(setting, course)].append(path)
 
     print(
-        "| Setting | Course | Runs | Valid | Attempts | BCubed F1 | Order agr. | Prereq links "
-        "| Modules | Tokens/run |"
+        "| Setting | Course | Runs | Valid | Attempts | BCubed F1 | Order agr. | Seq. agr. "
+        "| Prereq links | Modules | Tokens/run |"
     )
-    print("|---|---|---:|---:|---|---|---|---|---|---:|")
+    print("|---|---|---:|---:|---|---|---|---|---|---|---:|")
     for (setting, course), dirs in sorted(groups.items()):
         ms = [m for m in (metrics(d) for d in dirs) if m]
         valid = [m for m in ms if m["valid"]]
         print(
             f"| {setting} | {course} | {len(ms)} | {len(valid)} | "
             f"{fmt([m['attempts'] for m in ms])} | {fmt([m['bcubed'] for m in valid])} | "
-            f"{fmt([m['order'] for m in valid])} | {fmt([m['links'] for m in valid])} | "
+            f"{fmt([m['order'] for m in valid])} | {fmt([m['sequence'] for m in valid])} | "
+            f"{fmt([m['links'] for m in valid])} | "
             f"{fmt([m['modules'] for m in valid])} | "
             f"{round(mean(m['tokens'] for m in ms)) if ms else '–'} |"
         )
@@ -97,9 +99,9 @@ def main() -> None:
     print("\nRun-to-run consistency (pairs of seeds of the same setting):\n")
     print(
         "| Setting | Course | Pairs | Grouping ARI | Grouping BCubed F1 | Order agreement "
-        "| Prereq edge Jaccard |"
+        "| Sequence agreement | Prereq edge Jaccard |"
     )
-    print("|---|---|---:|---|---|---|---|")
+    print("|---|---|---:|---|---|---|---|---|")
     for (setting, course), dirs in sorted(groups.items()):
         ok = [d for d in dirs if has_output(d)]
         rows = [pair(a, b) for a, b in combinations(ok, 2)]
@@ -108,6 +110,7 @@ def main() -> None:
         print(
             f"| {setting} | {course} | {len(rows)} | {fmt([r['ari'] for r in rows])} | "
             f"{fmt([r['bcubed_f1'] for r in rows])} | {fmt([r['order_agreement'] for r in rows])} "
+            f"| {fmt([r['sequence_agreement'] for r in rows])} "
             f"| {fmt([r['prereq_jaccard'] for r in rows])} |"
         )
 

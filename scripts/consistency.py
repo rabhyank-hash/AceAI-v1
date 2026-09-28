@@ -4,9 +4,9 @@
 
 Input ids depend only on the raw LO, not on the seed, so runs can be compared LO by LO. For each
 pair of runs: grouping agreement (ARI, BCubed F1), order agreement (share of LO pairs in different
-modules in both runs that are ordered the same way), and overlap of LO prerequisite edges
-(Jaccard). High values mean the model's structure is stable; low values mean single-run scores
-are mostly noise.
+modules in both runs that are ordered the same way), sequence agreement (the same over all LO
+pairs of the flat sequence), and overlap of LO prerequisite edges (Jaccard). High values mean the
+model's structure is stable; low values mean single-run scores are mostly noise.
 """
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ from itertools import combinations
 from pathlib import Path
 from statistics import mean
 
-from aceai.eval.compare import adjusted_rand_index, bcubed
+from aceai.eval.compare import adjusted_rand_index, bcubed, sequence_agreement
 
 
 def has_output(run_dir: Path) -> bool:
@@ -44,6 +44,16 @@ def load(run_dir: Path) -> tuple[dict[str, int], set[tuple[str, str]]]:
     return placed, edges
 
 
+def flat_sequence(run_dir: Path) -> dict[str, int]:
+    """input id -> position in the flat teaching sequence (merged LOs share a position)."""
+    out = read_output(run_dir)
+    pos: dict[str, int] = {}
+    for m in sorted(out["modules"], key=lambda m: m["order"]):
+        for lid in m["lo_ids"]:
+            pos.setdefault(lid, len(pos))
+    return {e["raw_id"]: pos[e["lo_id"]] for e in out["provenance"] if e["lo_id"] in pos}
+
+
 def pair(a: Path, b: Path) -> dict[str, float | None]:
     pa, ea = load(a)
     pb, eb = load(b)
@@ -59,6 +69,7 @@ def pair(a: Path, b: Path) -> dict[str, float | None]:
         "bcubed_f1": bcubed([pa[i] for i in ids], [pb[i] for i in ids])["f1"],
         "order_agreement": round(agree / total, 3) if total else None,
         "prereq_jaccard": round(len(ea & eb) / len(union), 3) if union else None,
+        "sequence_agreement": sequence_agreement(flat_sequence(a), flat_sequence(b)),
     }
 
 

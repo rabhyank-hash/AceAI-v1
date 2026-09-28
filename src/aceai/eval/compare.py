@@ -8,6 +8,8 @@ Not the plan's evaluation metrics. Just enough to see whether a model is in the 
   predicted module, or a CSV module / CSV unit (ground truth).
 - order: over LO pairs that are apart in both, the share the model puts in the same relative order
   as the CSV. 0.5 is what a random module order would get.
+- sequence: the same over all LO pairs of the flat teaching sequence, ignoring module boundaries
+  (Kendall's tau rescaled to [0, 1]).
 
 Each is reported at two ground-truth levels. "module" is the CSV module; "unit" is the CSV unit,
 which is fairer for topic grouping because a unit's CONCEPT, PRIMER and PROJECT modules share a
@@ -59,6 +61,34 @@ def predicted_positions(output: SequencerOutput, id_map: dict[str, str]) -> dict
         if rid is not None and e.lo_id in module_of:
             out.setdefault(rid, module_of[e.lo_id])
     return out
+
+
+def sequence_positions(output: SequencerOutput, id_map: dict[str, str]) -> dict[str, int]:
+    """raw id -> position of the LO it survives as in the flat teaching sequence (modules in
+    order, LOs in module order). Raw LOs merged into one LO share its position."""
+    pos: dict[str, int] = {}
+    for m in sorted(output.modules, key=lambda m: m.order):
+        for lid in m.lo_ids:
+            pos.setdefault(lid, len(pos))
+    out = {}
+    for e in output.provenance:
+        rid = id_map.get(e.raw_id)
+        if rid is not None and e.lo_id in pos:
+            out.setdefault(rid, pos[e.lo_id])
+    return out
+
+
+def sequence_agreement(a: dict[str, int], b: dict[str, int]) -> float | None:
+    """Share of item pairs ordered the same way in two sequences (Kendall's tau rescaled to
+    [0, 1]; 0.5 = random). Pairs tied in either sequence are skipped."""
+    ids = sorted(set(a) & set(b))
+    agree = total = 0
+    for x, y in combinations(ids, 2):
+        if a[x] == a[y] or b[x] == b[y]:
+            continue
+        total += 1
+        agree += (a[x] < a[y]) == (b[x] < b[y])
+    return round(agree / total, 3) if total else None
 
 
 def _prf(tp: int, fp: int, fn: int) -> dict[str, float | int]:
@@ -163,6 +193,9 @@ def compare(output: SequencerOutput, id_map: dict[str, str], gt: GroundTruth) ->
     grouping, order = {}, {}
     for level, truth in (("module", gt_pos), ("unit", gt_unit)):
         grouping[level], order[level] = _score_level(detailed, truth, labels, placed)
+    # Flat sequence vs the CSV file order (all LO pairs, not only pairs in different modules).
+    csv_seq = {r: i for i, r in enumerate(r for u in gt.units for m in u.modules for r in m.lo_ids)}
+    sequence = {"agreement": sequence_agreement(sequence_positions(output, id_map), csv_seq)}
 
     # Merges: surviving LOs with more than one raw source.
     inv = {v: k for k, v in id_map.items()}  # raw -> input id (for display)
@@ -219,6 +252,7 @@ def compare(output: SequencerOutput, id_map: dict[str, str], gt: GroundTruth) ->
         "n_surviving_los": len(output.los),
         "grouping": grouping,
         "order": order,
+        "sequence": sequence,
         "merges": merges,
         "broad": broad,
     }

@@ -53,3 +53,19 @@ def json_validate_error(failed_generation=""):
     }
     resp = httpx2.Response(400, json=body, request=req)
     return openai.BadRequestError("json_validate_failed", response=resp, body=body)
+
+
+class FunctionSDK:
+    """Fake SDK whose reply is computed from the messages: `reply(messages) -> content`."""
+
+    def __init__(self, reply):
+        self.reply = reply
+        self.calls = []
+        self.chat = SimpleNamespace(
+            completions=SimpleNamespace(with_raw_response=SimpleNamespace(create=self._create))
+        )
+
+    def _create(self, **kw):
+        self.calls.append(kw)
+        content = self.reply(kw["messages"])
+        return SimpleNamespace(headers={}, parse=lambda: completion(content))
