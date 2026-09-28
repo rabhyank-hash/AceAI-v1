@@ -25,12 +25,15 @@ from aceai.ingest.agent1_input import Agent1Input, InputLO
 from aceai.llm.client import LLMClient, LLMError
 from aceai.schemas import SequencerOutput
 
-PROMPT_VERSION = "v3-1"
+PROMPT_VERSION = "v3-2"  # v3-1 lacked the "include every LO" rule; 3 of its answers dropped LOs
 
 PROMPT = """\
 You are an instructional designer. You receive every learning objective (LO) of one course, in \
 random order, labelled L1 to Ln. Arrange them into a course: put them in the order they should \
-be taught, and split that sequence into modules (topics). Every label must appear exactly once.
+be taught, and split that sequence into modules (topics).
+
+Include every LO. Do not drop, merge or skip any, even if it seems redundant, off-topic, or \
+about course logistics. Every label from L1 to Ln must appear exactly once.
 
 Reply with JSON only, modules and LOs in teaching order:
 {"modules": [{"title": "...", "los": ["L3", "L1", ...]}, ...]}"""

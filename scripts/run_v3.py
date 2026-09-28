@@ -63,7 +63,8 @@ def main() -> None:
     sample = select_modules(load_all(DATA_RAW)[args.course], args.modules, args.min_los, False)
     prepared = make_agent1_input(args.course, 0, los=sample)
     gt = extract_ground_truth(args.course, sample)
-    client = LLMClient("groq")
+    # Wait out rate limits (incl. the daily token limit) instead of losing asks to them.
+    client = LLMClient("groq", max_retries=30, max_backoff=300)
     result = sequence_v3(client, prepared.payload, args.seeds)
 
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
