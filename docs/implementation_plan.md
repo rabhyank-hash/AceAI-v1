@@ -20,7 +20,9 @@
 > 4. **Only exactly identical LOs are merged, by code (§4).** No LLM judgment on duplicates.
 > 5. **Normalization (verb, Bloom level, track, target concept) leaves Agent 1.** It is only used
 >    by Agent 2 (depth scale) and moves there.
->
+> 6. **Amendment (28 September): modules are decided in a separate step on the fixed consensus
+>    order (§4 step 5).** The first v3 test split modules inside the ordering asks and combined
+>    them along the averaged order; that over-split and was not consistent (module ARI about 0.5).
 > **Changes from v1 (in v2)**
 >
 > 1. **Consistency by construction (new principle, §2).** The v1 proof of concept showed that one
@@ -143,15 +145,17 @@ do the mechanical checks (v3):
    normalization become one LO, with provenance to every original. No other LOs are merged.
 2. **Detect containment (LLM).** For each course-level LO, decide which detailed LOs it covers;
    these become its children. *Tool:* every child exists, no LO is its own ancestor.
-3. **Order and split (LLM, repeated).** Each ask shows every detailed LO, in a shuffled order
-   under neutral labels, and asks for the course as an ordered list of modules, each an ordered
-   list of LOs. The ask is repeated k times on different shuffles. *Tool:* each answer contains
-   every LO exactly once.
+3. **Order (LLM, repeated).** Each ask shows every detailed LO, in a shuffled order under neutral
+   labels, and asks for the course in teaching order. The ask is repeated k times on different
+   shuffles. *Tool:* each answer contains every LO exactly once. (In the prototype the ask also
+   returns modules; only its order is used.)
 4. **Consensus order (code).** LOs are ordered by their mean position across the valid asks
    (Borda); ties by a stable key.
-5. **Consensus modules (code).** Along the consensus order, a module boundary is placed between
-   two neighbouring LOs when a strict majority of asks put them in different modules. Modules are
-   contiguous by construction.
+5. **Split into modules (LLM, repeated on the fixed order; code aggregates).** Each ask shows the
+   consensus order, under neutral labels shuffled per ask, and asks where modules start. The model
+   decides how many modules. *Tool:* each answer keeps the given order and covers every LO. A
+   module boundary is kept where a strict majority of asks place one. Modules are contiguous by
+   construction.
 
 v2's steps (consensus clustering, voted module prerequisites, tie rules) are replaced; see the
 v2 changelog above for what they were.

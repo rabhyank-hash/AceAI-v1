@@ -85,3 +85,28 @@ Changes to the design above. Hypotheses H1–H4 and their thresholds are unchang
 - **Rate limits:** calls retry up to 30 times, up to 5 minutes apart, so asks are not lost to the
   daily token limit.
 - **Labels:** `m3v1_s<seed>`, `m3v3_s<first seed>`, `m3v3k1_…`, `m3v3k3_…`.
+
+## Amendment 2 (28 September 2026, before any segmentation run)
+
+Motivation: in the amended test (Amendment 1, run at `272ed07`), H1a was met but H1b and H2 were
+not. Module boundaries were aggregated along the averaged order, where neighbours often were not
+neighbours in the individual asks, and the course was over-split. This amendment moves module
+splitting to a separate step on the fixed consensus order (plan v3, §4 step 5). Order is
+unchanged.
+
+- **Data reused:** the 9 runs of Amendment 1 (`m3v3_s0/s5/s10`, three courses). Their consensus
+  orders are kept as they are; the modules returned inside their asks are not used.
+- **Split asks:** per run, 5 asks with the run's own seeds (0–4, 5–9, 10–14). Each ask lists the
+  consensus order with labels shuffled per ask (the order itself is fixed) and returns the
+  modules as lists of labels in the given order. The model decides the number of modules. An
+  answer that changes the order, misses or repeats a label gets one repair message; if still
+  wrong, the ask is excluded. A run needs at least 3 valid asks.
+- **Aggregation:** a boundary after position i is kept when a strict majority of valid asks place
+  one there.
+- **Model and settings:** unchanged (`gpt-oss-120b`, low effort, temperature 0).
+- **Hypotheses:** H1b (module ARI between runs ≥ 0.60) and H2 (BCubed F1 ≥ v1 mean − 0.05) are
+  re-evaluated on the split outputs, on all three courses; thresholds unchanged. H1a is unchanged
+  by construction. H3 applies to the split asks.
+- **Comparison:** the Amendment 1 outputs (boundaries from the ordering asks) and the exploratory
+  median-count re-cut reported with them.
+- **Labels:** `m3v3seg_s<first seed>`.
