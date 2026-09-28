@@ -1,0 +1,13 @@
+{
+  "course": "DataEng",
+  "units": null,
+  "broad": false,
+  "seed": 0,
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b",
+  "max_repairs": 2,
+  "max_tokens": 6000,
+  "prompt_version": "poc-1",
+  "n_input_los": 57,
+  "prompt_tokens_estimate": 2151
+}

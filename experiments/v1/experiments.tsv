@@ -23,3 +23,10 @@ qwen_s0	CloudDevOps	experiments/v1/20260926-140019_CloudDevOps
 qwen_s0	CloudNative	experiments/v1/20260926-140127_CloudNative
 qwen_s0	DataEng	experiments/v1/20260926-140229_DataEng
 qwen_s0	PPP	experiments/v1/20260926-140233_PPP
+e1_s0	DataEng	experiments/v1/20260923-235850_DataEng
+e2_s0	AI_Practitioner	experiments/v1/20260926-131443_AI_Practitioner
+e2_s0	CloudAdmin	experiments/v1/20260926-131443_CloudAdmin
+e2_s0	CloudDevOps	experiments/v1/20260926-131444_CloudDevOps
+e2_s0	CloudNative	experiments/v1/20260926-131444_CloudNative
+e2_s0	DataEng	experiments/v1/20260926-131445_DataEng
+e2_s0	PPP	experiments/v1/20260926-131445_PPP
