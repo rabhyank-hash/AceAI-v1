@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Foundations of DevOps and Cloud",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -16,7 +16,7 @@
   },
   {
    "id": "M3",
-   "title": "Release Frequency and Improvement",
+   "title": "M3",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -29,7 +29,7 @@
   },
   {
    "id": "M2",
-   "title": "Error Handling and Release Practices",
+   "title": "M2",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -48,7 +48,7 @@
   },
   {
    "id": "M4",
-   "title": "Error Identification and Rectification",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -60,7 +60,7 @@
   },
   {
    "id": "M5",
-   "title": "Automation Strategy and Tooling",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -74,7 +74,7 @@
   },
   {
    "id": "M6",
-   "title": "Azure Cloud Fundamentals",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [

@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Data Types and Storage Foundations",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -15,7 +15,7 @@
   },
   {
    "id": "M2",
-   "title": "Relational Databases and Schema",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -29,7 +29,7 @@
   },
   {
    "id": "M4",
-   "title": "Linux Command\u2011Line Data Processing",
+   "title": "M4",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -40,7 +40,7 @@
   },
   {
    "id": "M5",
-   "title": "Pandas Fundamentals",
+   "title": "M5",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -54,7 +54,7 @@
   },
   {
    "id": "M6",
-   "title": "Data Extraction and Multi\u2011DataFrame Queries",
+   "title": "M6",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -67,7 +67,7 @@
   },
   {
    "id": "M7",
-   "title": "Jupyter Notebook Overview",
+   "title": "M7",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -79,7 +79,7 @@
   },
   {
    "id": "M8",
-   "title": "Data Modeling Importance",
+   "title": "M8",
    "order": 7,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -91,7 +91,7 @@
   },
   {
    "id": "M3",
-   "title": "Data Engineering Role and Impact",
+   "title": "M3",
    "order": 8,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -105,7 +105,7 @@
   },
   {
    "id": "M9",
-   "title": "Data Security and Compliance",
+   "title": "M9",
    "order": 9,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -117,7 +117,7 @@
   },
   {
    "id": "M10",
-   "title": "Data Structure Granularity",
+   "title": "M10",
    "order": 10,
    "aggregate_lo_id": null,
    "lo_ids": [

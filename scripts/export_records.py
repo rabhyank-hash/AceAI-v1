@@ -25,8 +25,8 @@ TEXT_FIELDS = {"raw_text", "canonical_text", "verb", "target_concept"}
 
 
 def structure(output: dict) -> dict:
-    return {
-        "modules": output["modules"],
+    return {  # module titles are model free text: replaced by the module id
+        "modules": [{**m, "title": m["id"]} for m in output["modules"]],
         "los": [{k: v for k, v in lo.items() if k not in TEXT_FIELDS} for lo in output["los"]],
         "provenance": output["provenance"],
     }
@@ -60,9 +60,11 @@ def main() -> None:
             (dst / "usage.json").write_text(json.dumps(usage, indent=1) + "\n")
         else:  # v3 sub-runs: calls are counted in the parent run
             shutil.copy(src / "usage.json", dst / "usage.json")
-        for f in ("consensus.json", "module_edges.json", "checks.json"):  # v2 runs
+        for f in ("consensus.json", "module_edges.json", "checks.json", "split.json"):  # v2, v3
             if (src / f).exists():
                 shutil.copy(src / f, dst / f)
+        if (src / "split_asks.json").exists():  # v3 split asks: codes and cuts only
+            shutil.copy(src / "split_asks.json", dst / "split_asks.json")
         if (src / "asks.json").exists():  # drop the model's free text
             asks = json.loads((src / "asks.json").read_text())
             for a in asks:  # model free text: v2 reasons, v3 module titles

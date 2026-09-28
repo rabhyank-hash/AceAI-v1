@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Fundamentals of Cloud Computing",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -21,7 +21,7 @@
   },
   {
    "id": "M2",
-   "title": "Azure Core Concepts",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -39,7 +39,7 @@
   },
   {
    "id": "M3",
-   "title": "Hands\u2011On Azure Portal & Cloud Shell",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -53,7 +53,7 @@
   },
   {
    "id": "M4",
-   "title": "Monitoring and Resource Management",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [

@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Foundations of Cloud Computing",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -15,7 +15,7 @@
   },
   {
    "id": "M2",
-   "title": "Cloud Paradigm Benefits and Context",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -30,7 +30,7 @@
   },
   {
    "id": "M3",
-   "title": "Cloud Providers and Use Cases",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -43,7 +43,7 @@
   },
   {
    "id": "M4",
-   "title": "Azure Subscription Fundamentals",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -56,7 +56,7 @@
   },
   {
    "id": "M5",
-   "title": "Azure Account and Portal Navigation",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -71,7 +71,7 @@
   },
   {
    "id": "M6",
-   "title": "Azure Cloud Shell Exploration",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -85,7 +85,7 @@
   },
   {
    "id": "M7",
-   "title": "Resource Monitoring and Service Agreements",
+   "title": "M7",
    "order": 7,
    "aggregate_lo_id": null,
    "lo_ids": [

@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Fundamental Data Concepts",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -17,7 +17,7 @@
   },
   {
    "id": "M2",
-   "title": "Linux Foundations for Data Engineering",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -28,7 +28,7 @@
   },
   {
    "id": "M3",
-   "title": "Relational Databases and Schema",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -40,7 +40,7 @@
   },
   {
    "id": "M4",
-   "title": "Introduction to Pandas and Jupyter",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -52,7 +52,7 @@
   },
   {
    "id": "M5",
-   "title": "Data Ingestion with Pandas",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -65,7 +65,7 @@
   },
   {
    "id": "M6",
-   "title": "Data Manipulation and Analysis with Pandas",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -79,7 +79,7 @@
   },
   {
    "id": "M7",
-   "title": "Data Lifecycle, Storage Models, and Governance",
+   "title": "M7",
    "order": 7,
    "aggregate_lo_id": null,
    "lo_ids": [

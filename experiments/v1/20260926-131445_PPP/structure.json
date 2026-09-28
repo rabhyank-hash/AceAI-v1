@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Foundations of Programming Languages",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -14,7 +14,7 @@
   },
   {
    "id": "M2",
-   "title": "Operators, Functions, and Returns",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -26,7 +26,7 @@
   },
   {
    "id": "M3",
-   "title": "Variables, Types, and Imports",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -38,7 +38,7 @@
   },
   {
    "id": "M4",
-   "title": "Errors and Questioning",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -50,7 +50,7 @@
   },
   {
    "id": "M5",
-   "title": "Python Execution and Feedback",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -62,7 +62,7 @@
   },
   {
    "id": "M6",
-   "title": "Built\u2011ins and Scope",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -74,7 +74,7 @@
   },
   {
    "id": "M7",
-   "title": "Documentation and User Functions",
+   "title": "M7",
    "order": 7,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -86,7 +86,7 @@
   },
   {
    "id": "M8",
-   "title": "Submission, Functions, and Scratch",
+   "title": "M8",
    "order": 8,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -98,7 +98,7 @@
   },
   {
    "id": "M9",
-   "title": "Program Tracing and Constructs",
+   "title": "M9",
    "order": 9,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -110,7 +110,7 @@
   },
   {
    "id": "M10",
-   "title": "File Modification with Python",
+   "title": "M10",
    "order": 10,
    "aggregate_lo_id": null,
    "lo_ids": [

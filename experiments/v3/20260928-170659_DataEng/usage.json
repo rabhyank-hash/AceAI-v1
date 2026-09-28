@@ -1,0 +1,135 @@
+[
+ {
+  "label": "seg_0",
+  "cached": false,
+  "completion_tokens": 226,
+  "prompt_tokens": 424,
+  "total_tokens": 650,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 137,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.004999612,
+  "prompt_time": 0.018057659,
+  "completion_time": 0.477002837,
+  "total_time": 0.495060496
+ },
+ {
+  "label": "seg_0_repair",
+  "cached": false,
+  "completion_tokens": 144,
+  "prompt_tokens": 554,
+  "total_tokens": 698,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 58,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.142153326,
+  "prompt_time": 0.024065376,
+  "completion_time": 0.300346711,
+  "total_time": 0.324412087
+ },
+ {
+  "label": "seg_1",
+  "cached": false,
+  "completion_tokens": 348,
+  "prompt_tokens": 424,
+  "total_tokens": 772,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 235,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.084685136,
+  "prompt_time": 0.138710389,
+  "completion_time": 0.72861845,
+  "total_time": 0.867328839
+ },
+ {
+  "label": "seg_2",
+  "cached": false,
+  "completion_tokens": 234,
+  "prompt_tokens": 424,
+  "total_tokens": 658,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 134,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.141314,
+  "prompt_time": 0.017623754,
+  "completion_time": 0.497648441,
+  "total_time": 0.515272195
+ },
+ {
+  "label": "seg_2_repair",
+  "cached": false,
+  "completion_tokens": 216,
+  "prompt_tokens": 565,
+  "total_tokens": 781,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 118,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.128881083,
+  "prompt_time": 0.129336433,
+  "completion_time": 0.453307374,
+  "total_time": 0.582643807
+ },
+ {
+  "label": "seg_3",
+  "cached": false,
+  "completion_tokens": 332,
+  "prompt_tokens": 424,
+  "total_tokens": 756,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 228,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.004850509,
+  "prompt_time": 0.020456643,
+  "completion_time": 0.713761948,
+  "total_time": 0.734218591
+ },
+ {
+  "label": "seg_4",
+  "cached": false,
+  "completion_tokens": 366,
+  "prompt_tokens": 424,
+  "total_tokens": 790,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 270,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.092382235,
+  "prompt_time": 0.05848939,
+  "completion_time": 0.764521968,
+  "total_time": 0.823011358
+ }
+]

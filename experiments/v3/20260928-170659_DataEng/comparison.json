@@ -1,0 +1,61 @@
+{
+  "coverage": {
+    "placed": 11,
+    "total": 11,
+    "complete": true
+  },
+  "n_detailed": 11,
+  "n_detailed_placed": 11,
+  "unplaced": [],
+  "n_gt_modules": 3,
+  "n_gt_units": 2,
+  "n_pred_modules": 5,
+  "n_surviving_los": 11,
+  "grouping": {
+    "module": {
+      "precision": 0.846,
+      "recall": 0.478,
+      "f1": 0.611,
+      "tp": 11,
+      "fp": 2,
+      "fn": 12,
+      "ari": 0.443,
+      "bcubed": {
+        "precision": 0.879,
+        "recall": 0.623,
+        "f1": 0.729
+      }
+    },
+    "unit": {
+      "precision": 1.0,
+      "recall": 0.481,
+      "f1": 0.65,
+      "tp": 13,
+      "fp": 0,
+      "fn": 14,
+      "ari": 0.486,
+      "bcubed": {
+        "precision": 1.0,
+        "recall": 0.578,
+        "f1": 0.733
+      }
+    }
+  },
+  "order": {
+    "module": {
+      "pairs": 30,
+      "agreement": 0.167,
+      "skipped_unplaced_pairs": 0
+    },
+    "unit": {
+      "pairs": 28,
+      "agreement": 0.107,
+      "skipped_unplaced_pairs": 0
+    }
+  },
+  "sequence": {
+    "agreement": 0.455
+  },
+  "merges": [],
+  "broad": []
+}

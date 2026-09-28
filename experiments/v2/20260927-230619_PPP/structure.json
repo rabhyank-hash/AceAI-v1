@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Foundations of Computing and Programming Languages",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -14,7 +14,7 @@
   },
   {
    "id": "M2",
-   "title": "Core Python Concepts",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -30,7 +30,7 @@
   },
   {
    "id": "M3",
-   "title": "Functions and Errors",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -46,7 +46,7 @@
   },
   {
    "id": "M4",
-   "title": "Introductory Programming Projects",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -60,7 +60,7 @@
   },
   {
    "id": "M5",
-   "title": "Programming Constructs and Code Quality",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -76,7 +76,7 @@
   },
   {
    "id": "M6",
-   "title": "Technical Questioning Skills",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -87,7 +87,7 @@
   },
   {
    "id": "M7",
-   "title": "Sail Platform Practice",
+   "title": "M7",
    "order": 7,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -101,7 +101,7 @@
   },
   {
    "id": "M8",
-   "title": "Python in the Browser and Built\u2011ins",
+   "title": "M8",
    "order": 8,
    "aggregate_lo_id": null,
    "lo_ids": [

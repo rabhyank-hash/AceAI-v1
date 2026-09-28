@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "CloudDevOps Foundations",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [

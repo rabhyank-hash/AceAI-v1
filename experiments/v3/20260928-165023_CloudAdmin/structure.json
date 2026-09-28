@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M5",
-   "title": "Historical Context",
+   "title": "M5",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -13,7 +13,7 @@
   },
   {
    "id": "M1",
-   "title": "Foundations of Cloud Computing",
+   "title": "M1",
    "order": 2,
    "aggregate_lo_id": "LO-c39ade",
    "lo_ids": [],
@@ -21,7 +21,7 @@
   },
   {
    "id": "M3",
-   "title": "Cloud Service Models and SLAs",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -36,7 +36,7 @@
   },
   {
    "id": "M4",
-   "title": "Economic Benefits and Use Cases",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -51,7 +51,7 @@
   },
   {
    "id": "M2",
-   "title": "Azure Fundamentals",
+   "title": "M2",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [

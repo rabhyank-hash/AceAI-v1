@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "DevOps Fundamentals",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -15,7 +15,7 @@
   },
   {
    "id": "M2",
-   "title": "Cloud Computing and Azure",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -30,7 +30,7 @@
   },
   {
    "id": "M3",
-   "title": "Rapid Release Strategies",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -44,7 +44,7 @@
   },
   {
    "id": "M4",
-   "title": "DevOps Automation",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -60,7 +60,7 @@
   },
   {
    "id": "M5",
-   "title": "Error Management in Releases",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [

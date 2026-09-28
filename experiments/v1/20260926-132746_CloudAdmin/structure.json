@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Foundations of Cloud Computing",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -16,7 +16,7 @@
   },
   {
    "id": "M2",
-   "title": "Azure Overview",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -32,7 +32,7 @@
   },
   {
    "id": "M3",
-   "title": "Azure Practical Setup",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -46,7 +46,7 @@
   },
   {
    "id": "M4",
-   "title": "Cloud Economics & SLA",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -61,7 +61,7 @@
   },
   {
    "id": "M5",
-   "title": "Azure Pricing & Resource Management",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [

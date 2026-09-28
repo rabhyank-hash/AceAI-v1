@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Foundations of Computing and Programming Languages",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -15,7 +15,7 @@
   },
   {
    "id": "M2",
-   "title": "Introduction to Python Basics",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -30,7 +30,7 @@
   },
   {
    "id": "M3",
-   "title": "Variables and Functions",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -47,7 +47,7 @@
   },
   {
    "id": "M4",
-   "title": "Data Types and Operators",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -60,7 +60,7 @@
   },
   {
    "id": "M5",
-   "title": "Built\u2011in Functions and Modules",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -73,7 +73,7 @@
   },
   {
    "id": "M6",
-   "title": "File Manipulation in Browser",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -85,7 +85,7 @@
   },
   {
    "id": "M7",
-   "title": "Scratch Programming",
+   "title": "M7",
    "order": 7,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -95,7 +95,7 @@
   },
   {
    "id": "M8",
-   "title": "Code Quality and Constructs",
+   "title": "M8",
    "order": 8,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -110,7 +110,7 @@
   },
   {
    "id": "M9",
-   "title": "Sail Platform and Technical Questioning",
+   "title": "M9",
    "order": 9,
    "aggregate_lo_id": null,
    "lo_ids": [

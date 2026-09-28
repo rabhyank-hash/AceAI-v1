@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Introduction to pandas and Linux tools",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -14,7 +14,7 @@
   },
   {
    "id": "M2",
-   "title": "Descriptive statistics and data modeling concepts",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -26,7 +26,7 @@
   },
   {
    "id": "M3",
-   "title": "Data types, access patterns, and Linux basics",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -38,7 +38,7 @@
   },
   {
    "id": "M4",
-   "title": "Roles, libraries, and security in data engineering",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -50,7 +50,7 @@
   },
   {
    "id": "M5",
-   "title": "Database concepts and pandas functionality",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -62,7 +62,7 @@
   },
   {
    "id": "M6",
-   "title": "Storage models and Jupyter Notebook",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -74,7 +74,7 @@
   },
   {
    "id": "M7",
-   "title": "Data science lifecycle and database importance",
+   "title": "M7",
    "order": 7,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -85,7 +85,7 @@
   },
   {
    "id": "M8",
-   "title": "Practical pandas data extraction and querying",
+   "title": "M8",
    "order": 8,
    "aggregate_lo_id": null,
    "lo_ids": [

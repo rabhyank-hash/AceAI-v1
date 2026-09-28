@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Docker Foundations",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -14,7 +14,7 @@
   },
   {
    "id": "M2",
-   "title": "Container Concepts & Architecture",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -28,7 +28,7 @@
   },
   {
    "id": "M3",
-   "title": "Docker Hands\u2011On Operations",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -45,7 +45,7 @@
   },
   {
    "id": "M4",
-   "title": "Advanced Container & Cloud\u2011Native Concepts",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -62,7 +62,7 @@
   },
   {
    "id": "M5",
-   "title": "Kubernetes Fundamentals",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": "LO-4a1b30",
    "lo_ids": [
@@ -76,7 +76,7 @@
   },
   {
    "id": "M6",
-   "title": "Kubernetes Cluster Setup",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -88,7 +88,7 @@
   },
   {
    "id": "M7",
-   "title": "Kubernetes Advanced Operations",
+   "title": "M7",
    "order": 7,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -101,7 +101,7 @@
   },
   {
    "id": "M8",
-   "title": "Capstone Project \u2013 Cloud Administration",
+   "title": "M8",
    "order": 8,
    "aggregate_lo_id": null,
    "lo_ids": [

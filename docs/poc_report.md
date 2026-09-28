@@ -18,8 +18,10 @@ Plan v1 is on branch `agent1-poc`, plan v2 on `agent_v2`, plan v3 on `agent_v3`
 - Plan v3 limits Agent 1 to ordering the LOs and splitting the sequence into modules. Each ask
   returns the whole course on shuffled input; code aggregates 5 asks.
 - v3 makes the order consistent: sequence agreement between runs is 0.91–0.93 on all three test
-  courses (v1: 0.59–0.90). The module split is not consistent (ARI 0.48–0.52) and is further
-  from the authors' modules than v1.
+  courses (v1: 0.59–0.90).
+- Splitting modules in a separate step on that order fixes over-splitting and makes CloudAdmin's
+  modules consistent (ARI 0.85). DataEng (0.51) and CloudNative (0.38) are not: the model's choice
+  of how many modules varies between asks.
 
 ## 1. Plan v1: implementation and tests
 
@@ -241,10 +243,40 @@ Cost: 3.5–8.5K tokens per v3 run, below v1 on the same samples (4.0–12.5K).
    median across asks and cutting at the strongest split votes fixes the over-splitting
    (CloudNative BCubed 0.25 → 0.50) but not module consistency (ARI about 0.5).
 
+### Amendment 2: modules split in a separate step
+
+The module split moved to a separate step on the fixed consensus order (plan v3 §4 step 5;
+pre-registration Amendment 2, `6ca6661`; code `e140986`). Each of the 9 runs kept its order; 5
+split asks per run, codes shuffled per ask, the model deciding the number of modules; a boundary
+is kept where most asks place one. Order results are unchanged.
+
+| Course | Module ARI between runs | BCubed F1 vs CSV | Modules (CSV: 3) |
+|---|---|---|---|
+| DataEng | 0.52 → 0.51 | 0.59 → 0.68 | 5.3 → 5.3 |
+| CloudAdmin | 0.48 → 0.85 | 0.57 → 0.53 | 5.7 → 5.0 |
+| CloudNative | 0.48 → 0.38 | 0.25 → 0.41 | 15 → 4.3 |
+
+Before → after the separate split step; mean over 3 runs or run pairs.
+
+| Hypothesis | Target | Result |
+|---|---|---|
+| H1b module consistency | ARI ≥ 0.60 on each course | Not met: CloudAdmin 0.85; DataEng 0.51; CloudNative 0.38 |
+| H2 quality | BCubed ≥ v1 − 0.05 (0.62, 0.62, 0.47) | Not met: DataEng 0.68 passes; CloudAdmin 0.53, CloudNative 0.41 do not |
+| H3 validity | all runs valid | Met: 9 of 9 runs; 44 of 45 asks |
+
+- **Over-splitting is fixed.** Module counts fall to 4–5 per course (CloudNative: 15 → 4.3).
+- **The split is consistent on CloudAdmin only.** On DataEng and CloudNative the model's own
+  choice of how many modules varies between asks on the same sequence (DataEng 4–8, CloudNative
+  4–10). The majority rule narrows this but does not remove it.
+- **The model moves LOs when asked only to split.** 13 of 45 first answers changed the given order;
+  12 were fixed by the repair message, 1 ask was excluded.
+- **Cost:** 3–9K tokens per split run.
+
 ### Next
 
-1. **Decide modules on the fixed consensus order.** The order is stable, so a separate
-   segmentation step on it would inherit that stability. Pre-register and test.
+1. **Granularity is the remaining variation.** The model chooses between 4 and 10 modules for the
+   same sequence. Options: more split asks per run; treat boundaries one position apart as the
+   same; or measure how much people agree on such splits, to know what ARI is achievable.
 2. **Label the order.** 9 module-order pairs for the three test courses (sheets in
    `annotations/`). This decides whether findings like DataEng's concept-first order are errors.
 
@@ -282,12 +314,15 @@ Cost: 3.5–8.5K tokens per v3 run, below v1 on the same samples (4.0–12.5K).
 - v3: in the pilot, 5 asks were lost to the daily rate limit. From Amendment 1 on, calls wait
   out rate limits.
 - v3: CloudNative's v1 reference has 1 valid run of 3, so its v1 BCubed mean rests on one run.
+- Exported records now replace model-written module titles with module ids (they are model free
+  text). Applied to all existing records; no metric uses titles.
 
 ## Reproduce
 
 ```bash
 bash scripts/run_v2_experiment.sh                                 # v2 experiment
 bash scripts/run_v3_experiment.sh                                 # v3 experiment (amended)
+bash scripts/run_v3_segment_experiment.sh                         # v3 Amendment 2 split step
 python scripts/run_poc.py --course DataEng --modules 3 --seed 0   # one v1 run
 python scripts/analyze_experiments.py --log experiments/v1/experiments.tsv
 python scripts/analyze_experiments.py --log experiments/v2/experiments.tsv   # v2 tables

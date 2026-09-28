@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Foundations of Computing",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -16,7 +16,7 @@
   },
   {
    "id": "M2",
-   "title": "Python Basics",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -36,7 +36,7 @@
   },
   {
    "id": "M3",
-   "title": "Functions in Python",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -50,7 +50,7 @@
   },
   {
    "id": "M4",
-   "title": "Programming Constructs & Errors",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -63,7 +63,7 @@
   },
   {
    "id": "M5",
-   "title": "Code Quality & Documentation",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -77,7 +77,7 @@
   },
   {
    "id": "M6",
-   "title": "Practical Sail Activities",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -94,7 +94,7 @@
   },
   {
    "id": "M7",
-   "title": "Scratch Programming",
+   "title": "M7",
    "order": 7,
    "aggregate_lo_id": null,
    "lo_ids": [

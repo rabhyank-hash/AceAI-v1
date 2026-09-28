@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Cloud Foundations",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": "LO-c39ade",
    "lo_ids": [
@@ -22,7 +22,7 @@
   },
   {
    "id": "M2",
-   "title": "Azure Account and Portal Operations",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [

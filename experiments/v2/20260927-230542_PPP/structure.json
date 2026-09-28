@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Introduction to Python and Programming Concepts",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -15,7 +15,7 @@
   },
   {
    "id": "M2",
-   "title": "Fundamentals: Programs, Variables, and Functions",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -30,7 +30,7 @@
   },
   {
    "id": "M3",
-   "title": "Built\u2011in Functions, Modules, and Data Types",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -47,7 +47,7 @@
   },
   {
    "id": "M4",
-   "title": "User\u2011Defined Functions and Scope",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -62,7 +62,7 @@
   },
   {
    "id": "M5",
-   "title": "Programming Constructs and Error Handling",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -74,7 +74,7 @@
   },
   {
    "id": "M6",
-   "title": "In\u2011Browser Development Environment",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -84,7 +84,7 @@
   },
   {
    "id": "M7",
-   "title": "Assessment and Feedback Logistics",
+   "title": "M7",
    "order": 7,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -96,7 +96,7 @@
   },
   {
    "id": "M8",
-   "title": "Scratch Programming",
+   "title": "M8",
    "order": 8,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -106,7 +106,7 @@
   },
   {
    "id": "M9",
-   "title": "Technical Questioning Skills",
+   "title": "M9",
    "order": 9,
    "aggregate_lo_id": null,
    "lo_ids": [

@@ -34,3 +34,12 @@ m3v3k3_s5	CloudNative	experiments/v3/20260928-165544_CloudNative_k3
 m3v3_s10	CloudNative	experiments/v3/20260928-165649_CloudNative
 m3v3k1_s10	CloudNative	experiments/v3/20260928-165649_CloudNative_k1
 m3v3k3_s10	CloudNative	experiments/v3/20260928-165649_CloudNative_k3
+m3v3seg_s0	DataEng	experiments/v3/20260928-170659_DataEng
+m3v3seg_s5	DataEng	experiments/v3/20260928-170703_DataEng
+m3v3seg_s10	DataEng	experiments/v3/20260928-170742_DataEng
+m3v3seg_s0	CloudAdmin	experiments/v3/20260928-170817_CloudAdmin
+m3v3seg_s5	CloudAdmin	experiments/v3/20260928-170846_CloudAdmin
+m3v3seg_s10	CloudAdmin	experiments/v3/20260928-170930_CloudAdmin
+m3v3seg_s0	CloudNative	experiments/v3/20260928-171029_CloudNative
+m3v3seg_s5	CloudNative	experiments/v3/20260928-171140_CloudNative
+m3v3seg_s10	CloudNative	experiments/v3/20260928-174156_CloudNative

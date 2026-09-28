@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Introduction to Data Engineering Foundations",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -16,7 +16,7 @@
   },
   {
    "id": "M2",
-   "title": "Linux Command\u2011Line Data Processing",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -28,7 +28,7 @@
   },
   {
    "id": "M3",
-   "title": "Pandas Core Operations",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -43,7 +43,7 @@
   },
   {
    "id": "M4",
-   "title": "Relational Databases and Modeling",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -56,7 +56,7 @@
   },
   {
    "id": "M5",
-   "title": "Data Types, Storage, and Governance",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -71,7 +71,7 @@
   },
   {
    "id": "M6",
-   "title": "Contextual and Professional Aspects",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [

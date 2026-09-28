@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Foundations of Data Engineering",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -13,7 +13,7 @@
   },
   {
    "id": "M2",
-   "title": "Data Concepts and Modeling",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -28,7 +28,7 @@
   },
   {
    "id": "M3",
-   "title": "Storage and Database Fundamentals",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -44,7 +44,7 @@
   },
   {
    "id": "M4",
-   "title": "Introduction to pandas",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -58,7 +58,7 @@
   },
   {
    "id": "M5",
-   "title": "pandas Applied Skills",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -73,7 +73,7 @@
   },
   {
    "id": "M6",
-   "title": "Linux Data Processing Tools",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -86,7 +86,7 @@
   },
   {
    "id": "M7",
-   "title": "Jupyter Notebook Overview",
+   "title": "M7",
    "order": 7,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -98,7 +98,7 @@
   },
   {
    "id": "M8",
-   "title": "Data Science Context and Impact",
+   "title": "M8",
    "order": 8,
    "aggregate_lo_id": null,
    "lo_ids": [

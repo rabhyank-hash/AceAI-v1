@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Cloud Computing Fundamentals",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -18,7 +18,7 @@
   },
   {
    "id": "M2",
-   "title": "Cloud Models and Providers",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -33,7 +33,7 @@
   },
   {
    "id": "M3",
-   "title": "Introduction to Microsoft Azure",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -46,7 +46,7 @@
   },
   {
    "id": "M4",
-   "title": "Azure Account and Resource Management",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -61,7 +61,7 @@
   },
   {
    "id": "M5",
-   "title": "Azure Cloud Shell",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -76,7 +76,7 @@
   },
   {
    "id": "M6",
-   "title": "Azure Resource Monitoring",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [

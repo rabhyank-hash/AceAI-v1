@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Introduction to Data Engineering and Life Cycle",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -13,7 +13,7 @@
   },
   {
    "id": "M2",
-   "title": "Data Modeling Foundations",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": "LO-78cd30",
    "lo_ids": [
@@ -27,7 +27,7 @@
   },
   {
    "id": "M3",
-   "title": "Relational Databases and Schema",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -40,7 +40,7 @@
   },
   {
    "id": "M4",
-   "title": "Storage Models and Data Types",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": "LO-6cf5a5",
    "lo_ids": [
@@ -56,7 +56,7 @@
   },
   {
    "id": "M5",
-   "title": "Data Security and Compliance",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -66,7 +66,7 @@
   },
   {
    "id": "M6",
-   "title": "Jupyter Notebook for Data Engineering",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -78,7 +78,7 @@
   },
   {
    "id": "M7",
-   "title": "Linux Command\u2011Line Data Processing",
+   "title": "M7",
    "order": 7,
    "aggregate_lo_id": "LO-b4a107",
    "lo_ids": [
@@ -89,7 +89,7 @@
   },
   {
    "id": "M8",
-   "title": "Pandas Fundamentals",
+   "title": "M8",
    "order": 8,
    "aggregate_lo_id": "LO-3a4850",
    "lo_ids": [
@@ -104,7 +104,7 @@
   },
   {
    "id": "M9",
-   "title": "Applied Pandas Workflows",
+   "title": "M9",
    "order": 9,
    "aggregate_lo_id": null,
    "lo_ids": [

@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Python Programming Foundations",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -12,7 +12,7 @@
   },
   {
    "id": "M2",
-   "title": "Data Structures in Python",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -26,7 +26,7 @@
   },
   {
    "id": "M3",
-   "title": "Linear Algebra Fundamentals",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -39,7 +39,7 @@
   },
   {
    "id": "M4",
-   "title": "NumPy and Vectorization",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -57,7 +57,7 @@
   },
   {
    "id": "M5",
-   "title": "Algorithms and Performance",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -71,7 +71,7 @@
   },
   {
    "id": "M6",
-   "title": "Recommender Systems and ML Application",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [

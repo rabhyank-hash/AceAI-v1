@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Introduction to DevOps",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -14,7 +14,7 @@
   },
   {
    "id": "M2",
-   "title": "Automation in DevOps",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -28,7 +28,7 @@
   },
   {
    "id": "M3",
-   "title": "Cloud Foundations",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -40,7 +40,7 @@
   },
   {
    "id": "M4",
-   "title": "Azure Hands\u2011On",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -54,7 +54,7 @@
   },
   {
    "id": "M5",
-   "title": "Automation Tools & Practices",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -68,7 +68,7 @@
   },
   {
    "id": "M6",
-   "title": "Release Management",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -82,7 +82,7 @@
   },
   {
    "id": "M7",
-   "title": "Error Types and Handling",
+   "title": "M7",
    "order": 7,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -96,7 +96,7 @@
   },
   {
    "id": "M8",
-   "title": "Improving Release Frequency",
+   "title": "M8",
    "order": 8,
    "aggregate_lo_id": null,
    "lo_ids": [

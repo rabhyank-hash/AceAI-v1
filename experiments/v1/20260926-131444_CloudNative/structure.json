@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Docker Installation",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -12,7 +12,7 @@
   },
   {
    "id": "M2",
-   "title": "Kubernetes Fundamentals",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -25,7 +25,7 @@
   },
   {
    "id": "M3",
-   "title": "Docker Images",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -37,7 +37,7 @@
   },
   {
    "id": "M4",
-   "title": "Dockerfiles",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -49,7 +49,7 @@
   },
   {
    "id": "M5",
-   "title": "Docker Container Operations",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -63,7 +63,7 @@
   },
   {
    "id": "M6",
-   "title": "Docker Web Server Deployment",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -75,7 +75,7 @@
   },
   {
    "id": "M7",
-   "title": "Kubernetes Cluster Setup",
+   "title": "M7",
    "order": 7,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -87,7 +87,7 @@
   },
   {
    "id": "M8",
-   "title": "Kubernetes Pods",
+   "title": "M8",
    "order": 8,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -99,7 +99,7 @@
   },
   {
    "id": "M9",
-   "title": "Kubernetes Deployments",
+   "title": "M9",
    "order": 9,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -111,7 +111,7 @@
   },
   {
    "id": "M10",
-   "title": "Kubernetes via Python",
+   "title": "M10",
    "order": 10,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -123,7 +123,7 @@
   },
   {
    "id": "M11",
-   "title": "Docker Registry Management",
+   "title": "M11",
    "order": 11,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -135,7 +135,7 @@
   },
   {
    "id": "M12",
-   "title": "Virtualization Concepts",
+   "title": "M12",
    "order": 12,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -148,7 +148,7 @@
   },
   {
    "id": "M13",
-   "title": "Microservices & Cloud-Native",
+   "title": "M13",
    "order": 13,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -161,7 +161,7 @@
   },
   {
    "id": "M14",
-   "title": "Cloud-Native Application Characteristics",
+   "title": "M14",
    "order": 14,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -171,7 +171,7 @@
   },
   {
    "id": "M15",
-   "title": "Comparative Analyses",
+   "title": "M15",
    "order": 15,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -185,7 +185,7 @@
   },
   {
    "id": "M16",
-   "title": "Container Advantages",
+   "title": "M16",
    "order": 16,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -197,7 +197,7 @@
   },
   {
    "id": "M17",
-   "title": "Docker Overview",
+   "title": "M17",
    "order": 17,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -210,7 +210,7 @@
   },
   {
    "id": "M18",
-   "title": "Event-Driven Architecture Evaluation",
+   "title": "M18",
    "order": 18,
    "aggregate_lo_id": null,
    "lo_ids": [

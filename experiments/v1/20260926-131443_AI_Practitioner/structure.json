@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Python Data Structures Foundations",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -16,7 +16,7 @@
   },
   {
    "id": "M2",
-   "title": "NumPy and Matrix Fundamentals",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -37,7 +37,7 @@
   },
   {
    "id": "M3",
-   "title": "Advanced Algorithms and Applications",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [

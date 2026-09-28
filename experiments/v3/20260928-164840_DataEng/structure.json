@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Pandas Fundamentals",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -15,7 +15,7 @@
   },
   {
    "id": "M2",
-   "title": "Core Data Concepts",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -27,7 +27,7 @@
   },
   {
    "id": "M3",
-   "title": "Data Engineering Context",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [

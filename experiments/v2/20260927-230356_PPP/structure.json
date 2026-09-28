@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Introduction & Foundations",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": "LO-945284",
    "lo_ids": [
@@ -13,7 +13,7 @@
   },
   {
    "id": "M2",
-   "title": "Python Basics",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": "LO-d446b2",
    "lo_ids": [
@@ -28,7 +28,7 @@
   },
   {
    "id": "M3",
-   "title": "Technical Questioning",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": "LO-765362",
    "lo_ids": [
@@ -38,7 +38,7 @@
   },
   {
    "id": "M4",
-   "title": "Core Python Constructs",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": "LO-dd6a95",
    "lo_ids": [
@@ -55,7 +55,7 @@
   },
   {
    "id": "M5",
-   "title": "Debugging & Execution",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -69,7 +69,7 @@
   },
   {
    "id": "M6",
-   "title": "Functions and Scope",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": "LO-2e0a3d",
    "lo_ids": [
@@ -82,7 +82,7 @@
   },
   {
    "id": "M7",
-   "title": "Sail Platform Activities",
+   "title": "M7",
    "order": 7,
    "aggregate_lo_id": null,
    "lo_ids": [

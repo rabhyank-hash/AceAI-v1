@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Python Data Structures Foundations",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -13,7 +13,7 @@
   },
   {
    "id": "M2",
-   "title": "NumPy and Matrix Basics",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -30,7 +30,7 @@
   },
   {
    "id": "M3",
-   "title": "Advanced Python Practices and Vectorization",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -45,7 +45,7 @@
   },
   {
    "id": "M4",
-   "title": "Algorithms and Data Structure Performance",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -59,7 +59,7 @@
   },
   {
    "id": "M5",
-   "title": "Recommender Systems and Collaborative Filtering",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -70,7 +70,7 @@
   },
   {
    "id": "M6",
-   "title": "Capstone: Real-World Problem Solving",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [

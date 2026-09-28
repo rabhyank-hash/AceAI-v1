@@ -2,7 +2,7 @@
  "modules": [
   {
    "id": "M1",
-   "title": "Special Matrices Overview",
+   "title": "M1",
    "order": 1,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -12,7 +12,7 @@
   },
   {
    "id": "M2",
-   "title": "Vectorization Principles",
+   "title": "M2",
    "order": 2,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -24,7 +24,7 @@
   },
   {
    "id": "M3",
-   "title": "Fundamental Python Data Structures",
+   "title": "M3",
    "order": 3,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -34,7 +34,7 @@
   },
   {
    "id": "M4",
-   "title": "Vectors and Matrices Foundations",
+   "title": "M4",
    "order": 4,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -44,7 +44,7 @@
   },
   {
    "id": "M5",
-   "title": "Python Data\u2011Analysis Libraries",
+   "title": "M5",
    "order": 5,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -56,7 +56,7 @@
   },
   {
    "id": "M6",
-   "title": "Collaborative Filtering Methods",
+   "title": "M6",
    "order": 6,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -68,7 +68,7 @@
   },
   {
    "id": "M7",
-   "title": "Matrix Interface Design",
+   "title": "M7",
    "order": 7,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -80,7 +80,7 @@
   },
   {
    "id": "M8",
-   "title": "Python Syntax for Data Structures",
+   "title": "M8",
    "order": 8,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -90,7 +90,7 @@
   },
   {
    "id": "M9",
-   "title": "Vectorizing Iterative Procedures",
+   "title": "M9",
    "order": 9,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -102,7 +102,7 @@
   },
   {
    "id": "M10",
-   "title": "Key Data Structure Concepts",
+   "title": "M10",
    "order": 10,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -112,7 +112,7 @@
   },
   {
    "id": "M11",
-   "title": "NumPy Array Basics",
+   "title": "M11",
    "order": 11,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -122,7 +122,7 @@
   },
   {
    "id": "M12",
-   "title": "Recommender Systems Role",
+   "title": "M12",
    "order": 12,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -132,7 +132,7 @@
   },
   {
    "id": "M13",
-   "title": "Matrix Mathematical Definition",
+   "title": "M13",
    "order": 13,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -142,7 +142,7 @@
   },
   {
    "id": "M14",
-   "title": "Data Structure Performance Comparison",
+   "title": "M14",
    "order": 14,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -154,7 +154,7 @@
   },
   {
    "id": "M15",
-   "title": "Stride and Shape Vectors",
+   "title": "M15",
    "order": 15,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -166,7 +166,7 @@
   },
   {
    "id": "M16",
-   "title": "Sparse Matrix Techniques",
+   "title": "M16",
    "order": 16,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -178,7 +178,7 @@
   },
   {
    "id": "M17",
-   "title": "NumPy Library Overview",
+   "title": "M17",
    "order": 17,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -188,7 +188,7 @@
   },
   {
    "id": "M18",
-   "title": "Applying Data Structures to Real Problems",
+   "title": "M18",
    "order": 18,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -200,7 +200,7 @@
   },
   {
    "id": "M19",
-   "title": "Search and Graph Algorithms",
+   "title": "M19",
    "order": 19,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -212,7 +212,7 @@
   },
   {
    "id": "M20",
-   "title": "Basic NumPy Operations",
+   "title": "M20",
    "order": 20,
    "aggregate_lo_id": null,
    "lo_ids": [
@@ -224,7 +224,7 @@
   },
   {
    "id": "M21",
-   "title": "Python Best Practices",
+   "title": "M21",
    "order": 21,
    "aggregate_lo_id": null,
    "lo_ids": [
