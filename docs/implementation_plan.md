@@ -2,11 +2,26 @@
 
 *Prepared by Ruchi, TEEL Lab / CMU. September 2026.*
 
-> **Version 2** (branch `agent_v2`, 26 September 2026). Version 1 is the Google Drive document of
-> the same name, tracked on branch `agent1-poc`. The evidence for these changes is in
-> [poc_report.md](poc_report.md) §1–2; see `git diff agent1-poc agent_v2 -- docs/implementation_plan.md`.
+> **Version 3** (branch `agent_v3`, 28 September 2026). Version 2 is on `agent_v2`, version 1 (the
+> Google Drive document) on `agent1-poc`. Evidence: [poc_report.md](poc_report.md). Diffs:
+> `git diff agent_v2 agent_v3 -- docs/implementation_plan.md` (v3), `git diff agent1-poc agent_v2`
+> (v2).
 >
-> **Changes from v1**
+> **Changes from v2**
+>
+> 1. **Agent 1's job is order and modules only (§2, §4).** It arranges the LOs in teaching order
+>    and splits that sequence into modules. Both have ground truth in the course CSVs.
+> 2. **Order first, then split (§4).** Modules are contiguous segments of the ordered sequence.
+>    v2 grouped first and ordered the groups; its grouping was the least stable step.
+> 3. **Each LLM ask returns the whole ordered, segmented course (§4).** Asks are repeated on
+>    shuffled input (permutation self-consistency, Tang et al., NAACL 2024). Code aggregates:
+>    consensus order by mean position, module boundaries by majority. v2 needed 30–45 calls per
+>    run; v3 needs k (e.g. 5).
+> 4. **Only exactly identical LOs are merged, by code (§4).** No LLM judgment on duplicates.
+> 5. **Normalization (verb, Bloom level, track, target concept) leaves Agent 1.** It is only used
+>    by Agent 2 (depth scale) and moves there.
+>
+> **Changes from v1 (in v2)**
 >
 > 1. **Consistency by construction (new principle, §2).** The v1 proof of concept showed that one
 >    large LLM judgment gives a different course for every input order (only 10–24% of
@@ -54,9 +69,9 @@ deterministic **code tools** for the mechanical checks that should never depend 
 judgment (schema validation, graph checks, constraint arithmetic). The model and agent framework
 are not chosen yet (§8).
 
-**Agent 1, the Sequencer**, takes the raw, mixed-granularity LO list and produces a coherent,
-deduplicated, dependency-ordered tree: modules in a fixed order, each headed by a course-level
-objective where one applies, containing the detailed objectives it covers. Agent 1 never sees
+**Agent 1, the Sequencer**, takes the raw, mixed-granularity LO list and arranges it into a
+course: the LOs in teaching order, split into modules (contiguous segments of that order), with
+course-level objectives as parents of the detailed objectives they contain (v3). Agent 1 never sees
 time, cost, or learner-level constraints. Its only job is deciding what needs to be taught and in
 what order, which is a question about the logical structure of the content, not about the budget.
 
@@ -122,41 +137,28 @@ these detailed LOs together cover this broad one, so they belong under it?
 is not discarded.
 
 Agent 1 is an LLM agent that works through these steps. The LLM makes every judgment; code tools
-do the mechanical checks.
+do the mechanical checks (v3):
 
-1. **Normalize (LLM)** every LO into a structured form: action verb, Bloom level (§3), target
-   concept, track (conceptual — "explain/describe X" vs. applied — "write/implement X"), and
-   scope (atomic, or aggregate/course-level). *Tool:* schema validation of each normalized LO.
-2. **Detect containment (LLM)**: for each aggregate LO, decide which atomic LOs it covers; these
-   become its children.
-3. **Deduplicate (LLM)** atomic LOs, keeping provenance links back to every original LO. Proposed
-   rule: only collapse LOs that share both track and Bloom level — "explain iteration"
-   (conceptual) and "use iteration to solve a problem" (applied) look similar but are different
-   coverage and both survive. (**Open:** confirm this combined rule.) *Tool:* provenance check
-   that every raw LO maps to exactly one surviving LO, so nothing is lost.
-4. **Group into modules (LLM, repeated; code aggregates).** The LLM groups the LOs by topic,
-   anchored on aggregate LOs where they exist, k times (e.g. 3–5) on different input orders. Code
-   counts, for every pair of LOs, the share of runs that put them in the same module, and clusters
-   that co-association matrix deterministically (average linkage, threshold 0.5): consensus
-   clustering. *Tool:* provenance and coverage checks on the consensus grouping.
-5. **Infer module prerequisites (LLM, repeated; code aggregates).** For each module, the LLM sees
-   all modules (as lists of LOs, under neutral labels) and names the modules a learner must have
-   learned before it (`required_before`) and the ones it would still teach first without a hard
-   dependency (`better_before`), with a one-line rationale. Each module is asked under several
-   presentation orders (module order, labels and LO order shuffled). Code keeps a prerequisite
-   edge when a strict majority of asks name it. *Tool:* cycle check on the module graph.
-6. **Order modules (tool).** A topological sort of the aggregated module graph gives the order.
-   Cycles are broken by removing the edge with the lowest vote share. Where several orders are
-   valid, ties are broken by fixed rules, in order: the aggregated `better_before` preference
-   (the module preferred over more of the other available modules goes first); then modules with
-   a larger share of conceptual LOs first; then a stable key.
-7. **Order LOs within each module (code).** LO prerequisites inside a module are kept when a
-   majority of the grouping runs state them; LOs are ordered topologically, ties broken by
-   conceptual before applied, then a stable key.
+1. **Merge exact duplicates (code).** LOs whose text is identical after whitespace
+   normalization become one LO, with provenance to every original. No other LOs are merged.
+2. **Detect containment (LLM).** For each course-level LO, decide which detailed LOs it covers;
+   these become its children. *Tool:* every child exists, no LO is its own ancestor.
+3. **Order and split (LLM, repeated).** Each ask shows every detailed LO, in a shuffled order
+   under neutral labels, and asks for the course as an ordered list of modules, each an ordered
+   list of LOs. The ask is repeated k times on different shuffles. *Tool:* each answer contains
+   every LO exactly once.
+4. **Consensus order (code).** LOs are ordered by their mean position across the valid asks
+   (Borda); ties by a stable key.
+5. **Consensus modules (code).** Along the consensus order, a module boundary is placed between
+   two neighbouring LOs when a strict majority of asks put them in different modules. Modules are
+   contiguous by construction.
 
-The output is a tree: module nodes (headed by a course-level LO where one applies) containing
-their atomic LOs, with a record of which original raw LOs fed into each deduplicated one, so
-nothing is silently lost.
+v2's steps (consensus clustering, voted module prerequisites, tie rules) are replaced; see the
+v2 changelog above for what they were.
+
+The output is the ordered sequence of modules, each an ordered list of LOs, with course-level LOs
+as parents and a record of which raw LOs were merged as exact duplicates, so nothing is silently
+lost.
 
 **Test cases (v2).** Six SAIL courses with human-built unit → module → LO structures serve as
 ground truth: Practical Programming with Python (PPP; 202 detailed LOs plus 22 syllabus LOs),
@@ -234,10 +236,10 @@ The deterministic checker needs computable time and cost. Options I am consideri
 
 Two separate evaluations, matching the two agents.
 
-**Agent 1 (v2)** — first, **run-to-run consistency**: the same LOs in different input orders
-must give the same grouping and order (grouping ARI and order agreement between independent
-runs). Then quality against the human-built structures of the six courses: module assignment
-agreement (BCubed), order agreement, and dependency violations against labeled module-order
+**Agent 1 (v3)** — first, **run-to-run consistency**: the same LOs in different input orders
+must give the same sequence and modules (sequence agreement and module ARI between independent
+runs). Then quality against the human-built structures of the six courses: sequence agreement
+with the authors' order, module agreement (BCubed), and violations of labeled module-order
 pairs. Full framework: [evaluation.md](evaluation.md). Baselines: (a)
 embeddings + clustering — group LOs into modules by topic similarity with no LLM judgment, then
 order them by a topological sort over the same prerequisite graph — which Agent 1 must beat to
