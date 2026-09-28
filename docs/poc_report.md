@@ -1,11 +1,11 @@
-# Agent 1 (Sequencer): v1 results and plan v2
+# Agent 1 (Sequencer): v1 results, plans v2 and v3
 
-TEEL Lab, ACE-AI, 27 September 2026.
+TEEL Lab, ACE-AI, 28 September 2026.
 
-Plan v1 is on branch `agent1-poc`, plan v2 on `agent_v2` (`docs/implementation_plan.md` on each).
-The v2 prototype is pre-registered in [v2_preregistration.md](v2_preregistration.md). Metrics are
-defined in [evaluation.md](evaluation.md). Run records without LO text are in `experiments/v1/`
-and `experiments/v2/`.
+Plan v1 is on branch `agent1-poc`, plan v2 on `agent_v2`, plan v3 on `agent_v3`
+(`docs/implementation_plan.md` on each). Pre-registrations: [v2](v2_preregistration.md),
+[v3](v3_preregistration.md). Metrics: [evaluation.md](evaluation.md). Run records without LO text:
+`experiments/v1/`, `v2/`, `v3_pilot/`, `v3/`.
 
 ## Summary
 
@@ -15,6 +15,11 @@ and `experiments/v2/`.
 - The v2 prototype ran on 27 September. It did not meet its pre-registered consistency targets.
   It made DataEng more consistent (order agreement between runs 0.54 → 0.77) but not PPP.
   Grouping is the remaining source of variation.
+- Plan v3 limits Agent 1 to ordering the LOs and splitting the sequence into modules. Each ask
+  returns the whole course on shuffled input; code aggregates 5 asks.
+- v3 makes the order consistent: sequence agreement between runs is 0.91–0.93 on all three test
+  courses (v1: 0.59–0.90). The module split is not consistent (ARI 0.48–0.52) and is further
+  from the authors' modules than v1.
 
 ## 1. Plan v1: implementation and tests
 
@@ -180,6 +185,69 @@ A hypothesis holds only if it holds for both courses (pre-registration).
 3. Order quality still needs labeled module order; consistency alone does not show that an order
    is good.
 
+## 6. Plan v3 and its test
+
+### Changes (plan v3)
+
+| # | Change | Reason |
+|---|---|---|
+| 1 | Agent 1 only orders the LOs and splits the sequence into modules. | Both have ground truth; v2's separate grouping was the least stable step. |
+| 2 | Each ask returns the whole ordered, segmented course on shuffled, relabelled input; 5 asks per run. | Permutation self-consistency (Tang et al., NAACL 2024). |
+| 3 | Consensus order by mean position; a module boundary where most asks split two neighbours. | Aggregation in code. |
+| 4 | Only LOs with identical text are merged, by code. | No LLM judgment on duplicates. |
+| 5 | Normalization (Bloom level etc.) moves to Agent 2. | Agent 1 does not use it. |
+| 6 | The prompt states that every LO must be included (prompt v3-2). | In a pilot with prompt v3-1, 3 of 50 answers dropped an LO. |
+
+### Test
+
+Pre-registered (`d1637f3`), amended before any v3-2 run (`dd99ae2`), run at `272ed07` on 28
+September. Courses: DataEng, CloudAdmin, CloudNative, each limited to its first 3 CSV modules
+(11, 15 and 44 LOs; CloudNative has 16 exact duplicates). Reference: v1 on the same samples,
+seeds 0–2. v3: three independent runs per course (5 asks each). Same model and settings as v1.
+Records: `experiments/v3/`.
+
+### Results
+
+Mean over 3 run pairs (range). v1 on the same samples in brackets.
+
+| Course | Sequence agreement between runs | Module ARI between runs | BCubed F1 vs CSV | Sequence agreement vs CSV | Valid runs |
+|---|---|---|---|---|---|
+| DataEng | 0.92 (0.89–0.93) [0.59] | 0.52 [0.87] | 0.59 [0.67] | 0.42 [0.52] | 3/3 [3/3] |
+| CloudAdmin | 0.93 (0.92–0.94) [0.76] | 0.48 [0.24] | 0.57 [0.67] | 0.91 [0.82] | 3/3 [3/3] |
+| CloudNative | 0.91 (0.89–0.93) [0.90] | 0.48 [0.57] | 0.25 [0.52] | 0.65 [0.61] | 3/3 [1/3] |
+
+| Hypothesis | Target | Result |
+|---|---|---|
+| H1a sequence consistency | ≥ 0.90 on each course | **Met** (0.91–0.93) |
+| H1b module consistency | ARI ≥ 0.60 on each course | Not met (0.48–0.52) |
+| H2 quality | BCubed ≥ v1 − 0.05 | Not met on any course |
+| H3 validity | all runs valid | **Met** (45 of 45 asks valid; 3 repaired) |
+| H4 aggregation | sequence agreement higher at k = 5 than k = 1 | **Met** (0.92 vs 0.87) |
+
+Cost: 3.5–8.5K tokens per v3 run, below v1 on the same samples (4.0–12.5K).
+
+### Findings
+
+1. **The order is consistent.** Every course passes 0.90. Repeating the ask on shuffled input and
+   averaging raises agreement from 0.87 (one ask) to 0.92 (five).
+2. **The module split is not, and over-splits.** Module counts rise with the number of asks
+   (CloudNative: 4 modules at k = 1, 15 at k = 5; the CSV has 3). Averaging positions places LOs
+   between topics, and the majority rule then cuts too often. This was named as a threat in the
+   pre-registration.
+3. **A consistent order exposes a clear disagreement with the authors.** On DataEng, every v3 run
+   teaches the Data Landscape unit before the pandas unit; the authors do the reverse. v1 varied
+   between both. Whether this is an error needs a label.
+4. **Exploratory (not pre-registered), on the saved asks:** setting the number of modules to the
+   median across asks and cutting at the strongest split votes fixes the over-splitting
+   (CloudNative BCubed 0.25 → 0.50) but not module consistency (ARI about 0.5).
+
+### Next
+
+1. **Decide modules on the fixed consensus order.** The order is stable, so a separate
+   segmentation step on it would inherit that stability. Pre-register and test.
+2. **Label the order.** 9 module-order pairs for the three test courses (sheets in
+   `annotations/`). This decides whether findings like DataEng's concept-first order are errors.
+
 ## Requirements
 
 - **API access above the free tier.** The free tier allows one v2 experiment or about 25 v1
@@ -187,7 +255,8 @@ A hypothesis holds only if it holds for both courses (pre-registration).
   planned work is about 18M tokens: $6 on Groq `gpt-oss-120b`, up to $43 on DeepSeek
   `deepseek-v4-pro`, at 26 September 2026 list prices. Groq's pay-as-you-go plan allows 250K
   tokens/minute.
-- **Labels.** 68 module-order pairs across the six samples, about 15 minutes.
+- **Labels.** 9 module-order pairs for the three v3 test courses (first 3 modules), a few
+  minutes; 68 pairs for the larger v1/v2 samples.
   `scripts/make_label_sheets.py` writes the sheets to `annotations/`, which is not in git
   because the sheets contain LO text.
 - **Decisions.** Merge rule and Bloom verb rules (plan questions 1–2). Whether a detailed LO may
@@ -207,14 +276,22 @@ A hypothesis holds only if it holds for both courses (pre-registration).
   input for v2 run B, as the pre-registration requires all three seeds. It is counted as invalid
   in the v1 quality mean.
 - v1 BCubed means are over valid runs only.
+- v3: the prompt was changed from v3-1 to v3-2 after 10 runs, and the test was reduced to three
+  courses with their first 3 modules. Both were recorded as Amendment 1 to the v3
+  pre-registration before any v3-2 run. The v3-1 runs are a pilot (`experiments/v3_pilot/`).
+- v3: in the pilot, 5 asks were lost to the daily rate limit. From Amendment 1 on, calls wait
+  out rate limits.
+- v3: CloudNative's v1 reference has 1 valid run of 3, so its v1 BCubed mean rests on one run.
 
 ## Reproduce
 
 ```bash
 bash scripts/run_v2_experiment.sh                                 # v2 experiment
+bash scripts/run_v3_experiment.sh                                 # v3 experiment (amended)
 python scripts/run_poc.py --course DataEng --modules 3 --seed 0   # one v1 run
 python scripts/analyze_experiments.py --log experiments/v1/experiments.tsv
 python scripts/analyze_experiments.py --log experiments/v2/experiments.tsv   # v2 tables
+python scripts/analyze_experiments.py --log experiments/v3/experiments.tsv   # v3 tables
 ```
 
 Prices and limits: https://console.groq.com/docs/models,

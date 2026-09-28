@@ -1,0 +1,242 @@
+{
+ "modules": [
+  {
+   "id": "S01",
+   "title": "S01",
+   "order": 1,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-919a9b",
+    "LO-03638c",
+    "LO-801048",
+    "LO-42056a"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "S02",
+   "title": "S02",
+   "order": 2,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-27431d",
+    "LO-35e321",
+    "LO-a49de3"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "S03",
+   "title": "S03",
+   "order": 3,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-baa488",
+    "LO-3a4850"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "S04",
+   "title": "S04",
+   "order": 4,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-7e4edd",
+    "LO-ef3761"
+   ],
+   "depends_on": []
+  }
+ ],
+ "los": [
+  {
+   "id": "LO-919a9b",
+   "source_ids": [
+    "LO-919a9b"
+   ],
+   "bloom_level": "C1",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-03638c",
+   "source_ids": [
+    "LO-03638c"
+   ],
+   "bloom_level": "C1",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-801048",
+   "source_ids": [
+    "LO-801048"
+   ],
+   "bloom_level": "C1",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-42056a",
+   "source_ids": [
+    "LO-42056a"
+   ],
+   "bloom_level": "C1",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-27431d",
+   "source_ids": [
+    "LO-27431d"
+   ],
+   "bloom_level": "C1",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-35e321",
+   "source_ids": [
+    "LO-35e321"
+   ],
+   "bloom_level": "C1",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-a49de3",
+   "source_ids": [
+    "LO-a49de3"
+   ],
+   "bloom_level": "C1",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-baa488",
+   "source_ids": [
+    "LO-baa488"
+   ],
+   "bloom_level": "C1",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-3a4850",
+   "source_ids": [
+    "LO-3a4850"
+   ],
+   "bloom_level": "C1",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-7e4edd",
+   "source_ids": [
+    "LO-7e4edd"
+   ],
+   "bloom_level": "C1",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-ef3761",
+   "source_ids": [
+    "LO-ef3761"
+   ],
+   "bloom_level": "C1",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  }
+ ],
+ "provenance": [
+  {
+   "raw_id": "LO-919a9b",
+   "lo_id": "LO-919a9b"
+  },
+  {
+   "raw_id": "LO-03638c",
+   "lo_id": "LO-03638c"
+  },
+  {
+   "raw_id": "LO-801048",
+   "lo_id": "LO-801048"
+  },
+  {
+   "raw_id": "LO-42056a",
+   "lo_id": "LO-42056a"
+  },
+  {
+   "raw_id": "LO-27431d",
+   "lo_id": "LO-27431d"
+  },
+  {
+   "raw_id": "LO-35e321",
+   "lo_id": "LO-35e321"
+  },
+  {
+   "raw_id": "LO-a49de3",
+   "lo_id": "LO-a49de3"
+  },
+  {
+   "raw_id": "LO-baa488",
+   "lo_id": "LO-baa488"
+  },
+  {
+   "raw_id": "LO-3a4850",
+   "lo_id": "LO-3a4850"
+  },
+  {
+   "raw_id": "LO-7e4edd",
+   "lo_id": "LO-7e4edd"
+  },
+  {
+   "raw_id": "LO-ef3761",
+   "lo_id": "LO-ef3761"
+  }
+ ]
+}

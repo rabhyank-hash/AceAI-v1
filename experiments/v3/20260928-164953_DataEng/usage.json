@@ -1,0 +1,97 @@
+[
+ {
+  "label": "v3_0",
+  "cached": false,
+  "completion_tokens": 284,
+  "prompt_tokens": 430,
+  "total_tokens": 714,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 191,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.00502272,
+  "prompt_time": 0.022041728,
+  "completion_time": 0.596545159,
+  "total_time": 0.618586887
+ },
+ {
+  "label": "v3_1",
+  "cached": false,
+  "completion_tokens": 292,
+  "prompt_tokens": 430,
+  "total_tokens": 722,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 208,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.192623428,
+  "prompt_time": 0.059439964,
+  "completion_time": 0.613650053,
+  "total_time": 0.673090017
+ },
+ {
+  "label": "v3_2",
+  "cached": false,
+  "completion_tokens": 223,
+  "prompt_tokens": 430,
+  "total_tokens": 653,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 125,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.112162721,
+  "prompt_time": 0.018252298,
+  "completion_time": 0.465480741,
+  "total_time": 0.483733039
+ },
+ {
+  "label": "v3_3",
+  "cached": false,
+  "completion_tokens": 259,
+  "prompt_tokens": 430,
+  "total_tokens": 689,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 164,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.163428499,
+  "prompt_time": 0.027348604,
+  "completion_time": 0.548774208,
+  "total_time": 0.576122812
+ },
+ {
+  "label": "v3_4",
+  "cached": false,
+  "completion_tokens": 306,
+  "prompt_tokens": 430,
+  "total_tokens": 736,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 219,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.092223625,
+  "prompt_time": 0.021452773,
+  "completion_time": 0.63211233,
+  "total_time": 0.653565103
+ }
+]

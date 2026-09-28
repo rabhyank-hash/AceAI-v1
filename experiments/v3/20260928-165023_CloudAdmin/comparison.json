@@ -1,0 +1,73 @@
+{
+  "coverage": {
+    "placed": 15,
+    "total": 15,
+    "complete": true
+  },
+  "n_detailed": 15,
+  "n_detailed_placed": 15,
+  "unplaced": [],
+  "n_gt_modules": 3,
+  "n_gt_units": 1,
+  "n_pred_modules": 5,
+  "n_surviving_los": 14,
+  "grouping": {
+    "module": {
+      "precision": 0.632,
+      "recall": 0.245,
+      "f1": 0.353,
+      "tp": 12,
+      "fp": 7,
+      "fn": 37,
+      "ari": 0.125,
+      "bcubed": {
+        "precision": 0.767,
+        "recall": 0.444,
+        "f1": 0.563
+      }
+    },
+    "unit": {
+      "precision": 1.0,
+      "recall": 0.181,
+      "f1": 0.306,
+      "tp": 19,
+      "fp": 0,
+      "fn": 86,
+      "ari": 0.0,
+      "bcubed": {
+        "precision": 1.0,
+        "recall": 0.236,
+        "f1": 0.381
+      }
+    }
+  },
+  "order": {
+    "module": {
+      "pairs": 49,
+      "agreement": 1.0,
+      "skipped_unplaced_pairs": 0
+    },
+    "unit": {
+      "pairs": 0,
+      "agreement": null,
+      "skipped_unplaced_pairs": 0
+    }
+  },
+  "sequence": {
+    "agreement": 0.889
+  },
+  "merges": [
+    {
+      "lo_id": "LO-00b69b",
+      "raw_ids": [
+        "cloudadmin-u00-primer-an-introduction-to-azure-lo02",
+        "cloudadmin-u00-primer-an-introduction-to-azure-lo03"
+      ],
+      "gt_modules": [
+        "u0 PRIMER An Introduction to Azure"
+      ],
+      "same_gt_module": true
+    }
+  ],
+  "broad": []
+}

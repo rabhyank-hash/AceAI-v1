@@ -1,0 +1,195 @@
+[
+ {
+  "seed": 5,
+  "labels": {
+   "L1": "LO-baa488",
+   "L2": "LO-ef3761",
+   "L3": "LO-919a9b",
+   "L4": "LO-801048",
+   "L5": "LO-42056a",
+   "L6": "LO-35e321",
+   "L7": "LO-03638c",
+   "L8": "LO-3a4850",
+   "L9": "LO-7e4edd",
+   "L10": "LO-27431d",
+   "L11": "LO-a49de3"
+  },
+  "modules": [
+   [
+    "LO-919a9b",
+    "LO-801048",
+    "LO-42056a",
+    "LO-03638c"
+   ],
+   [
+    "LO-27431d",
+    "LO-35e321",
+    "LO-a49de3"
+   ],
+   [
+    "LO-baa488",
+    "LO-3a4850"
+   ],
+   [
+    "LO-7e4edd",
+    "LO-ef3761"
+   ]
+  ],
+  "repaired": false,
+  "error": null
+ },
+ {
+  "seed": 6,
+  "labels": {
+   "L1": "LO-ef3761",
+   "L2": "LO-801048",
+   "L3": "LO-baa488",
+   "L4": "LO-42056a",
+   "L5": "LO-7e4edd",
+   "L6": "LO-27431d",
+   "L7": "LO-919a9b",
+   "L8": "LO-a49de3",
+   "L9": "LO-03638c",
+   "L10": "LO-3a4850",
+   "L11": "LO-35e321"
+  },
+  "modules": [
+   [
+    "LO-27431d",
+    "LO-919a9b",
+    "LO-03638c",
+    "LO-801048",
+    "LO-42056a",
+    "LO-a49de3",
+    "LO-35e321"
+   ],
+   [
+    "LO-baa488",
+    "LO-3a4850",
+    "LO-7e4edd",
+    "LO-ef3761"
+   ]
+  ],
+  "repaired": false,
+  "error": null
+ },
+ {
+  "seed": 7,
+  "labels": {
+   "L1": "LO-42056a",
+   "L2": "LO-7e4edd",
+   "L3": "LO-3a4850",
+   "L4": "LO-35e321",
+   "L5": "LO-801048",
+   "L6": "LO-a49de3",
+   "L7": "LO-03638c",
+   "L8": "LO-baa488",
+   "L9": "LO-27431d",
+   "L10": "LO-919a9b",
+   "L11": "LO-ef3761"
+  },
+  "modules": [
+   [
+    "LO-801048",
+    "LO-03638c",
+    "LO-42056a",
+    "LO-919a9b"
+   ],
+   [
+    "LO-a49de3",
+    "LO-35e321",
+    "LO-27431d"
+   ],
+   [
+    "LO-3a4850",
+    "LO-baa488"
+   ],
+   [
+    "LO-7e4edd",
+    "LO-ef3761"
+   ]
+  ],
+  "repaired": false,
+  "error": null
+ },
+ {
+  "seed": 8,
+  "labels": {
+   "L1": "LO-7e4edd",
+   "L2": "LO-03638c",
+   "L3": "LO-27431d",
+   "L4": "LO-baa488",
+   "L5": "LO-919a9b",
+   "L6": "LO-a49de3",
+   "L7": "LO-801048",
+   "L8": "LO-3a4850",
+   "L9": "LO-42056a",
+   "L10": "LO-35e321",
+   "L11": "LO-ef3761"
+  },
+  "modules": [
+   [
+    "LO-03638c",
+    "LO-919a9b",
+    "LO-801048",
+    "LO-42056a",
+    "LO-35e321"
+   ],
+   [
+    "LO-27431d",
+    "LO-a49de3"
+   ],
+   [
+    "LO-baa488",
+    "LO-3a4850",
+    "LO-7e4edd"
+   ],
+   [
+    "LO-ef3761"
+   ]
+  ],
+  "repaired": false,
+  "error": null
+ },
+ {
+  "seed": 9,
+  "labels": {
+   "L1": "LO-801048",
+   "L2": "LO-baa488",
+   "L3": "LO-27431d",
+   "L4": "LO-ef3761",
+   "L5": "LO-919a9b",
+   "L6": "LO-35e321",
+   "L7": "LO-42056a",
+   "L8": "LO-03638c",
+   "L9": "LO-a49de3",
+   "L10": "LO-3a4850",
+   "L11": "LO-7e4edd"
+  },
+  "modules": [
+   [
+    "LO-27431d",
+    "LO-919a9b",
+    "LO-03638c",
+    "LO-42056a",
+    "LO-801048"
+   ],
+   [
+    "LO-a49de3"
+   ],
+   [
+    "LO-35e321"
+   ],
+   [
+    "LO-baa488",
+    "LO-3a4850"
+   ],
+   [
+    "LO-7e4edd",
+    "LO-ef3761"
+   ]
+  ],
+  "repaired": false,
+  "error": null
+ }
+]

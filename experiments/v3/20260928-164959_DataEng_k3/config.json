@@ -1,0 +1,19 @@
+{
+  "course": "DataEng",
+  "agent": "v3",
+  "seed": 5,
+  "seeds": [
+    5,
+    6,
+    7
+  ],
+  "model": "openai/gpt-oss-120b",
+  "model_params": {
+    "reasoning_effort": "low"
+  },
+  "prompt_version": "v3-2",
+  "modules": 3,
+  "min_los": 0,
+  "n_input_los": 11,
+  "k": 3
+}

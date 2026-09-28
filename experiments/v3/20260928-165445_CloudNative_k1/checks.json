@@ -1,0 +1,65 @@
+{
+  "validate_output": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  "check_provenance": {
+    "ok": true,
+    "errors": [],
+    "warnings": [],
+    "missing": [],
+    "duplicated": {},
+    "unknown_raw": [],
+    "unknown_lo": []
+  },
+  "check_cycles": {
+    "ok": true,
+    "errors": [],
+    "warnings": [],
+    "cycles": [],
+    "truncated": false
+  },
+  "check_module_order": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  "build_module_graph": {
+    "ok": true,
+    "errors": [],
+    "warnings": [],
+    "edges": []
+  },
+  "topo_sort_modules": {
+    "ok": true,
+    "errors": [],
+    "warnings": [],
+    "order": [
+      "S01",
+      "S02",
+      "S03"
+    ],
+    "ties": [
+      {
+        "position": 0,
+        "candidates": [
+          "S01",
+          "S02",
+          "S03"
+        ],
+        "chosen": "S01"
+      },
+      {
+        "position": 1,
+        "candidates": [
+          "S02",
+          "S03"
+        ],
+        "chosen": "S02"
+      }
+    ],
+    "unique": false,
+    "matches_current_order": true
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "stopped_because": "all checks passed",
+  "attempts": [
+    {
+      "index": 0,
+      "error": null,
+      "n_errors": 30,
+      "errors_by_tool": {
+        "validate_output": 16,
+        "check_provenance": 14,
+        "check_cycles": 0,
+        "check_module_order": 0,
+        "build_module_graph": 0,
+        "topo_sort_modules": 0
+      },
+      "skipped": null
+    },
+    {
+      "index": 1,
+      "error": null,
+      "n_errors": 20,
+      "errors_by_tool": {
+        "validate_output": 20
+      },
+      "skipped": "output does not parse; graph and provenance checks not run"
+    },
+    {
+      "index": 2,
+      "error": null,
+      "n_errors": 3,
+      "errors_by_tool": {
+        "validate_output": 1,
+        "check_provenance": 2,
+        "check_cycles": 0,
+        "check_module_order": 0,
+        "build_module_graph": 0,
+        "topo_sort_modules": 0
+      },
+      "skipped": null
+    },
+    {
+      "index": 3,
+      "error": null,
+      "n_errors": 0,
+      "errors_by_tool": {
+        "validate_output": 0,
+        "check_provenance": 0,
+        "check_cycles": 0,
+        "check_module_order": 0,
+        "build_module_graph": 0,
+        "topo_sort_modules": 0
+      },
+      "skipped": null
+    }
+  ]
+}

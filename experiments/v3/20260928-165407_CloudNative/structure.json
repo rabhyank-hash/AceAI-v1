@@ -1,0 +1,679 @@
+{
+ "modules": [
+  {
+   "id": "M1",
+   "title": "Docker Foundations",
+   "order": 1,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-a5a712",
+    "LO-6513cf",
+    "LO-2d5bab",
+    "LO-e7dd52",
+    "LO-804797",
+    "LO-ad008e",
+    "LO-9db252",
+    "LO-76b59a",
+    "LO-9e8327",
+    "LO-eac2b5"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M2",
+   "title": "Docker Applied Projects",
+   "order": 2,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-09c309"
+   ],
+   "depends_on": [
+    "M1"
+   ]
+  },
+  {
+   "id": "M3",
+   "title": "Cloud\u2011Native Concepts",
+   "order": 3,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-8e1dab",
+    "LO-c5e935",
+    "LO-3328a1",
+    "LO-737a7c",
+    "LO-0ddd8e",
+    "LO-9f6808"
+   ],
+   "depends_on": [
+    "M1"
+   ]
+  },
+  {
+   "id": "M4",
+   "title": "Kubernetes Foundations",
+   "order": 4,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-4a1b30",
+    "LO-7f60fa",
+    "LO-203da6",
+    "LO-23007b",
+    "LO-2f7871",
+    "LO-082f58",
+    "LO-6af0ce",
+    "LO-a119e6",
+    "LO-41c6f5"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M5",
+   "title": "Advanced Cloud\u2011Native Practices",
+   "order": 5,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-5ae536",
+    "LO-93ccff"
+   ],
+   "depends_on": [
+    "M1",
+    "M4"
+   ]
+  }
+ ],
+ "los": [
+  {
+   "id": "LO-a5a712",
+   "source_ids": [
+    "LO-a5a712",
+    "LO-c8abb5"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-6513cf",
+   "source_ids": [
+    "LO-6513cf",
+    "LO-e66af1"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-2d5bab",
+   "source_ids": [
+    "LO-2d5bab",
+    "LO-8505e9"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-a5a712"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-e7dd52",
+   "source_ids": [
+    "LO-e7dd52",
+    "LO-2d0458"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-2d5bab"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-804797",
+   "source_ids": [
+    "LO-804797",
+    "LO-2a1fa6"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-e7dd52"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-ad008e",
+   "source_ids": [
+    "LO-ad008e",
+    "LO-5cca5a"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-804797"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-09c309",
+   "source_ids": [
+    "LO-09c309",
+    "LO-a489d9"
+   ],
+   "bloom_level": "C6",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-804797"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-9db252",
+   "source_ids": [
+    "LO-9db252",
+    "LO-a96433"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-8e1dab",
+   "source_ids": [
+    "LO-8e1dab"
+   ],
+   "bloom_level": "C4",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-c5e935",
+   "source_ids": [
+    "LO-c5e935",
+    "LO-ba1d4a"
+   ],
+   "bloom_level": "C4",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-3328a1",
+   "source_ids": [
+    "LO-3328a1"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-9db252"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-737a7c",
+   "source_ids": [
+    "LO-737a7c"
+   ],
+   "bloom_level": "C4",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-8e1dab"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-0ddd8e",
+   "source_ids": [
+    "LO-0ddd8e"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-9f6808",
+   "source_ids": [
+    "LO-9f6808"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-0ddd8e"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-4a1b30",
+   "source_ids": [
+    "LO-4a1b30",
+    "LO-9d047b"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-7f60fa",
+   "source_ids": [
+    "LO-7f60fa",
+    "LO-95cfb8"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-4a1b30"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-203da6",
+   "source_ids": [
+    "LO-203da6"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-7f60fa"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-23007b",
+   "source_ids": [
+    "LO-23007b"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-203da6"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-2f7871",
+   "source_ids": [
+    "LO-2f7871"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-23007b"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-082f58",
+   "source_ids": [
+    "LO-082f58",
+    "LO-60a7c6",
+    "LO-9b4540"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-4a1b30"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-6af0ce",
+   "source_ids": [
+    "LO-6af0ce"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-4a1b30"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-5ae536",
+   "source_ids": [
+    "LO-5ae536"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-804797",
+    "LO-082f58"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-93ccff",
+   "source_ids": [
+    "LO-93ccff"
+   ],
+   "bloom_level": "C5",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-23007b"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-76b59a",
+   "source_ids": [
+    "LO-76b59a",
+    "LO-7ed6c8"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-9e8327",
+   "source_ids": [
+    "LO-9e8327",
+    "LO-eb671e"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-a119e6",
+   "source_ids": [
+    "LO-a119e6",
+    "LO-ebeb52"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-eac2b5",
+   "source_ids": [
+    "LO-eac2b5"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-41c6f5",
+   "source_ids": [
+    "LO-41c6f5"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-7f60fa"
+   ],
+   "priority": null,
+   "depth_floor": null
+  }
+ ],
+ "provenance": [
+  {
+   "raw_id": "LO-a5a712",
+   "lo_id": "LO-a5a712"
+  },
+  {
+   "raw_id": "LO-c8abb5",
+   "lo_id": "LO-a5a712"
+  },
+  {
+   "raw_id": "LO-6513cf",
+   "lo_id": "LO-6513cf"
+  },
+  {
+   "raw_id": "LO-e66af1",
+   "lo_id": "LO-6513cf"
+  },
+  {
+   "raw_id": "LO-2d5bab",
+   "lo_id": "LO-2d5bab"
+  },
+  {
+   "raw_id": "LO-8505e9",
+   "lo_id": "LO-2d5bab"
+  },
+  {
+   "raw_id": "LO-e7dd52",
+   "lo_id": "LO-e7dd52"
+  },
+  {
+   "raw_id": "LO-2d0458",
+   "lo_id": "LO-e7dd52"
+  },
+  {
+   "raw_id": "LO-804797",
+   "lo_id": "LO-804797"
+  },
+  {
+   "raw_id": "LO-2a1fa6",
+   "lo_id": "LO-804797"
+  },
+  {
+   "raw_id": "LO-ad008e",
+   "lo_id": "LO-ad008e"
+  },
+  {
+   "raw_id": "LO-5cca5a",
+   "lo_id": "LO-ad008e"
+  },
+  {
+   "raw_id": "LO-09c309",
+   "lo_id": "LO-09c309"
+  },
+  {
+   "raw_id": "LO-a489d9",
+   "lo_id": "LO-09c309"
+  },
+  {
+   "raw_id": "LO-9db252",
+   "lo_id": "LO-9db252"
+  },
+  {
+   "raw_id": "LO-a96433",
+   "lo_id": "LO-9db252"
+  },
+  {
+   "raw_id": "LO-8e1dab",
+   "lo_id": "LO-8e1dab"
+  },
+  {
+   "raw_id": "LO-c5e935",
+   "lo_id": "LO-c5e935"
+  },
+  {
+   "raw_id": "LO-ba1d4a",
+   "lo_id": "LO-c5e935"
+  },
+  {
+   "raw_id": "LO-3328a1",
+   "lo_id": "LO-3328a1"
+  },
+  {
+   "raw_id": "LO-737a7c",
+   "lo_id": "LO-737a7c"
+  },
+  {
+   "raw_id": "LO-0ddd8e",
+   "lo_id": "LO-0ddd8e"
+  },
+  {
+   "raw_id": "LO-9f6808",
+   "lo_id": "LO-9f6808"
+  },
+  {
+   "raw_id": "LO-4a1b30",
+   "lo_id": "LO-4a1b30"
+  },
+  {
+   "raw_id": "LO-9d047b",
+   "lo_id": "LO-4a1b30"
+  },
+  {
+   "raw_id": "LO-7f60fa",
+   "lo_id": "LO-7f60fa"
+  },
+  {
+   "raw_id": "LO-95cfb8",
+   "lo_id": "LO-7f60fa"
+  },
+  {
+   "raw_id": "LO-203da6",
+   "lo_id": "LO-203da6"
+  },
+  {
+   "raw_id": "LO-23007b",
+   "lo_id": "LO-23007b"
+  },
+  {
+   "raw_id": "LO-2f7871",
+   "lo_id": "LO-2f7871"
+  },
+  {
+   "raw_id": "LO-082f58",
+   "lo_id": "LO-082f58"
+  },
+  {
+   "raw_id": "LO-60a7c6",
+   "lo_id": "LO-082f58"
+  },
+  {
+   "raw_id": "LO-9b4540",
+   "lo_id": "LO-082f58"
+  },
+  {
+   "raw_id": "LO-6af0ce",
+   "lo_id": "LO-6af0ce"
+  },
+  {
+   "raw_id": "LO-5ae536",
+   "lo_id": "LO-5ae536"
+  },
+  {
+   "raw_id": "LO-93ccff",
+   "lo_id": "LO-93ccff"
+  },
+  {
+   "raw_id": "LO-76b59a",
+   "lo_id": "LO-76b59a"
+  },
+  {
+   "raw_id": "LO-7ed6c8",
+   "lo_id": "LO-76b59a"
+  },
+  {
+   "raw_id": "LO-9e8327",
+   "lo_id": "LO-9e8327"
+  },
+  {
+   "raw_id": "LO-eb671e",
+   "lo_id": "LO-9e8327"
+  },
+  {
+   "raw_id": "LO-a119e6",
+   "lo_id": "LO-a119e6"
+  },
+  {
+   "raw_id": "LO-ebeb52",
+   "lo_id": "LO-a119e6"
+  },
+  {
+   "raw_id": "LO-eac2b5",
+   "lo_id": "LO-eac2b5"
+  },
+  {
+   "raw_id": "LO-41c6f5",
+   "lo_id": "LO-41c6f5"
+  }
+ ]
+}
