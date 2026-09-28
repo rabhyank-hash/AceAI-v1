@@ -55,6 +55,14 @@ def main() -> None:
             for c in calls
         ]
         (dst / "usage.json").write_text(json.dumps(usage, indent=1) + "\n")
+        for f in ("consensus.json", "module_edges.json", "checks.json"):  # v2 runs
+            if (src / f).exists():
+                shutil.copy(src / f, dst / f)
+        if (src / "asks.json").exists():  # v2: drop the model's free-text reasons
+            asks = json.loads((src / "asks.json").read_text())
+            for a in asks:
+                a.pop("reason", None)
+            (dst / "asks.json").write_text(json.dumps(asks, indent=1) + "\n")
         if (src / "output.json").exists():
             output = json.loads((src / "output.json").read_text())
             (dst / "structure.json").write_text(json.dumps(structure(output), indent=1) + "\n")
