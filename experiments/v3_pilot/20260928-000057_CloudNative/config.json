@@ -1,0 +1,21 @@
+{
+  "course": "CloudNative",
+  "agent": "v3",
+  "seed": 0,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "model": "openai/gpt-oss-120b",
+  "model_params": {
+    "reasoning_effort": "low"
+  },
+  "prompt_version": "v3-1",
+  "modules": 3,
+  "min_los": 20,
+  "n_input_los": 44,
+  "k": 5
+}

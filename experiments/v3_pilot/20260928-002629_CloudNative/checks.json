@@ -1,0 +1,163 @@
+{
+  "validate_output": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  "check_provenance": {
+    "ok": true,
+    "errors": [],
+    "warnings": [],
+    "missing": [],
+    "duplicated": {},
+    "unknown_raw": [],
+    "unknown_lo": []
+  },
+  "check_cycles": {
+    "ok": true,
+    "errors": [],
+    "warnings": [],
+    "cycles": [],
+    "truncated": false
+  },
+  "check_module_order": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  "build_module_graph": {
+    "ok": true,
+    "errors": [],
+    "warnings": [],
+    "edges": []
+  },
+  "topo_sort_modules": {
+    "ok": true,
+    "errors": [],
+    "warnings": [],
+    "order": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07",
+      "S08",
+      "S09",
+      "S10"
+    ],
+    "ties": [
+      {
+        "position": 0,
+        "candidates": [
+          "S01",
+          "S02",
+          "S03",
+          "S04",
+          "S05",
+          "S06",
+          "S07",
+          "S08",
+          "S09",
+          "S10"
+        ],
+        "chosen": "S01"
+      },
+      {
+        "position": 1,
+        "candidates": [
+          "S02",
+          "S03",
+          "S04",
+          "S05",
+          "S06",
+          "S07",
+          "S08",
+          "S09",
+          "S10"
+        ],
+        "chosen": "S02"
+      },
+      {
+        "position": 2,
+        "candidates": [
+          "S03",
+          "S04",
+          "S05",
+          "S06",
+          "S07",
+          "S08",
+          "S09",
+          "S10"
+        ],
+        "chosen": "S03"
+      },
+      {
+        "position": 3,
+        "candidates": [
+          "S04",
+          "S05",
+          "S06",
+          "S07",
+          "S08",
+          "S09",
+          "S10"
+        ],
+        "chosen": "S04"
+      },
+      {
+        "position": 4,
+        "candidates": [
+          "S05",
+          "S06",
+          "S07",
+          "S08",
+          "S09",
+          "S10"
+        ],
+        "chosen": "S05"
+      },
+      {
+        "position": 5,
+        "candidates": [
+          "S06",
+          "S07",
+          "S08",
+          "S09",
+          "S10"
+        ],
+        "chosen": "S06"
+      },
+      {
+        "position": 6,
+        "candidates": [
+          "S07",
+          "S08",
+          "S09",
+          "S10"
+        ],
+        "chosen": "S07"
+      },
+      {
+        "position": 7,
+        "candidates": [
+          "S08",
+          "S09",
+          "S10"
+        ],
+        "chosen": "S08"
+      },
+      {
+        "position": 8,
+        "candidates": [
+          "S09",
+          "S10"
+        ],
+        "chosen": "S09"
+      }
+    ],
+    "unique": false,
+    "matches_current_order": true
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "course": "CloudDevOps",
+  "agent": "v3",
+  "seed": 0,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "model": "openai/gpt-oss-120b",
+  "model_params": {
+    "reasoning_effort": "low"
+  },
+  "prompt_version": "v3-1",
+  "modules": 3,
+  "min_los": 20,
+  "n_input_los": 23,
+  "k": 3
+}

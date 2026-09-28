@@ -1,0 +1,305 @@
+[
+ {
+  "seed": 5,
+  "labels": {
+   "L1": "LO-b4a107",
+   "L2": "LO-801048",
+   "L3": "LO-386ac3",
+   "L4": "LO-42056a",
+   "L5": "LO-ef3761",
+   "L6": "LO-aad72f",
+   "L7": "LO-195d05",
+   "L8": "LO-8589d4",
+   "L9": "LO-3a4850",
+   "L10": "LO-810198",
+   "L11": "LO-f40300",
+   "L12": "LO-03638c",
+   "L13": "LO-919a9b",
+   "L14": "LO-7e4edd",
+   "L15": "LO-68e737",
+   "L16": "LO-6cf5a5",
+   "L17": "LO-27431d",
+   "L18": "LO-546fa3",
+   "L19": "LO-78cd30",
+   "L20": "LO-baa488",
+   "L21": "LO-35e321",
+   "L22": "LO-a49de3",
+   "L23": "LO-f789ea"
+  },
+  "modules": [],
+  "repaired": false,
+  "error": "giving up after 7 attempts: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kezc1f6qfv9rm38js6m60ax8` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198988, Requested 1061. Please try again in 21.168s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+ },
+ {
+  "seed": 6,
+  "labels": {
+   "L1": "LO-27431d",
+   "L2": "LO-8589d4",
+   "L3": "LO-a49de3",
+   "L4": "LO-ef3761",
+   "L5": "LO-801048",
+   "L6": "LO-b4a107",
+   "L7": "LO-7e4edd",
+   "L8": "LO-68e737",
+   "L9": "LO-78cd30",
+   "L10": "LO-6cf5a5",
+   "L11": "LO-919a9b",
+   "L12": "LO-386ac3",
+   "L13": "LO-baa488",
+   "L14": "LO-aad72f",
+   "L15": "LO-810198",
+   "L16": "LO-42056a",
+   "L17": "LO-f789ea",
+   "L18": "LO-f40300",
+   "L19": "LO-35e321",
+   "L20": "LO-03638c",
+   "L21": "LO-195d05",
+   "L22": "LO-546fa3",
+   "L23": "LO-3a4850"
+  },
+  "modules": [
+   [
+    "LO-27431d",
+    "LO-919a9b",
+    "LO-03638c",
+    "LO-801048",
+    "LO-42056a",
+    "LO-546fa3"
+   ],
+   [
+    "LO-b4a107",
+    "LO-f40300",
+    "LO-f789ea",
+    "LO-8589d4",
+    "LO-195d05"
+   ],
+   [
+    "LO-baa488",
+    "LO-3a4850",
+    "LO-ef3761",
+    "LO-7e4edd",
+    "LO-810198"
+   ],
+   [
+    "LO-68e737",
+    "LO-78cd30",
+    "LO-386ac3",
+    "LO-aad72f",
+    "LO-6cf5a5",
+    "LO-a49de3"
+   ],
+   [
+    "LO-35e321"
+   ]
+  ],
+  "repaired": false,
+  "error": null
+ },
+ {
+  "seed": 7,
+  "labels": {
+   "L1": "LO-6cf5a5",
+   "L2": "LO-7e4edd",
+   "L3": "LO-aad72f",
+   "L4": "LO-03638c",
+   "L5": "LO-810198",
+   "L6": "LO-3a4850",
+   "L7": "LO-f789ea",
+   "L8": "LO-42056a",
+   "L9": "LO-f40300",
+   "L10": "LO-195d05",
+   "L11": "LO-801048",
+   "L12": "LO-a49de3",
+   "L13": "LO-78cd30",
+   "L14": "LO-68e737",
+   "L15": "LO-386ac3",
+   "L16": "LO-baa488",
+   "L17": "LO-546fa3",
+   "L18": "LO-35e321",
+   "L19": "LO-8589d4",
+   "L20": "LO-27431d",
+   "L21": "LO-b4a107",
+   "L22": "LO-919a9b",
+   "L23": "LO-ef3761"
+  },
+  "modules": [
+   [
+    "LO-03638c",
+    "LO-42056a",
+    "LO-801048",
+    "LO-546fa3",
+    "LO-919a9b"
+   ],
+   [
+    "LO-6cf5a5",
+    "LO-aad72f",
+    "LO-386ac3",
+    "LO-68e737",
+    "LO-78cd30",
+    "LO-a49de3"
+   ],
+   [
+    "LO-b4a107",
+    "LO-f40300"
+   ],
+   [
+    "LO-3a4850",
+    "LO-f789ea",
+    "LO-baa488",
+    "LO-7e4edd",
+    "LO-ef3761"
+   ],
+   [
+    "LO-195d05",
+    "LO-810198"
+   ],
+   [
+    "LO-8589d4"
+   ],
+   [
+    "LO-27431d",
+    "LO-35e321"
+   ]
+  ],
+  "repaired": false,
+  "error": null
+ },
+ {
+  "seed": 8,
+  "labels": {
+   "L1": "LO-baa488",
+   "L2": "LO-b4a107",
+   "L3": "LO-7e4edd",
+   "L4": "LO-546fa3",
+   "L5": "LO-8589d4",
+   "L6": "LO-35e321",
+   "L7": "LO-f40300",
+   "L8": "LO-195d05",
+   "L9": "LO-aad72f",
+   "L10": "LO-3a4850",
+   "L11": "LO-f789ea",
+   "L12": "LO-27431d",
+   "L13": "LO-68e737",
+   "L14": "LO-03638c",
+   "L15": "LO-801048",
+   "L16": "LO-810198",
+   "L17": "LO-78cd30",
+   "L18": "LO-919a9b",
+   "L19": "LO-a49de3",
+   "L20": "LO-42056a",
+   "L21": "LO-6cf5a5",
+   "L22": "LO-386ac3",
+   "L23": "LO-ef3761"
+  },
+  "modules": [
+   [
+    "LO-546fa3",
+    "LO-03638c",
+    "LO-801048",
+    "LO-42056a",
+    "LO-919a9b"
+   ],
+   [
+    "LO-27431d",
+    "LO-68e737",
+    "LO-78cd30",
+    "LO-aad72f",
+    "LO-386ac3",
+    "LO-6cf5a5"
+   ],
+   [
+    "LO-b4a107",
+    "LO-f40300"
+   ],
+   [
+    "LO-baa488",
+    "LO-3a4850",
+    "LO-f789ea",
+    "LO-7e4edd",
+    "LO-ef3761"
+   ],
+   [
+    "LO-195d05",
+    "LO-8589d4"
+   ],
+   [
+    "LO-810198"
+   ],
+   [
+    "LO-35e321"
+   ],
+   [
+    "LO-a49de3"
+   ]
+  ],
+  "repaired": false,
+  "error": null
+ },
+ {
+  "seed": 9,
+  "labels": {
+   "L1": "LO-ef3761",
+   "L2": "LO-195d05",
+   "L3": "LO-919a9b",
+   "L4": "LO-35e321",
+   "L5": "LO-386ac3",
+   "L6": "LO-42056a",
+   "L7": "LO-6cf5a5",
+   "L8": "LO-8589d4",
+   "L9": "LO-801048",
+   "L10": "LO-78cd30",
+   "L11": "LO-27431d",
+   "L12": "LO-3a4850",
+   "L13": "LO-810198",
+   "L14": "LO-b4a107",
+   "L15": "LO-f40300",
+   "L16": "LO-f789ea",
+   "L17": "LO-baa488",
+   "L18": "LO-68e737",
+   "L19": "LO-aad72f",
+   "L20": "LO-03638c",
+   "L21": "LO-a49de3",
+   "L22": "LO-546fa3",
+   "L23": "LO-7e4edd"
+  },
+  "modules": [
+   [
+    "LO-919a9b",
+    "LO-03638c",
+    "LO-42056a",
+    "LO-801048",
+    "LO-546fa3"
+   ],
+   [
+    "LO-386ac3",
+    "LO-aad72f",
+    "LO-68e737",
+    "LO-78cd30",
+    "LO-6cf5a5",
+    "LO-27431d"
+   ],
+   [
+    "LO-b4a107",
+    "LO-f40300",
+    "LO-f789ea",
+    "LO-a49de3"
+   ],
+   [
+    "LO-3a4850",
+    "LO-baa488",
+    "LO-7e4edd",
+    "LO-ef3761",
+    "LO-195d05"
+   ],
+   [
+    "LO-8589d4",
+    "LO-810198"
+   ],
+   [
+    "LO-35e321"
+   ]
+  ],
+  "repaired": false,
+  "error": null
+ }
+]

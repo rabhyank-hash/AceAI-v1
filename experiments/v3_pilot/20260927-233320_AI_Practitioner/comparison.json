@@ -1,0 +1,74 @@
+{
+  "coverage": {
+    "placed": 23,
+    "total": 23,
+    "complete": true
+  },
+  "n_detailed": 23,
+  "n_detailed_placed": 23,
+  "unplaced": [],
+  "n_gt_modules": 7,
+  "n_gt_units": 2,
+  "n_pred_modules": 12,
+  "n_surviving_los": 22,
+  "grouping": {
+    "module": {
+      "precision": 0.375,
+      "recall": 0.2,
+      "f1": 0.261,
+      "tp": 6,
+      "fp": 10,
+      "fn": 24,
+      "ari": 0.194,
+      "bcubed": {
+        "precision": 0.688,
+        "recall": 0.464,
+        "f1": 0.554
+      }
+    },
+    "unit": {
+      "precision": 0.562,
+      "recall": 0.073,
+      "f1": 0.129,
+      "tp": 9,
+      "fp": 7,
+      "fn": 114,
+      "ari": 0.02,
+      "bcubed": {
+        "precision": 0.819,
+        "recall": 0.157,
+        "f1": 0.264
+      }
+    }
+  },
+  "order": {
+    "module": {
+      "pairs": 213,
+      "agreement": 0.592,
+      "skipped_unplaced_pairs": 0
+    },
+    "unit": {
+      "pairs": 123,
+      "agreement": 0.585,
+      "skipped_unplaced_pairs": 0
+    }
+  },
+  "sequence": {
+    "agreement": 0.587
+  },
+  "merges": [
+    {
+      "lo_id": "LO-0cb0d7",
+      "raw_ids": [
+        "ai-practitioner-u00-primer-data-structures-in-python-lo02",
+        "ai-practitioner-u00-primer-data-types-in-python-lo02"
+      ],
+      "gt_modules": [
+        "u0 PRIMER Data Structures in Python",
+        "u0 PRIMER Data Types in Python"
+      ],
+      "same_gt_module": false
+    }
+  ],
+  "broad": []
+}

@@ -43,25 +43,31 @@ def main() -> None:
     for line in args.log.read_text().splitlines():
         label, course, d = line.split("\t")
         src = Path(d) if Path(d).is_absolute() else PROJECT_ROOT / d
-        dst = out_root / src.name
+        # v3 sub-runs (k1/, k3/) live inside their parent run directory.
+        name = f"{src.parent.name}_{src.name}" if src.name.startswith("k") else src.name
+        dst = out_root / name
         dst.mkdir(exist_ok=True)
         for f in ("config.json", "result.json", "comparison.json"):
             if (src / f).exists():
                 shutil.copy(src / f, dst / f)
         shutil.copy(src / "input" / "id_map.json", dst / "id_map.json")
-        calls = json.loads((src / "llm_calls.json").read_text())
-        usage = [
-            {"label": c["label"], "cached": c["response"]["cached"], **c["response"]["usage"]}
-            for c in calls
-        ]
-        (dst / "usage.json").write_text(json.dumps(usage, indent=1) + "\n")
+        if (src / "llm_calls.json").exists():
+            calls = json.loads((src / "llm_calls.json").read_text())
+            usage = [
+                {"label": c["label"], "cached": c["response"]["cached"], **c["response"]["usage"]}
+                for c in calls
+            ]
+            (dst / "usage.json").write_text(json.dumps(usage, indent=1) + "\n")
+        else:  # v3 sub-runs: calls are counted in the parent run
+            shutil.copy(src / "usage.json", dst / "usage.json")
         for f in ("consensus.json", "module_edges.json", "checks.json"):  # v2 runs
             if (src / f).exists():
                 shutil.copy(src / f, dst / f)
-        if (src / "asks.json").exists():  # v2: drop the model's free-text reasons
+        if (src / "asks.json").exists():  # drop the model's free text
             asks = json.loads((src / "asks.json").read_text())
-            for a in asks:
+            for a in asks:  # model free text: v2 reasons, v3 module titles
                 a.pop("reason", None)
+                a.pop("titles", None)
             (dst / "asks.json").write_text(json.dumps(asks, indent=1) + "\n")
         if (src / "output.json").exists():
             output = json.loads((src / "output.json").read_text())

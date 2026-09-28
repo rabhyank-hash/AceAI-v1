@@ -1,0 +1,31 @@
+commit 1bac2e2 started 2026-09-27T23:32:34-04:00
+run dir: /home/ruchi/ruchi/AceAI/runs/20260927-233240_AI_Practitioner
+asks: 5/5 valid (0 repaired); 5 uncached calls, 5386 tokens; merged duplicates: 1
+13 modules; coverage 23/23; BCubed F1 0.507; sequence agreement vs CSV 0.544
+run dir: /home/ruchi/ruchi/AceAI/runs/20260927-233320_AI_Practitioner
+asks: 5/5 valid (3 repaired); 8 uncached calls, 8114 tokens; merged duplicates: 1
+12 modules; coverage 23/23; BCubed F1 0.554; sequence agreement vs CSV 0.587
+run dir: /home/ruchi/ruchi/AceAI/runs/20260927-233400_CloudAdmin
+asks: 5/5 valid (1 repaired); 6 uncached calls, 5377 tokens; merged duplicates: 0
+9 modules; coverage 21/21; BCubed F1 0.538; sequence agreement vs CSV 0.838
+run dir: /home/ruchi/ruchi/AceAI/runs/20260927-233438_CloudAdmin
+asks: 5/5 valid (1 repaired); 6 uncached calls, 4941 tokens; merged duplicates: 0
+9 modules; coverage 21/21; BCubed F1 0.601; sequence agreement vs CSV 0.833
+run dir: /home/ruchi/ruchi/AceAI/runs/20260927-233526_CloudDevOps
+asks: 5/5 valid (1 repaired); 6 uncached calls, 6494 tokens; merged duplicates: 0
+12 modules; coverage 23/23; BCubed F1 0.351; sequence agreement vs CSV 0.565
+run dir: /home/ruchi/ruchi/AceAI/runs/20260927-233604_CloudDevOps
+asks: 5/5 valid (0 repaired); 5 uncached calls, 5027 tokens; merged duplicates: 0
+12 modules; coverage 23/23; BCubed F1 0.391; sequence agreement vs CSV 0.636
+run dir: /home/ruchi/ruchi/AceAI/runs/20260928-000057_CloudNative
+asks: 4/5 valid (1 repaired); 5 uncached calls, 6638 tokens; merged duplicates: 16
+13 modules; coverage 44/44; BCubed F1 0.327; sequence agreement vs CSV 0.645
+run dir: /home/ruchi/ruchi/AceAI/runs/20260928-002629_CloudNative
+asks: 3/5 valid (1 repaired); 4 uncached calls, 5330 tokens; merged duplicates: 16
+10 modules; coverage 44/44; BCubed F1 0.284; sequence agreement vs CSV 0.65
+run dir: /home/ruchi/ruchi/AceAI/runs/20260928-005838_DataEng
+asks: 4/5 valid (0 repaired); 4 uncached calls, 4774 tokens; merged duplicates: 0
+10 modules; coverage 23/23; BCubed F1 0.577; sequence agreement vs CSV 0.526
+run dir: /home/ruchi/ruchi/AceAI/runs/20260928-012725_DataEng
+asks: 4/5 valid (0 repaired); 4 uncached calls, 4835 tokens; merged duplicates: 0
+13 modules; coverage 23/23; BCubed F1 0.577; sequence agreement vs CSV 0.51
