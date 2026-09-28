@@ -3,12 +3,17 @@ import json
 from aceai.agents.sequencer import run_checks
 from aceai.agents.sequencer_v3 import (
     Ask,
+    SplitAsk,
     ask_messages,
     ask_once,
     consensus,
     exact_duplicates,
     parse_answer,
+    parse_split,
     sequence_v3,
+    split_consensus,
+    split_messages,
+    split_once,
 )
 from aceai.config import ProviderConfig
 from aceai.ingest.agent1_input import Agent1Input, InputLO
@@ -103,3 +108,54 @@ def test_sequence_v3_end_to_end_valid_and_deterministic():
     assert not [e for k, v in checks.items() if k != "skipped" for e in v.errors]
     assert outputs[0].output == outputs[1].output
     assert set(r.by_k) == {1, 3, 5}
+
+
+# --- split step (Amendment 2) -------------------------------------------------------------------
+
+
+def codes_in_order(labels):
+    return [c for c, _ in sorted(labels.items(), key=lambda kv: kv[1])]
+
+
+def test_split_messages_keep_order_and_shuffle_codes():
+    order, texts = ["a", "b", "c", "d"], {x: f"text {x}" for x in "abcd"}
+    msgs, labels = split_messages(order, texts, 0)
+    lines = msgs[1]["content"].splitlines()[1:]
+    assert [line.split(": ")[1] for line in lines] == ["text a", "text b", "text c", "text d"]
+    assert sorted(labels.values()) == [0, 1, 2, 3]
+    assert len({tuple(codes_in_order(split_messages(order, texts, s)[1])) for s in range(6)}) > 1
+
+
+def test_parse_split_valid_and_invalid():
+    labels = {"K3": 0, "K1": 1, "K4": 2, "K2": 3}
+    ok = {"modules": [{"los": ["K3", "K1"]}, {"los": ["K4"]}, {"los": ["K2"]}]}
+    assert parse_split(ok, labels) == ([1, 2], 3, None)
+    swapped = {"modules": [{"los": ["K1", "K3"]}, {"los": ["K4", "K2"]}]}
+    assert parse_split(swapped, labels)[2] == "the order was changed"
+    short = {"modules": [{"los": ["K3", "K1", "K4"]}]}
+    assert parse_split(short, labels)[2] == "missing K2"
+
+
+def test_split_once_repairs_then_accepts():
+    order, texts = ["a", "b", "c"], {x: x for x in "abc"}
+    _, labels = split_messages(order, texts, 0)
+    codes = codes_in_order(labels)
+    bad = json.dumps({"modules": [{"los": [codes[1], codes[0], codes[2]]}]})
+    good = json.dumps({"modules": [{"los": codes[:2]}, {"los": codes[2:]}]})
+    ask = split_once(
+        LLMClient(PROVIDER, cache_dir=None, sdk=FakeSDK([bad, good])), order, texts, 0, 100
+    )
+    assert ask.valid and ask.repaired and ask.cuts == [1] and ask.n_modules == 2
+
+
+def test_split_consensus_majority_cuts():
+    order = ["a", "b", "c", "d", "e"]
+    asks = [
+        SplitAsk(0, {}, cuts=[1, 3], n_modules=3),
+        SplitAsk(1, {}, cuts=[1], n_modules=2),
+        SplitAsk(2, {}, cuts=[1, 2], n_modules=3),
+        SplitAsk(3, {}, error="bad"),
+    ]
+    modules, votes = split_consensus(asks, order)
+    assert modules == [["a", "b"], ["c", "d", "e"]]  # cut after b: 3/3; after c or d: 1/3
+    assert votes == [0.0, 1.0, 1 / 3, 1 / 3]

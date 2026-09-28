@@ -271,3 +271,144 @@ def asks_to_json(asks: list[Ask]) -> list[dict[str, Any]]:
         }
         for a in asks
     ]
+
+
+# --- 5. modules on the fixed order (Amendment 2) ------------------------------------------------
+
+SEGMENT_PROMPT_VERSION = "v3-seg-1"
+
+SEGMENT_PROMPT = """\
+You are an instructional designer. You receive the learning objectives (LOs) of one course, \
+already in teaching order, each with a random code. Split this sequence into modules: groups of \
+consecutive LOs that belong to one topic. Decide how many modules the course needs.
+
+Keep the given order. Include every LO exactly once. Do not move, drop or merge any LO.
+
+Reply with JSON only, modules in order, each listing its LO codes in the given order:
+{"modules": [{"title": "...", "los": ["K7", "K2", ...]}, ...]}"""
+
+SEGMENT_REPAIR = """\
+Your answer is not a valid split of the given sequence: {problems}. List every code exactly \
+once, in the given order, grouped into consecutive modules. Reply with the complete JSON again."""
+
+
+@dataclass
+class SplitAsk:
+    seed: int
+    labels: dict[str, int]  # code -> position in the fixed order
+    cuts: list[int] = field(default_factory=list)  # a module ends after these positions
+    n_modules: int = 0
+    repaired: bool = False
+    error: str | None = None
+
+    @property
+    def valid(self) -> bool:
+        return self.error is None and self.n_modules > 0
+
+
+def split_messages(
+    order: list[str], texts: dict[str, str], seed: int
+) -> tuple[list[dict[str, str]], dict[str, int]]:
+    """The fixed order, each LO under a random code (codes shuffled per seed)."""
+    codes = list(range(1, len(order) + 1))
+    random.Random(f"v3-seg-{seed}").shuffle(codes)
+    labels = {f"K{c}": pos for pos, c in enumerate(codes)}
+    by_pos = {pos: code for code, pos in labels.items()}
+    lines = [f"Course with {len(order)} learning objectives, in teaching order:"]
+    lines += [f"{by_pos[pos]}: {texts[lid]}" for pos, lid in enumerate(order)]
+    return [
+        {"role": "system", "content": SEGMENT_PROMPT},
+        {"role": "user", "content": "\n".join(lines)},
+    ], labels
+
+
+def parse_split(reply: Any, labels: dict[str, int]) -> tuple[list[int], int, str | None]:
+    """(cuts, number of modules, problem or None). Valid only if the modules, read in order,
+    give back positions 0..n-1."""
+    mods = reply.get("modules") if isinstance(reply, dict) else None
+    if not isinstance(mods, list) or not mods:
+        return [], 0, "no modules list"
+    positions: list[int] = []
+    unknown: list[str] = []
+    cuts: list[int] = []
+    n_modules = 0
+    for m in mods:
+        items = m.get("los") if isinstance(m, dict) else None
+        if not isinstance(items, list):
+            return [], 0, "a module has no los list"
+        known = [labels[str(x).strip()] for x in items if str(x).strip() in labels]
+        unknown += [str(x).strip() for x in items if str(x).strip() not in labels]
+        if known:
+            positions += known
+            cuts.append(len(positions) - 1)
+            n_modules += 1
+    n = len(labels)
+    problems = []
+    missing = sorted(set(range(n)) - set(positions))
+    if missing:
+        code = {pos: c for c, pos in labels.items()}
+        problems.append("missing " + ", ".join(code[p] for p in missing))
+    if len(positions) != len(set(positions)):
+        problems.append("repeated codes")
+    if unknown:
+        problems.append("unknown codes " + ", ".join(unknown))
+    if not problems and positions != list(range(n)):
+        problems.append("the order was changed")
+    return cuts[:-1], n_modules, "; ".join(problems) or None
+
+
+def split_once(
+    client: LLMClient, order: list[str], texts: dict[str, str], seed: int, max_tokens: int
+) -> SplitAsk:
+    messages, labels = split_messages(order, texts, seed)
+    ask = SplitAsk(seed=seed, labels=labels)
+    try:
+        resp = client.chat(messages, json_mode=True, max_tokens=max_tokens, label=f"seg_{seed}")
+        cuts, n_mod, problem = parse_split(resp.parse_json(), labels)
+        if problem:
+            ask.repaired = True
+            messages = messages + [
+                {"role": "assistant", "content": resp.content or ""},
+                {"role": "user", "content": SEGMENT_REPAIR.format(problems=problem)},
+            ]
+            resp = client.chat(
+                messages, json_mode=True, max_tokens=max_tokens, label=f"seg_{seed}_repair"
+            )
+            cuts, n_mod, problem = parse_split(resp.parse_json(), labels)
+        if problem:
+            ask.error = problem
+        else:
+            ask.cuts, ask.n_modules = cuts, n_mod
+    except LLMError as e:
+        ask.error = str(e)
+    return ask
+
+
+def split_consensus(asks: list[SplitAsk], order: list[str]) -> tuple[list[list[str]], list[float]]:
+    """Modules along `order`: a boundary after position i when a strict majority of valid asks
+    place one there. Returns the modules and the vote share per gap."""
+    valid = [a for a in asks if a.valid]
+    if not valid:
+        raise ValueError("no valid split asks")
+    votes = [sum(i in a.cuts for a in valid) / len(valid) for i in range(len(order) - 1)]
+    modules = [[order[0]]]
+    for i, lid in enumerate(order[1:]):
+        if votes[i] > 0.5:
+            modules.append([lid])
+        else:
+            modules[-1].append(lid)
+    return modules, votes
+
+
+def split_asks_to_json(asks: list[SplitAsk]) -> list[dict[str, Any]]:
+    return [
+        {
+            "seed": a.seed,
+            "labels": a.labels,
+            "cuts": a.cuts,
+            "n_modules": a.n_modules,
+            "repaired": a.repaired,
+            "error": a.error,
+        }
+        for a in asks
+    ]
