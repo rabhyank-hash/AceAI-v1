@@ -1,0 +1,654 @@
+{
+ "modules": [
+  {
+   "id": "M1",
+   "title": "Foundations of Computing and Programming Languages",
+   "order": 1,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-945284",
+    "LO-e9dff8",
+    "LO-20334f",
+    "LO-5c3268"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M2",
+   "title": "Introduction to Python Basics",
+   "order": 2,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-d446b2",
+    "LO-a9258c",
+    "LO-7e1a79",
+    "LO-d540f8"
+   ],
+   "depends_on": [
+    "M1"
+   ]
+  },
+  {
+   "id": "M3",
+   "title": "Variables and Functions",
+   "order": 3,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-2d4646",
+    "LO-fbeabe",
+    "LO-0159ab",
+    "LO-07ffec",
+    "LO-2e0a3d"
+   ],
+   "depends_on": [
+    "M1",
+    "M2"
+   ]
+  },
+  {
+   "id": "M4",
+   "title": "Data Types and Operators",
+   "order": 4,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-c7e27e",
+    "LO-a3057f"
+   ],
+   "depends_on": [
+    "M3"
+   ]
+  },
+  {
+   "id": "M5",
+   "title": "Built\u2011in Functions and Modules",
+   "order": 5,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-800700",
+    "LO-5efcb1"
+   ],
+   "depends_on": [
+    "M4"
+   ]
+  },
+  {
+   "id": "M6",
+   "title": "File Manipulation in Browser",
+   "order": 6,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-ff5e4d"
+   ],
+   "depends_on": [
+    "M5"
+   ]
+  },
+  {
+   "id": "M7",
+   "title": "Scratch Programming",
+   "order": 7,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-0184e6"
+   ],
+   "depends_on": []
+  },
+  {
+   "id": "M8",
+   "title": "Code Quality and Constructs",
+   "order": 8,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-26c6e5",
+    "LO-dd6a95",
+    "LO-343d8e",
+    "LO-c12ab1"
+   ],
+   "depends_on": [
+    "M3"
+   ]
+  },
+  {
+   "id": "M9",
+   "title": "Sail Platform and Technical Questioning",
+   "order": 9,
+   "aggregate_lo_id": null,
+   "lo_ids": [
+    "LO-765362",
+    "LO-a63fc3",
+    "LO-29659f",
+    "LO-a2cc63",
+    "LO-21f48b"
+   ],
+   "depends_on": []
+  }
+ ],
+ "los": [
+  {
+   "id": "LO-945284",
+   "source_ids": [
+    "LO-945284"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-e9dff8",
+   "source_ids": [
+    "LO-e9dff8"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-945284"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-20334f",
+   "source_ids": [
+    "LO-20334f"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-e9dff8"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-5c3268",
+   "source_ids": [
+    "LO-5c3268"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-e9dff8"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-d446b2",
+   "source_ids": [
+    "LO-d446b2"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-945284"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-a9258c",
+   "source_ids": [
+    "LO-a9258c"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-d446b2"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-7e1a79",
+   "source_ids": [
+    "LO-7e1a79"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-d446b2"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-2d4646",
+   "source_ids": [
+    "LO-2d4646"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-d446b2"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-c7e27e",
+   "source_ids": [
+    "LO-c7e27e"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-2d4646"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-a3057f",
+   "source_ids": [
+    "LO-a3057f"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-c7e27e"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-800700",
+   "source_ids": [
+    "LO-800700"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-a3057f"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-5efcb1",
+   "source_ids": [
+    "LO-5efcb1"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-800700"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-ff5e4d",
+   "source_ids": [
+    "LO-ff5e4d"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-5efcb1"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-fbeabe",
+   "source_ids": [
+    "LO-fbeabe"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-2d4646"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-0159ab",
+   "source_ids": [
+    "LO-0159ab"
+   ],
+   "bloom_level": "C4",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-fbeabe"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-07ffec",
+   "source_ids": [
+    "LO-07ffec"
+   ],
+   "bloom_level": "C4",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-fbeabe"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-0184e6",
+   "source_ids": [
+    "LO-0184e6"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-26c6e5",
+   "source_ids": [
+    "LO-26c6e5"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-2d4646"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-dd6a95",
+   "source_ids": [
+    "LO-dd6a95"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-2d4646"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-343d8e",
+   "source_ids": [
+    "LO-343d8e"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-2d4646"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-c12ab1",
+   "source_ids": [
+    "LO-c12ab1"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-2d4646"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-765362",
+   "source_ids": [
+    "LO-765362"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-a63fc3",
+   "source_ids": [
+    "LO-a63fc3"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-765362"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-29659f",
+   "source_ids": [
+    "LO-29659f"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-a2cc63",
+   "source_ids": [
+    "LO-a2cc63"
+   ],
+   "bloom_level": "C3",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-29659f"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-21f48b",
+   "source_ids": [
+    "LO-21f48b"
+   ],
+   "bloom_level": "C4",
+   "track": "applied",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-a2cc63"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-2e0a3d",
+   "source_ids": [
+    "LO-2e0a3d"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-945284"
+   ],
+   "priority": null,
+   "depth_floor": null
+  },
+  {
+   "id": "LO-d540f8",
+   "source_ids": [
+    "LO-d540f8"
+   ],
+   "bloom_level": "C2",
+   "track": "conceptual",
+   "scope": "atomic",
+   "parent_id": null,
+   "depends_on": [
+    "LO-7e1a79"
+   ],
+   "priority": null,
+   "depth_floor": null
+  }
+ ],
+ "provenance": [
+  {
+   "raw_id": "LO-945284",
+   "lo_id": "LO-945284"
+  },
+  {
+   "raw_id": "LO-e9dff8",
+   "lo_id": "LO-e9dff8"
+  },
+  {
+   "raw_id": "LO-20334f",
+   "lo_id": "LO-20334f"
+  },
+  {
+   "raw_id": "LO-5c3268",
+   "lo_id": "LO-5c3268"
+  },
+  {
+   "raw_id": "LO-d446b2",
+   "lo_id": "LO-d446b2"
+  },
+  {
+   "raw_id": "LO-a9258c",
+   "lo_id": "LO-a9258c"
+  },
+  {
+   "raw_id": "LO-7e1a79",
+   "lo_id": "LO-7e1a79"
+  },
+  {
+   "raw_id": "LO-2d4646",
+   "lo_id": "LO-2d4646"
+  },
+  {
+   "raw_id": "LO-c7e27e",
+   "lo_id": "LO-c7e27e"
+  },
+  {
+   "raw_id": "LO-a3057f",
+   "lo_id": "LO-a3057f"
+  },
+  {
+   "raw_id": "LO-800700",
+   "lo_id": "LO-800700"
+  },
+  {
+   "raw_id": "LO-5efcb1",
+   "lo_id": "LO-5efcb1"
+  },
+  {
+   "raw_id": "LO-ff5e4d",
+   "lo_id": "LO-ff5e4d"
+  },
+  {
+   "raw_id": "LO-fbeabe",
+   "lo_id": "LO-fbeabe"
+  },
+  {
+   "raw_id": "LO-0159ab",
+   "lo_id": "LO-0159ab"
+  },
+  {
+   "raw_id": "LO-07ffec",
+   "lo_id": "LO-07ffec"
+  },
+  {
+   "raw_id": "LO-0184e6",
+   "lo_id": "LO-0184e6"
+  },
+  {
+   "raw_id": "LO-26c6e5",
+   "lo_id": "LO-26c6e5"
+  },
+  {
+   "raw_id": "LO-dd6a95",
+   "lo_id": "LO-dd6a95"
+  },
+  {
+   "raw_id": "LO-343d8e",
+   "lo_id": "LO-343d8e"
+  },
+  {
+   "raw_id": "LO-c12ab1",
+   "lo_id": "LO-c12ab1"
+  },
+  {
+   "raw_id": "LO-765362",
+   "lo_id": "LO-765362"
+  },
+  {
+   "raw_id": "LO-a63fc3",
+   "lo_id": "LO-a63fc3"
+  },
+  {
+   "raw_id": "LO-29659f",
+   "lo_id": "LO-29659f"
+  },
+  {
+   "raw_id": "LO-a2cc63",
+   "lo_id": "LO-a2cc63"
+  },
+  {
+   "raw_id": "LO-21f48b",
+   "lo_id": "LO-21f48b"
+  },
+  {
+   "raw_id": "LO-2e0a3d",
+   "lo_id": "LO-2e0a3d"
+  },
+  {
+   "raw_id": "LO-d540f8",
+   "lo_id": "LO-d540f8"
+  }
+ ]
+}

@@ -1,17 +1,20 @@
 # Agent 1 (Sequencer): v1 results and plan v2
 
-TEEL Lab, ACE-AI, 26 September 2026.
+TEEL Lab, ACE-AI, 27 September 2026.
 
 Plan v1 is on branch `agent1-poc`, plan v2 on `agent_v2` (`docs/implementation_plan.md` on each).
 The v2 prototype is pre-registered in [v2_preregistration.md](v2_preregistration.md). Metrics are
-defined in [evaluation.md](evaluation.md). Run records without LO text are in `experiments/v1/`.
+defined in [evaluation.md](evaluation.md). Run records without LO text are in `experiments/v1/`
+and `experiments/v2/`.
 
 ## Summary
 
 - v1 produces a valid module tree for a sample of every course.
 - v1 is not consistent: rerunning with the LOs in a different order gives a different course.
 - Plan v2 repeats small LLM judgments under different orders and aggregates them in code.
-- The v2 prototype is built but not yet run. The free API tier's daily limit was reached.
+- The v2 prototype ran on 27 September. It did not meet its pre-registered consistency targets.
+  It made DataEng more consistent (order agreement between runs 0.54 → 0.77) but not PPP.
+  Grouping is the remaining source of variation.
 
 ## 1. Plan v1: implementation and tests
 
@@ -117,9 +120,8 @@ order scores 0.5. ARI is 1 for identical groupings and 0 for chance.
 
 ## 4. v2 prototype
 
-Status: implemented and tested offline. Not yet run.
-
-The design was committed before any run (`bdb43e6`), and the code before running (`ebac3e6`).
+Run on 27 September 2026 at commit `9e96fa0`. The design was committed before any run
+(`bdb43e6`), and the code before running (`ebac3e6`). Records: `experiments/v2/`.
 
 - **Hypotheses.** H1a: order agreement between two v2 runs ≥ 0.90. H1b: grouping ARI between
   them ≥ 0.60. H2: BCubed F1 against the CSV at least the v1 mean minus 0.05. H3: every run
@@ -131,23 +133,52 @@ The design was committed before any run (`bdb43e6`), and the code before running
   is seeds 0–5.
 - **Scope.** Grouping reuses v1's calls. Merging and containment are left out; neither sample
   has course-level LOs.
-- **Offline check.** Consensus of v1 seeds 0–2 gives 10 modules for DataEng and 12 for PPP, many
-  with 1–2 LOs. The experiment needs about 185K tokens.
+- **Execution.** All 4 v2 runs are valid. Consensus gave 10 modules in both DataEng runs, and 12
+  and 15 modules in the PPP runs, many with 1–2 LOs. Each v2 run made 30–45 ordering calls and
+  used 25–48K tokens, on top of its 3 grouping runs. A v2 run costs 7–9 times a v1 run.
 
 ## 5. Metrics
 
-Pending the v2 run. v1 values are from seeds 0–2 and will be recomputed over seeds 0–5.
+v1: 6 seeds per course (15 run pairs). v2: one pair of independent runs per course.
 
-| Course | Metric | v1 | v2 | Target |
-|---|---|---|---|---|
-| DataEng | Order agreement between runs | 0.63 (0.60–0.67) | pending | ≥ 0.90 |
-| DataEng | Grouping ARI between runs | 0.24 (0.12–0.40) | pending | ≥ 0.60 |
-| DataEng | BCubed F1 vs CSV | 0.63 | pending | ≥ v1 − 0.05 (now 0.58) |
-| DataEng | Valid runs | 3/3 | pending | all |
-| PPP | Order agreement between runs | 0.81 (0.70–0.87) | pending | ≥ 0.90 |
-| PPP | Grouping ARI between runs | 0.43 (0.37–0.52) | pending | ≥ 0.60 |
-| PPP | BCubed F1 vs CSV | 0.59 | pending | ≥ v1 − 0.05 (now 0.54) |
-| PPP | Valid runs | 3/3 | pending | all |
+| Course | Metric | v1 mean (range) | v2 | Target | Met |
+|---|---|---|---|---|---|
+| DataEng | Order agreement between runs | 0.54 (0.22–0.77) | 0.77 | ≥ 0.90 | no |
+| DataEng | Grouping ARI between runs | 0.37 (0.12–0.62) | 0.60 | ≥ 0.60 | yes |
+| DataEng | BCubed F1 vs CSV | 0.639 | 0.593 | ≥ 0.589 | yes |
+| DataEng | Valid runs | 6/6 | 2/2 | all | yes |
+| PPP | Order agreement between runs | 0.77 (0.66–0.97) | 0.82 | ≥ 0.90 | no |
+| PPP | Grouping ARI between runs | 0.35 (0.22–0.58) | 0.30 | ≥ 0.60 | no |
+| PPP | BCubed F1 vs CSV | 0.562 | 0.501 | ≥ 0.512 | no |
+| PPP | Valid runs | 5/6 | 2/2 | all | yes |
+
+A hypothesis holds only if it holds for both courses (pre-registration).
+
+- **H1a (order consistency): not met.** DataEng rose from 0.54 to 0.77; 1 of 15 v1 pairs reached
+  0.77. PPP rose from 0.77 to 0.82; 4 of 15 v1 pairs scored higher.
+- **H1b (grouping consistency): not met.** DataEng reached 0.60. PPP fell to 0.30, below v1.
+- **H2 (quality): not met.** DataEng stayed within 0.05 of v1. PPP fell 0.06.
+- **H3 (validity): met.**
+
+### Exploratory observations (not pre-registered)
+
+- Grouping is the main remaining source of variation. Consensus of 3 unstable groupings is itself
+  unstable: the two PPP runs produced 12 and 15 modules. Order agreement between runs is
+  computed over LOs, so grouping differences lower it too.
+- Many consensus modules hold 1–2 LOs, because few LO pairs are grouped together in at least 2 of
+  3 v1 runs.
+- Within-module LO prerequisites overlap more between v2 runs (44–62% shared) than between v1 runs
+  (16–24%). They are majority votes over grouping runs, so this is expected, and the numbers are
+  not directly comparable.
+
+### Implications for the plan
+
+1. Consensus over 3 noisy groupings is not enough. Grouping needs its own stable design, for
+   example: agree on the module topics first by consensus, then assign each LO to one topic.
+2. The ordering stage should be measured on its own: repeat v2's ordering with a fixed grouping
+   and different order seeds. This isolates how much variation the ordering questions add.
+3. Order quality still needs labeled module order; consistency alone does not show that an order
+   is good.
 
 ## Requirements
 
@@ -164,10 +195,18 @@ Pending the v2 run. v1 values are from seeds 0–2 and will be recomputed over s
 
 ## Deviations
 
-- One v1 run (DataEng, seed 3) hit the daily rate limit before any reply. It is excluded in
-  `runs/excluded.tsv` and will be rerun with the same seed.
+- One v1 run (DataEng, seed 3) hit the daily rate limit before any reply on 26 September. It
+  is excluded (`runs/excluded.tsv`) and was rerun with the same seed.
 - The consensus threshold of 0.5 is applied as strictly greater than 0.5. This was set in code
   before running.
+- The run script's check that grouping runs share settings rejected v1 seed-0 runs, whose
+  config predates the `model_params` field. The check was changed to compare the request
+  parameters actually sent (commit `9e96fa0`); the parameters were identical. No results
+  existed at that point.
+- The PPP v1 seed-3 run ended with 5 tool errors but placed every LO. It was used as a grouping
+  input for v2 run B, as the pre-registration requires all three seeds. It is counted as invalid
+  in the v1 quality mean.
+- v1 BCubed means are over valid runs only.
 
 ## Reproduce
 
@@ -175,6 +214,7 @@ Pending the v2 run. v1 values are from seeds 0–2 and will be recomputed over s
 bash scripts/run_v2_experiment.sh                                 # v2 experiment
 python scripts/run_poc.py --course DataEng --modules 3 --seed 0   # one v1 run
 python scripts/analyze_experiments.py --log experiments/v1/experiments.tsv
+python scripts/analyze_experiments.py --log experiments/v2/experiments.tsv   # v2 tables
 ```
 
 Prices and limits: https://console.groq.com/docs/models,

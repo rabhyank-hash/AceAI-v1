@@ -1,0 +1,76 @@
+{
+  "ok": false,
+  "stopped_because": "errors remain after 4 repair round(s)",
+  "attempts": [
+    {
+      "index": 0,
+      "error": null,
+      "n_errors": 12,
+      "errors_by_tool": {
+        "validate_output": 7,
+        "check_provenance": 0,
+        "check_cycles": 0,
+        "check_module_order": 4,
+        "build_module_graph": 0,
+        "topo_sort_modules": 1
+      },
+      "skipped": null
+    },
+    {
+      "index": 1,
+      "error": null,
+      "n_errors": 5,
+      "errors_by_tool": {
+        "validate_output": 5,
+        "check_provenance": 0,
+        "check_cycles": 0,
+        "check_module_order": 0,
+        "build_module_graph": 0,
+        "topo_sort_modules": 0
+      },
+      "skipped": null
+    },
+    {
+      "index": 2,
+      "error": null,
+      "n_errors": 6,
+      "errors_by_tool": {
+        "validate_output": 6,
+        "check_provenance": 0,
+        "check_cycles": 0,
+        "check_module_order": 0,
+        "build_module_graph": 0,
+        "topo_sort_modules": 0
+      },
+      "skipped": null
+    },
+    {
+      "index": 3,
+      "error": null,
+      "n_errors": 5,
+      "errors_by_tool": {
+        "validate_output": 5,
+        "check_provenance": 0,
+        "check_cycles": 0,
+        "check_module_order": 0,
+        "build_module_graph": 0,
+        "topo_sort_modules": 0
+      },
+      "skipped": null
+    },
+    {
+      "index": 4,
+      "error": null,
+      "n_errors": 5,
+      "errors_by_tool": {
+        "validate_output": 5,
+        "check_provenance": 0,
+        "check_cycles": 0,
+        "check_module_order": 0,
+        "build_module_graph": 0,
+        "topo_sort_modules": 0
+      },
+      "skipped": null
+    }
+  ]
+}

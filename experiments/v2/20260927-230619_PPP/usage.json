@@ -1,0 +1,40 @@
+[
+ {
+  "label": "attempt_0",
+  "cached": false,
+  "completion_tokens": 2163,
+  "prompt_tokens": 1639,
+  "total_tokens": 3802,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 39,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.074607151,
+  "prompt_time": 0.075161381,
+  "completion_time": 4.487948522,
+  "total_time": 4.563109903
+ },
+ {
+  "label": "attempt_1",
+  "cached": false,
+  "completion_tokens": 508,
+  "prompt_tokens": 2662,
+  "total_tokens": 3170,
+  "completion_tokens_details": {
+   "accepted_prediction_tokens": null,
+   "audio_tokens": null,
+   "reasoning_tokens": 303,
+   "rejected_prediction_tokens": null,
+   "text_tokens": null
+  },
+  "prompt_tokens_details": null,
+  "queue_time": 0.234651818,
+  "prompt_time": 0.258492678,
+  "completion_time": 1.057668927,
+  "total_time": 1.316161605
+ }
+]

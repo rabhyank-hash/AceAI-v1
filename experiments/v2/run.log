@@ -1,0 +1,51 @@
+commit 34b552b started 2026-09-27T22:56:15-04:00
+grouping runs use different models or settings
+exit 1 at 2026-09-27T22:58:11-04:00
+commit 9e96fa0 restarted 2026-09-27T22:58:53-04:00
+run dir: /home/ruchi/ruchi/AceAI/runs/20260927-230107_DataEng
+checks: all checks passed; coverage 23/23
+10 modules, 9 module edges (0 removed for cycles), 8 tie decisions, 30 asks, 30 uncached calls
+BCubed F1 0.578, order agreement 0.337
+run dir: /home/ruchi/ruchi/AceAI/runs/20260927-230356_DataEng
+checks: all checks passed; coverage 23/23
+10 modules, 11 module edges (0 removed for cycles), 9 tie decisions, 30 asks, 30 uncached calls
+BCubed F1 0.607, order agreement 0.513
+run dir: /home/ruchi/ruchi/AceAI/runs/20260927-231109_PPP
+checks: all checks passed; coverage 28/28
+12 modules, 29 module edges (1 removed for cycles), 9 tie decisions, 36 asks, 36 uncached calls
+BCubed F1 0.527, order agreement 0.537
+run dir: /home/ruchi/ruchi/AceAI/runs/20260927-231604_PPP
+checks: all checks passed; coverage 28/28
+15 modules, 39 module edges (2 removed for cycles), 14 tie decisions, 45 asks, 45 uncached calls
+BCubed F1 0.474, order agreement 0.573
+| Setting | Course | Runs | Valid | Attempts | BCubed F1 | Order agr. | Prereq links | Modules | Tokens/run |
+|---|---|---:|---:|---|---|---|---|---|---:|
+| base | AI_Practitioner | 3 | 3 | 2.67 (2.00–4.00) | 0.54 (0.46–0.60) | 0.55 (0.49–0.62) | 17.33 (12.00–23.00) | 10.67 (5.00–21.00) | 8851 |
+| base | CloudAdmin | 3 | 3 | 1.67 (1.00–2.00) | 0.65 (0.55–0.80) | 0.56 (0.18–0.84) | 19.33 (19.00–20.00) | 5.33 (4.00–7.00) | 5010 |
+| base | CloudDevOps | 3 | 3 | 2.00 (2.00–2.00) | 0.47 (0.43–0.51) | 0.59 (0.40–0.83) | 19.67 (17.00–21.00) | 6.67 (6.00–8.00) | 5874 |
+| base | CloudNative | 3 | 2 | 3.00 (2.00–4.00) | 0.44 (0.36–0.52) | 0.46 (0.43–0.50) | 21.00 (18.00–24.00) | 5.50 (5.00–6.00) | 14528 |
+| base | DataEng | 6 | 6 | 2.00 (1.00–4.00) | 0.64 (0.61–0.69) | 0.44 (0.34–0.58) | 17.50 (10.00–21.00) | 7.67 (6.00–10.00) | 6590 |
+| base | PPP | 6 | 5 | 2.50 (1.00–5.00) | 0.56 (0.50–0.64) | 0.45 (0.39–0.54) | 20.00 (9.00–29.00) | 9.20 (7.00–13.00) | 8379 |
+| medium | AI_Practitioner | 1 | 0 | 5 | – | – | – | – | 0 |
+| qwen | AI_Practitioner | 1 | 1 | 1 | 0.61 | 0.62 | 20 | 6 | 4363 |
+| qwen | CloudAdmin | 1 | 1 | 1 | 0.74 | 0.93 | 19 | 6 | 4039 |
+| qwen | CloudDevOps | 1 | 1 | 1 | 0.54 | 0.23 | 21 | 5 | 4401 |
+| qwen | CloudNative | 1 | 0 | 1 | – | – | – | – | 0 |
+| qwen | DataEng | 1 | 0 | 1 | – | – | – | – | 0 |
+| qwen | PPP | 1 | 0 | 1 | – | – | – | – | 0 |
+| v2 | DataEng | 2 | 2 | 0.00 (0.00–0.00) | 0.59 (0.58–0.61) | 0.43 (0.34–0.51) | 6.50 (5.00–8.00) | 10.00 (10.00–10.00) | 25262 |
+| v2 | PPP | 2 | 2 | 0.00 (0.00–0.00) | 0.50 (0.47–0.53) | 0.55 (0.54–0.57) | 6.50 (4.00–9.00) | 13.50 (12.00–15.00) | 41054 |
+
+Run-to-run consistency (pairs of seeds of the same setting):
+
+| Setting | Course | Pairs | Grouping ARI | Grouping BCubed F1 | Order agreement | Prereq edge Jaccard |
+|---|---|---:|---|---|---|---|
+| base | AI_Practitioner | 3 | 0.25 (0.04–0.64) | 0.53 (0.39–0.73) | 0.61 (0.48–0.79) | 0.21 (0.13–0.26) |
+| base | CloudAdmin | 3 | 0.26 (0.24–0.28) | 0.54 (0.52–0.57) | 0.49 (0.33–0.73) | 0.15 (0.11–0.18) |
+| base | CloudDevOps | 3 | 0.34 (0.30–0.38) | 0.61 (0.59–0.63) | 0.66 (0.55–0.80) | 0.16 (0.12–0.20) |
+| base | CloudNative | 3 | 0.43 (0.34–0.61) | 0.65 (0.59–0.75) | 0.87 (0.79–0.97) | 0.10 (0.07–0.14) |
+| base | DataEng | 15 | 0.37 (0.12–0.62) | 0.64 (0.47–0.80) | 0.54 (0.22–0.77) | 0.24 (0.15–0.39) |
+| base | PPP | 15 | 0.35 (0.22–0.58) | 0.64 (0.53–0.75) | 0.77 (0.66–0.97) | 0.16 (0.03–0.23) |
+| v2 | DataEng | 1 | 0.60 | 0.81 | 0.77 | 0.62 |
+| v2 | PPP | 1 | 0.30 | 0.68 | 0.82 | 0.44 |
+exit 0 at 2026-09-27T23:16:04-04:00

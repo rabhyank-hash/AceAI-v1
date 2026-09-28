@@ -1,0 +1,30 @@
+{
+  "course": "DataEng",
+  "agent": "v2",
+  "label": "v2_s3",
+  "seed": 3,
+  "order_seeds": [
+    3,
+    4,
+    5
+  ],
+  "grouping_runs": [
+    "/home/ruchi/ruchi/AceAI/runs/20260927-225616_DataEng",
+    "/home/ruchi/ruchi/AceAI/runs/20260927-225619_DataEng",
+    "/home/ruchi/ruchi/AceAI/runs/20260927-225625_DataEng"
+  ],
+  "grouping_seeds": [
+    3,
+    4,
+    5
+  ],
+  "model": "openai/gpt-oss-120b",
+  "model_params": {
+    "reasoning_effort": "low"
+  },
+  "prompt_version": "v2-order-1",
+  "grouping_prompt_version": "poc-3",
+  "modules": 3,
+  "min_los": 20,
+  "n_input_los": 23
+}

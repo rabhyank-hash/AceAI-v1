@@ -1,0 +1,734 @@
+{
+  "validate_output": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  "check_provenance": {
+    "ok": true,
+    "errors": [],
+    "warnings": [],
+    "missing": [],
+    "duplicated": {},
+    "unknown_raw": [],
+    "unknown_lo": []
+  },
+  "check_cycles": {
+    "ok": true,
+    "errors": [],
+    "warnings": [],
+    "cycles": [],
+    "truncated": false
+  },
+  "check_module_order": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  "build_module_graph": {
+    "ok": true,
+    "errors": [],
+    "warnings": [
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G01 declares a dependency on G03 that no LO edge supports.",
+        "ids": [
+          "G01",
+          "G03"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G01 declares a dependency on G06 that no LO edge supports.",
+        "ids": [
+          "G01",
+          "G06"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G01 declares a dependency on G09 that no LO edge supports.",
+        "ids": [
+          "G01",
+          "G09"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G01 declares a dependency on G11 that no LO edge supports.",
+        "ids": [
+          "G01",
+          "G11"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G01 declares a dependency on G13 that no LO edge supports.",
+        "ids": [
+          "G01",
+          "G13"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G02 declares a dependency on G07 that no LO edge supports.",
+        "ids": [
+          "G02",
+          "G07"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G02 declares a dependency on G12 that no LO edge supports.",
+        "ids": [
+          "G02",
+          "G12"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G03 declares a dependency on G12 that no LO edge supports.",
+        "ids": [
+          "G03",
+          "G12"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G04 declares a dependency on G03 that no LO edge supports.",
+        "ids": [
+          "G04",
+          "G03"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G04 declares a dependency on G07 that no LO edge supports.",
+        "ids": [
+          "G04",
+          "G07"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G04 declares a dependency on G09 that no LO edge supports.",
+        "ids": [
+          "G04",
+          "G09"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G04 declares a dependency on G11 that no LO edge supports.",
+        "ids": [
+          "G04",
+          "G11"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G04 declares a dependency on G12 that no LO edge supports.",
+        "ids": [
+          "G04",
+          "G12"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G04 declares a dependency on G13 that no LO edge supports.",
+        "ids": [
+          "G04",
+          "G13"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G05 declares a dependency on G01 that no LO edge supports.",
+        "ids": [
+          "G05",
+          "G01"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G05 declares a dependency on G03 that no LO edge supports.",
+        "ids": [
+          "G05",
+          "G03"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G06 declares a dependency on G12 that no LO edge supports.",
+        "ids": [
+          "G06",
+          "G12"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G07 declares a dependency on G03 that no LO edge supports.",
+        "ids": [
+          "G07",
+          "G03"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G07 declares a dependency on G12 that no LO edge supports.",
+        "ids": [
+          "G07",
+          "G12"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G07 declares a dependency on G13 that no LO edge supports.",
+        "ids": [
+          "G07",
+          "G13"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G09 declares a dependency on G03 that no LO edge supports.",
+        "ids": [
+          "G09",
+          "G03"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G09 declares a dependency on G06 that no LO edge supports.",
+        "ids": [
+          "G09",
+          "G06"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G09 declares a dependency on G07 that no LO edge supports.",
+        "ids": [
+          "G09",
+          "G07"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G09 declares a dependency on G13 that no LO edge supports.",
+        "ids": [
+          "G09",
+          "G13"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G11 declares a dependency on G03 that no LO edge supports.",
+        "ids": [
+          "G11",
+          "G03"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G11 declares a dependency on G07 that no LO edge supports.",
+        "ids": [
+          "G11",
+          "G07"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G11 declares a dependency on G09 that no LO edge supports.",
+        "ids": [
+          "G11",
+          "G09"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G11 declares a dependency on G13 that no LO edge supports.",
+        "ids": [
+          "G11",
+          "G13"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G12 declares a dependency on G08 that no LO edge supports.",
+        "ids": [
+          "G12",
+          "G08"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G13 declares a dependency on G08 that no LO edge supports.",
+        "ids": [
+          "G13",
+          "G08"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G13 declares a dependency on G12 that no LO edge supports.",
+        "ids": [
+          "G13",
+          "G12"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G14 declares a dependency on G03 that no LO edge supports.",
+        "ids": [
+          "G14",
+          "G03"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G14 declares a dependency on G07 that no LO edge supports.",
+        "ids": [
+          "G14",
+          "G07"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G14 declares a dependency on G11 that no LO edge supports.",
+        "ids": [
+          "G14",
+          "G11"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G15 declares a dependency on G03 that no LO edge supports.",
+        "ids": [
+          "G15",
+          "G03"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G15 declares a dependency on G07 that no LO edge supports.",
+        "ids": [
+          "G15",
+          "G07"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G15 declares a dependency on G09 that no LO edge supports.",
+        "ids": [
+          "G15",
+          "G09"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G15 declares a dependency on G11 that no LO edge supports.",
+        "ids": [
+          "G15",
+          "G11"
+        ]
+      },
+      {
+        "code": "declared_without_lo_evidence",
+        "message": "Module G15 declares a dependency on G13 that no LO edge supports.",
+        "ids": [
+          "G15",
+          "G13"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "from_module": "G01",
+        "to_module": "G03",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G01",
+        "to_module": "G06",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G01",
+        "to_module": "G09",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G01",
+        "to_module": "G11",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G01",
+        "to_module": "G13",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G02",
+        "to_module": "G07",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G02",
+        "to_module": "G12",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G03",
+        "to_module": "G12",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G04",
+        "to_module": "G03",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G04",
+        "to_module": "G07",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G04",
+        "to_module": "G09",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G04",
+        "to_module": "G11",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G04",
+        "to_module": "G12",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G04",
+        "to_module": "G13",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G05",
+        "to_module": "G01",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G05",
+        "to_module": "G03",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G06",
+        "to_module": "G12",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G07",
+        "to_module": "G03",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G07",
+        "to_module": "G12",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G07",
+        "to_module": "G13",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G09",
+        "to_module": "G03",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G09",
+        "to_module": "G06",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G09",
+        "to_module": "G07",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G09",
+        "to_module": "G13",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G11",
+        "to_module": "G03",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G11",
+        "to_module": "G07",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G11",
+        "to_module": "G09",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G11",
+        "to_module": "G13",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G12",
+        "to_module": "G08",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G13",
+        "to_module": "G08",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G13",
+        "to_module": "G12",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G14",
+        "to_module": "G03",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G14",
+        "to_module": "G07",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G14",
+        "to_module": "G11",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G15",
+        "to_module": "G03",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G15",
+        "to_module": "G07",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G15",
+        "to_module": "G09",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G15",
+        "to_module": "G11",
+        "lo_edges": [],
+        "declared": true
+      },
+      {
+        "from_module": "G15",
+        "to_module": "G13",
+        "lo_edges": [],
+        "declared": true
+      }
+    ]
+  },
+  "topo_sort_modules": {
+    "ok": true,
+    "errors": [],
+    "warnings": [],
+    "order": [
+      "G08",
+      "G12",
+      "G13",
+      "G03",
+      "G07",
+      "G06",
+      "G09",
+      "G10",
+      "G11",
+      "G14",
+      "G02",
+      "G01",
+      "G05",
+      "G04",
+      "G15"
+    ],
+    "ties": [
+      {
+        "position": 0,
+        "candidates": [
+          "G08",
+          "G10"
+        ],
+        "chosen": "G08"
+      },
+      {
+        "position": 1,
+        "candidates": [
+          "G12",
+          "G10"
+        ],
+        "chosen": "G12"
+      },
+      {
+        "position": 2,
+        "candidates": [
+          "G13",
+          "G03",
+          "G06",
+          "G10"
+        ],
+        "chosen": "G13"
+      },
+      {
+        "position": 3,
+        "candidates": [
+          "G03",
+          "G06",
+          "G10"
+        ],
+        "chosen": "G03"
+      },
+      {
+        "position": 4,
+        "candidates": [
+          "G07",
+          "G06",
+          "G10"
+        ],
+        "chosen": "G07"
+      },
+      {
+        "position": 5,
+        "candidates": [
+          "G06",
+          "G10",
+          "G02"
+        ],
+        "chosen": "G06"
+      },
+      {
+        "position": 6,
+        "candidates": [
+          "G09",
+          "G10",
+          "G02"
+        ],
+        "chosen": "G09"
+      },
+      {
+        "position": 7,
+        "candidates": [
+          "G10",
+          "G11",
+          "G02"
+        ],
+        "chosen": "G10"
+      },
+      {
+        "position": 8,
+        "candidates": [
+          "G11",
+          "G02"
+        ],
+        "chosen": "G11"
+      },
+      {
+        "position": 9,
+        "candidates": [
+          "G14",
+          "G02",
+          "G01",
+          "G04",
+          "G15"
+        ],
+        "chosen": "G14"
+      },
+      {
+        "position": 10,
+        "candidates": [
+          "G02",
+          "G01",
+          "G04",
+          "G15"
+        ],
+        "chosen": "G02"
+      },
+      {
+        "position": 11,
+        "candidates": [
+          "G01",
+          "G04",
+          "G15"
+        ],
+        "chosen": "G01"
+      },
+      {
+        "position": 12,
+        "candidates": [
+          "G05",
+          "G04",
+          "G15"
+        ],
+        "chosen": "G05"
+      },
+      {
+        "position": 13,
+        "candidates": [
+          "G04",
+          "G15"
+        ],
+        "chosen": "G04"
+      }
+    ],
+    "unique": false,
+    "matches_current_order": true
+  }
+}

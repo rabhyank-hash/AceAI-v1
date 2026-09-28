@@ -1,0 +1,83 @@
+{
+  "coverage": {
+    "placed": 23,
+    "total": 23,
+    "complete": true
+  },
+  "n_detailed": 23,
+  "n_detailed_placed": 23,
+  "unplaced": [],
+  "n_gt_modules": 7,
+  "n_gt_units": 3,
+  "n_pred_modules": 7,
+  "n_surviving_los": 21,
+  "grouping": {
+    "module": {
+      "precision": 0.444,
+      "recall": 0.364,
+      "f1": 0.4,
+      "tp": 16,
+      "fp": 20,
+      "fn": 28,
+      "ari": 0.289,
+      "bcubed": {
+        "precision": 0.636,
+        "recall": 0.583,
+        "f1": 0.608
+      }
+    },
+    "unit": {
+      "precision": 0.583,
+      "recall": 0.212,
+      "f1": 0.311,
+      "tp": 21,
+      "fp": 15,
+      "fn": 78,
+      "ari": 0.129,
+      "bcubed": {
+        "precision": 0.749,
+        "recall": 0.392,
+        "f1": 0.515
+      }
+    }
+  },
+  "order": {
+    "module": {
+      "pairs": 189,
+      "agreement": 0.46,
+      "skipped_unplaced_pairs": 0
+    },
+    "unit": {
+      "pairs": 139,
+      "agreement": 0.403,
+      "skipped_unplaced_pairs": 0
+    }
+  },
+  "merges": [
+    {
+      "lo_id": "LO-3a4850",
+      "raw_ids": [
+        "dataeng-u00-concept-pandas-python-data-analysis-library-lo01",
+        "dataeng-u00-primer-introduction-to-pandas-lo01"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Pandas - Python Data Analysis Library",
+        "u0 PRIMER Introduction to Pandas"
+      ],
+      "same_gt_module": false
+    },
+    {
+      "lo_id": "LO-ef3761",
+      "raw_ids": [
+        "dataeng-u00-concept-pandas-python-data-analysis-library-lo02",
+        "dataeng-u00-primer-introduction-to-pandas-lo02"
+      ],
+      "gt_modules": [
+        "u0 CONCEPT Pandas - Python Data Analysis Library",
+        "u0 PRIMER Introduction to Pandas"
+      ],
+      "same_gt_module": false
+    }
+  ],
+  "broad": []
+}

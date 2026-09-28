@@ -1,0 +1,30 @@
+{
+  "course": "PPP",
+  "agent": "v2",
+  "label": "v2_s3",
+  "seed": 3,
+  "order_seeds": [
+    3,
+    4,
+    5
+  ],
+  "grouping_runs": [
+    "/home/ruchi/ruchi/AceAI/runs/20260927-230356_PPP",
+    "/home/ruchi/ruchi/AceAI/runs/20260927-230542_PPP",
+    "/home/ruchi/ruchi/AceAI/runs/20260927-230619_PPP"
+  ],
+  "grouping_seeds": [
+    3,
+    4,
+    5
+  ],
+  "model": "openai/gpt-oss-120b",
+  "model_params": {
+    "reasoning_effort": "low"
+  },
+  "prompt_version": "v2-order-1",
+  "grouping_prompt_version": "poc-3",
+  "modules": 3,
+  "min_los": 20,
+  "n_input_los": 28
+}
