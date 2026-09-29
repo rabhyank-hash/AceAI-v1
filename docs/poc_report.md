@@ -61,8 +61,9 @@ Sample per course: the first 3 CSV modules, extended to at least 20 LOs (21–44
 | E1 | 23 Sep | DataEng, all 57 LOs, first prompt | 21 LOs placed in no module |
 | E2 | 26 Sep | Six courses; each LO names its module | All valid; order near random |
 | E3 | 26 Sep | Six courses × 3 seeds; order from the model's prerequisites | 17 of 18 runs valid |
-| E4 | 26 Sep | `qwen3.8-27b`, seed 0 | 3 of 6 courses ran (rate limit); all 3 valid |
-| E5 | 26 Sep | gpt-oss-120b, medium reasoning effort | Empty replies: reasoning used the output limit |
+
+Runs that only tested provider limits (`qwen3.8-27b`; medium reasoning effort) are recorded in
+`experiments/v1/` but not reported: they say nothing about the method.
 
 E3, agreement with the authors' structure (mean and range over 3 seeds):
 
@@ -107,8 +108,6 @@ order scores 0.5. ARI is 1 for identical groupings and 0 for chance.
    parent of three others. Parents are not placed in modules, so it was never taught.
 6. **Engineering faults, fixed.** Unplaced LOs, repair patches that deleted modules, error
    messages that named list positions, and a self-referencing merge. None changes the plan.
-7. **The free API tier blocks larger tests.** Its limits are 8K tokens/minute and 200K
-   tokens/day. Higher reasoning effort, whole courses and repeated calls do not fit.
 
 ## 3. Plan changes (v2)
 
@@ -311,8 +310,6 @@ Before → after the separate split step; mean over 3 runs or run pairs.
 - v3: the prompt was changed from v3-1 to v3-2 after 10 runs, and the test was reduced to three
   courses with their first 3 modules. Both were recorded as Amendment 1 to the v3
   pre-registration before any v3-2 run. The v3-1 runs are a pilot (`experiments/v3_pilot/`).
-- v3: in the pilot, 5 asks were lost to the daily rate limit. From Amendment 1 on, calls wait
-  out rate limits.
 - v3: CloudNative's v1 reference has 1 valid run of 3, so its v1 BCubed mean rests on one run.
 - Exported records now replace model-written module titles with module ids (they are model free
   text). Applied to all existing records; no metric uses titles.
