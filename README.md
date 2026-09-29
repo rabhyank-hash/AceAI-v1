@@ -62,7 +62,8 @@ scripts/
   make_label_sheets.py    module-order labeling sheets in annotations/
 tests/                    unit tests; the LLM is replaced by a fake (tests/fakes.py)
 docs/                     see Documents
-experiments/<name>/       experiment records: configs, scores, structures (no LO text)
+experiments/<version>/<experiment>/<course>_s<seed>/
+                          experiment records: configs, scores, structures (no LO text)
 ```
 
 Local only (git-ignored): `data/` (course CSVs and derived files), `runs/` (full run output,
@@ -93,13 +94,15 @@ python scripts/build_ground_truth.py
 ## Running
 
 ```bash
-python scripts/run_v3.py --course DataEng --seeds 0 1 2 3 4 --label v3_s0   # one run
-bash scripts/run_v3_experiment.sh                                           # the v3 test
+python scripts/run_v3.py --experiment E9 --course DataEng --seeds 0 1 2 3 4   # one run
+bash scripts/run_v3_experiment.sh E9                                          # the v3 test
 python scripts/analyze_experiments.py --log experiments/v3/experiments.tsv  # tables from git
 ```
 
-Each run writes `runs/<timestamp>_<course>/`: config, the model's answers, consensus order, output,
-checks, comparison with the authors' structure, and every LLM call.
+Each run writes `runs/v3/<experiment>/<course>_s<seed>/`: config, the model's answers, consensus
+order, output, checks, comparison with the authors' structure, and every LLM call. Experiment ids
+(E1, E2, ...) are listed in [docs/experiments.md](docs/experiments.md);
+`scripts/export_records.py` copies runs, without LO text, to the same path under `experiments/`.
 
 ## Tests
 

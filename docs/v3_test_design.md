@@ -57,5 +57,5 @@ course). Every run is reported.
 ## Run
 
 ```bash
-bash scripts/run_v3_experiment.sh
+bash scripts/run_v3_experiment.sh <experiment id>
 ```

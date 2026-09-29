@@ -5,8 +5,8 @@ TEEL Lab, ACE-AI, 28 September 2026.
 Plan v1 is on branch `agent1-poc`, plan v2 on `agent_v2`, plan v3 on `agent_v3`
 (`docs/implementation_plan.md` on each). Every experiment's configuration:
 [experiments.md](experiments.md). v3 test design: [v3_test_design.md](v3_test_design.md).
-Metrics: [evaluation.md](evaluation.md). Run records without LO text: `experiments/v1/`, `v2/`,
-`v3_pilot/`, `v3/`.
+Metrics: [evaluation.md](evaluation.md). Run records without LO text:
+`experiments/<version>/<experiment>/<course>_s<seed>/`.
 
 ## Summary
 
@@ -19,7 +19,7 @@ Metrics: [evaluation.md](evaluation.md). Run records without LO text: `experimen
 - Plan v3 limits Agent 1 to ordering the LOs and splitting the sequence into modules. Each ask
   returns the whole course on shuffled input; code aggregates 5 asks.
 - v3 makes the order consistent: sequence agreement between runs is 0.91–0.93 on all three test
-  courses (v1: 0.59–0.90).
+  courses (v1: 0.59–0.80).
 - Splitting modules in a separate step on that order fixes over-splitting and makes CloudAdmin's
   modules consistent (ARI 0.85). DataEng (0.51) and CloudNative (0.38) are not: the model's choice
   of how many modules varies between asks.
@@ -216,7 +216,7 @@ Mean over 3 run pairs (range). v1 on the same samples in brackets.
 |---|---|---|---|---|---|
 | DataEng | 0.92 (0.89–0.93) [0.59] | 0.52 [0.87] | 0.59 [0.67] | 0.42 [0.52] | 3/3 [3/3] |
 | CloudAdmin | 0.93 (0.92–0.94) [0.76] | 0.48 [0.24] | 0.57 [0.67] | 0.91 [0.82] | 3/3 [3/3] |
-| CloudNative | 0.91 (0.89–0.93) [0.90] | 0.48 [0.57] | 0.25 [0.52] | 0.65 [0.61] | 3/3 [1/3] |
+| CloudNative | 0.91 (0.89–0.93) [0.80] | 0.48 [0.43] | 0.25 [0.44] | 0.65 [0.61] | 3/3 [2/3] |
 
 | Hypothesis | Target | Result |
 |---|---|---|
@@ -261,7 +261,7 @@ Before → after the separate split step; mean over 3 runs or run pairs.
 | Hypothesis | Target | Result |
 |---|---|---|
 | H1b module consistency | ARI ≥ 0.60 on each course | Not met: CloudAdmin 0.85; DataEng 0.51; CloudNative 0.38 |
-| H2 quality | BCubed ≥ v1 − 0.05 (0.62, 0.62, 0.47) | Not met: DataEng 0.68 passes; CloudAdmin 0.53, CloudNative 0.41 do not |
+| H2 quality | BCubed ≥ v1 − 0.05 (0.62, 0.62, 0.39) | Not met: DataEng 0.68 and CloudNative 0.41 pass; CloudAdmin 0.53 does not |
 | H3 validity | all runs valid | Met: 9 of 9 runs; 44 of 45 asks |
 
 - **Over-splitting is fixed.** Module counts fall to 4–5 per course (CloudNative: 15 → 4.3).
@@ -339,8 +339,12 @@ Where the variation comes from, measured on the saved answers:
 - v1 BCubed means are over valid runs only.
 - v3: the prompt was changed from v3-1 to v3-2 after 10 runs, and the test was reduced to three
   courses with their first 3 modules, both before any v3-2 run. The v3-1 runs are a pilot
-  (`experiments/v3_pilot/`).
-- v3: CloudNative's v1 reference has 1 valid run of 3, so its v1 BCubed mean rests on one run.
+  (`experiments/v3/E5/`).
+- v3: CloudNative's v1 reference was corrected on 28 September. Two of its runs had been saved to
+  the same timestamp-named folder, so one run was counted twice and one comparison was a run
+  against itself. The lost run was reproduced from the response cache. Corrected v1 values:
+  BCubed 0.44 (was 0.52), sequence agreement between runs 0.80 (was 0.90), module ARI 0.43 (was
+  0.57). Details: [experiments.md](experiments.md), Corrections.
 - Exported records now replace model-written module titles with module ids (they are model free
   text). Applied to all existing records; no metric uses titles.
 

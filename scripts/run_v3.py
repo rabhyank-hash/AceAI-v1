@@ -1,17 +1,16 @@
 """Run Agent 1 v3 on one course sample (plan v3, §4).
 
-    python scripts/run_v3.py --course DataEng --seeds 0 1 2 3 4 --label v3_s0
+    python scripts/run_v3.py --experiment E9 --course DataEng --seeds 0 1 2 3 4
 
-Writes runs/<timestamp>_<course>/ (config, result, output, checks, comparison with the CSV,
-llm_calls, asks.json, split_asks.json, consensus.json) and appends the run to
-runs/experiments.tsv under the given label.
+Writes runs/v3/<experiment>/<course>_s<first seed>/ (config, result, output, checks, comparison
+with the CSV, llm_calls, asks.json, split_asks.json, consensus.json) and appends the run to
+runs/experiments.tsv with label <experiment>_s<first seed>. Refuses to overwrite an existing run.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
-from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -43,10 +42,14 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--course", required=True)
     ap.add_argument("--seeds", nargs="+", type=int, required=True)
-    ap.add_argument("--label", required=True, help="e.g. v3_s0")
+    ap.add_argument("--experiment", required=True, help="experiment id, e.g. E9")
     ap.add_argument("--modules", type=int, default=3)
     ap.add_argument("--min-los", type=int, default=0)
     args = ap.parse_args()
+    name = f"{args.course}_s{args.seeds[0]}"
+    run_dir = RUNS_DIR / "v3" / args.experiment / name
+    if run_dir.exists():
+        raise SystemExit(f"{run_dir} exists; use another experiment id or first seed")
 
     sample = select_modules(load_all(DATA_RAW)[args.course], args.modules, args.min_los, False)
     prepared = make_agent1_input(args.course, 0, los=sample)
@@ -55,12 +58,12 @@ def main() -> None:
     client = LLMClient("groq", max_retries=30, max_backoff=300)
     result = sequence_v3(client, prepared.payload, args.seeds)
 
-    run_dir = RUNS_DIR / f"{datetime.now():%Y%m%d-%H%M%S}_{args.course}"
     dump(
         run_dir / "config.json",
         {
             "course": args.course,
-            "agent": "v3",
+            "version": "v3",
+            "experiment": args.experiment,
             "seed": args.seeds[0],
             "seeds": args.seeds,
             "model": client.model,
@@ -97,7 +100,7 @@ def main() -> None:
     stopped = result.stopped if ok or result.output is None else "check errors"
     dump(run_dir / "result.json", {"ok": ok, "stopped_because": stopped, "attempts": []})
     with (RUNS_DIR / "experiments.tsv").open("a") as f:
-        f.write(f"{args.label}\t{args.course}\t{run_dir}\n")
+        f.write(f"{args.experiment}_s{args.seeds[0]}\t{args.course}\t{run_dir}\n")
 
     tokens = sum(c["response"]["usage"].get("total_tokens", 0) for c in client.call_log)
     print(f"run dir: {run_dir}")

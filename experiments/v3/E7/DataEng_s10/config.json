@@ -1,0 +1,24 @@
+{
+  "course": "DataEng",
+  "agent": "v3",
+  "seed": 10,
+  "seeds": [
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "model": "openai/gpt-oss-120b",
+  "model_params": {
+    "reasoning_effort": "low"
+  },
+  "prompt_version": "v3-seg-1",
+  "modules": 3,
+  "min_los": 0,
+  "n_input_los": 11,
+  "k": 5,
+  "step": "split",
+  "source_run": "/home/ruchi/ruchi/AceAI/runs/v3/E6/DataEng_s10",
+  "order_prompt_version": "v3-2"
+}

@@ -1,14 +1,15 @@
-"""Copy experiment records into experiments/<name>/ for git, without any LO text.
+"""Copy run records from runs/ into experiments/ for git, without any LO text.
 
-    python scripts/export_records.py <name> --log runs/v3_test.tsv
+    python scripts/export_records.py --log runs/v3_test.tsv --out experiments/v3/experiments.tsv
 
 runs/ is git-ignored and holds full run data, including course LO text (which, like data/, is
-kept out of git). This writes, per run listed in the log: config.json, result.json,
-comparison.json, checks.json, id_map.json (input id -> raw id), usage.json (token counts per LLM
-call), consensus.json, the asks without the model's free text, and structure.json (the output
-with every text field removed and module titles replaced by ids). It also writes the log with
-paths rewritten, so scripts/analyze_experiments.py --log experiments/<name>/experiments.tsv
-reproduces the tables from git alone.
+kept out of git). A run at runs/<version>/<experiment>/<course>_s<seed> is recorded at
+experiments/<version>/<experiment>/<course>_s<seed>. Per run listed in the log it writes
+config.json, result.json, comparison.json, checks.json, id_map.json (input id -> raw id),
+usage.json (token counts per LLM call), consensus.json, the asks without the model's free text,
+and structure.json (the output with every text field removed and module titles replaced by ids).
+It also merges the runs into the experiment log given by --out, so
+scripts/analyze_experiments.py --log <that log> reproduces the tables from git alone.
 """
 
 from __future__ import annotations
@@ -33,19 +34,16 @@ def structure(output: dict) -> dict:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("name")
-    ap.add_argument("--log", type=Path, default=RUNS_DIR / "experiments.tsv")
+    ap.add_argument("--log", type=Path, required=True, help="runs to export (label, course, dir)")
+    ap.add_argument("--out", type=Path, required=True, help="experiment log to merge into")
     args = ap.parse_args()
-    out_root = PROJECT_ROOT / "experiments" / args.name
-    out_root.mkdir(parents=True, exist_ok=True)
+    exp_root = PROJECT_ROOT / "experiments"
     rows = []
     for line in args.log.read_text().splitlines():
         label, course, d = line.split("\t")
         src = Path(d) if Path(d).is_absolute() else PROJECT_ROOT / d
-        # v3 sub-runs (k1/, k3/) live inside their parent run directory.
-        name = f"{src.parent.name}_{src.name}" if src.name.startswith("k") else src.name
-        dst = out_root / name
-        dst.mkdir(exist_ok=True)
+        dst = exp_root / src.resolve().relative_to(RUNS_DIR.resolve())
+        dst.mkdir(parents=True, exist_ok=True)
         for f in ("config.json", "result.json", "comparison.json"):
             if (src / f).exists():
                 shutil.copy(src / f, dst / f)
@@ -74,8 +72,12 @@ def main() -> None:
             output = json.loads((src / "output.json").read_text())
             (dst / "structure.json").write_text(json.dumps(structure(output), indent=1) + "\n")
         rows.append(f"{label}\t{course}\t{dst.relative_to(PROJECT_ROOT)}")
-    (out_root / "experiments.tsv").write_text("\n".join(rows) + "\n")
-    print(f"{len(rows)} runs -> {out_root}")
+    out = args.out if args.out.is_absolute() else PROJECT_ROOT / args.out
+    existing = out.read_text().splitlines() if out.exists() else []
+    keys = {tuple(r.split("\t")[:2]) for r in rows}
+    merged = [r for r in existing if tuple(r.split("\t")[:2]) not in keys] + rows
+    out.write_text("\n".join(merged) + "\n")
+    print(f"{len(rows)} runs -> {out.relative_to(PROJECT_ROOT)}")
 
 
 if __name__ == "__main__":
