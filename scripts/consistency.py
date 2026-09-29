@@ -3,10 +3,10 @@
     python scripts/consistency.py runs/<a> runs/<b> [runs/<c> ...]
 
 Input ids depend only on the raw LO, not on the seed, so runs can be compared LO by LO. For each
-pair of runs: grouping agreement (ARI, BCubed F1), order agreement (share of LO pairs in different
-modules in both runs that are ordered the same way), sequence agreement (the same over all LO
-pairs of the flat sequence), and overlap of LO prerequisite edges (Jaccard). High values mean the
-model's structure is stable; low values mean single-run scores are mostly noise.
+pair of runs: module agreement (ARI, BCubed F1), order agreement (share of LO pairs in different
+modules in both runs that are ordered the same way) and sequence agreement (the same over all LO
+pairs of the flat sequence). High values mean the structure is stable; low values mean single-run
+scores are mostly noise.
 """
 
 from __future__ import annotations
@@ -32,16 +32,14 @@ def read_output(run_dir: Path) -> dict:
     raise FileNotFoundError(f"no output in {run_dir}")
 
 
-def load(run_dir: Path) -> tuple[dict[str, int], set[tuple[str, str]]]:
-    """input id -> module position (via provenance), and LO prerequisite edges in input ids."""
+def module_positions(run_dir: Path) -> dict[str, int]:
+    """input id -> module position (via provenance)."""
     out = read_output(run_dir)
     pos = {}
     for i, m in enumerate(sorted(out["modules"], key=lambda m: m["order"])):
         for lid in m["lo_ids"]:
             pos[lid] = i
-    placed = {e["raw_id"]: pos[e["lo_id"]] for e in out["provenance"] if e["lo_id"] in pos}
-    edges = {(lo["id"], d) for lo in out["los"] for d in lo["depends_on"]}
-    return placed, edges
+    return {e["raw_id"]: pos[e["lo_id"]] for e in out["provenance"] if e["lo_id"] in pos}
 
 
 def flat_sequence(run_dir: Path) -> dict[str, int]:
@@ -55,20 +53,17 @@ def flat_sequence(run_dir: Path) -> dict[str, int]:
 
 
 def pair(a: Path, b: Path) -> dict[str, float | None]:
-    pa, ea = load(a)
-    pb, eb = load(b)
+    pa, pb = module_positions(a), module_positions(b)
     ids = sorted(set(pa) & set(pb))
     agree = total = 0
     for x, y in combinations(ids, 2):
         if pa[x] != pa[y] and pb[x] != pb[y]:
             total += 1
             agree += (pa[x] < pa[y]) == (pb[x] < pb[y])
-    union = ea | eb
     return {
         "ari": adjusted_rand_index([pa[i] for i in ids], [pb[i] for i in ids]),
         "bcubed_f1": bcubed([pa[i] for i in ids], [pb[i] for i in ids])["f1"],
         "order_agreement": round(agree / total, 3) if total else None,
-        "prereq_jaccard": round(len(ea & eb) / len(union), 3) if union else None,
         "sequence_agreement": sequence_agreement(flat_sequence(a), flat_sequence(b)),
     }
 

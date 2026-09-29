@@ -3,9 +3,10 @@
 TEEL Lab, ACE-AI, 28 September 2026.
 
 Plan v1 is on branch `agent1-poc`, plan v2 on `agent_v2`, plan v3 on `agent_v3`
-(`docs/implementation_plan.md` on each). Pre-registrations: [v2](v2_preregistration.md),
-[v3](v3_preregistration.md). Metrics: [evaluation.md](evaluation.md). Run records without LO text:
-`experiments/v1/`, `v2/`, `v3_pilot/`, `v3/`.
+(`docs/implementation_plan.md` on each). Every experiment's configuration:
+[experiments.md](experiments.md). v3 test design: [v3_test_design.md](v3_test_design.md).
+Metrics: [evaluation.md](evaluation.md). Run records without LO text: `experiments/v1/`, `v2/`,
+`v3_pilot/`, `v3/`.
 
 ## Summary
 
@@ -244,8 +245,8 @@ Cost: 3.5–8.5K tokens per v3 run, below v1 on the same samples (4.0–12.5K).
 
 ### Separate split step
 
-The module split moved to a separate step on the fixed consensus order (plan v3 §4 step 5;
-pre-registered as Amendment 2, `6ca6661`; code `e140986`). Each of the 9 runs kept its order; 5
+The module split moved to a separate step on the fixed consensus order (plan v3 §4 step 5; code
+`e140986`; experiment E7 in [experiments.md](experiments.md)). Each of the 9 runs kept its order; 5
 split asks per run, codes shuffled per ask, the model deciding the number of modules; a boundary
 is kept where most asks place one. Order results are unchanged.
 
@@ -337,23 +338,21 @@ Where the variation comes from, measured on the saved answers:
   in the v1 quality mean.
 - v1 BCubed means are over valid runs only.
 - v3: the prompt was changed from v3-1 to v3-2 after 10 runs, and the test was reduced to three
-  courses with their first 3 modules. Both were recorded as Amendment 1 to the v3
-  pre-registration before any v3-2 run. The v3-1 runs are a pilot (`experiments/v3_pilot/`).
+  courses with their first 3 modules, both before any v3-2 run. The v3-1 runs are a pilot
+  (`experiments/v3_pilot/`).
 - v3: CloudNative's v1 reference has 1 valid run of 3, so its v1 BCubed mean rests on one run.
 - Exported records now replace model-written module titles with module ids (they are model free
   text). Applied to all existing records; no metric uses titles.
 
 ## Reproduce
 
+Each version runs on its own branch; the experiment log gives the commit per experiment.
+
 ```bash
-bash scripts/run_v2_experiment.sh                                 # v2 experiment
-bash scripts/run_v3_experiment.sh                                 # v3 experiment (amended)
-bash scripts/run_v3_segment_experiment.sh                         # v3 split step
-python scripts/resplit_v3.py --run runs/<split run> --tolerance 1 --label <label>   # re-combine
-python scripts/run_poc.py --course DataEng --modules 3 --seed 0   # one v1 run
-python scripts/analyze_experiments.py --log experiments/v1/experiments.tsv
-python scripts/analyze_experiments.py --log experiments/v2/experiments.tsv   # v2 tables
-python scripts/analyze_experiments.py --log experiments/v3/experiments.tsv   # v3 tables
+bash scripts/run_v3_experiment.sh                                          # v3 (agent_v3)
+python scripts/analyze_experiments.py --log experiments/v3/experiments.tsv # v3 tables
+git checkout agent_v2 && bash scripts/run_v2_experiment.sh                 # v2
+git checkout agent1-poc && python scripts/run_poc.py --course DataEng --modules 3 --seed 0  # v1
 ```
 
 Prices and limits: https://console.groq.com/docs/models,

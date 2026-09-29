@@ -1,8 +1,8 @@
 """Blank labeling sheets for module-order ground truth (docs/evaluation.md, levels 2-3).
 
-    python scripts/make_label_sheets.py [--modules 3 --min-los 20]
+    python scripts/make_label_sheets.py [--modules 3 --min-los 0] [--courses DataEng ...]
 
-Writes annotations/<course>_module_order.csv: one row per pair of CSV modules in the POC sample,
+Writes annotations/<course>_module_order.csv: one row per pair of CSV modules in the test sample,
 with the module names and a few example LOs. The labeler fills `answer`:
     A  = A must be taught before B
     B  = B must be taught before A
@@ -15,21 +15,23 @@ import argparse
 import csv
 from itertools import combinations
 
-from run_poc import select_modules
-
 from aceai.config import DATA_RAW, PROJECT_ROOT
 from aceai.ingest import load_all
 from aceai.ingest.ground_truth import extract_ground_truth
+from aceai.ingest.sample import select_modules
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--modules", type=int, default=3)
-    ap.add_argument("--min-los", type=int, default=20)
+    ap.add_argument("--min-los", type=int, default=0)
+    ap.add_argument("--courses", nargs="*", default=["DataEng", "CloudAdmin", "CloudNative"])
     args = ap.parse_args()
     out_dir = PROJECT_ROOT / "annotations"
     out_dir.mkdir(exist_ok=True)
     for course, los in load_all(DATA_RAW).items():
+        if course not in args.courses:
+            continue
         gt = extract_ground_truth(course, select_modules(los, args.modules, args.min_los, False))
         mods = [
             (f"u{u.unit_no} {m.module_type.value} {m.module_name.strip()}", m)

@@ -7,15 +7,7 @@ from aceai.config import DATA_RAW
 from aceai.ingest import load_all
 from aceai.ingest.ground_truth import extract_ground_truth, ground_truth_to_output
 from aceai.schemas import LearningObjective, Module, SequencerOutput
-from aceai.tools import (
-    build_module_graph,
-    check_cycles,
-    check_module_order,
-    check_provenance,
-    topo_sort_modules,
-    validate_lo,
-    validate_output,
-)
+from aceai.tools import check_provenance, validate_lo, validate_output
 
 
 def lo(
@@ -69,9 +61,9 @@ def good() -> SequencerOutput:
 
 
 def test_results_serialize_to_json(good):
-    r = check_cycles(good.los)
+    r = check_provenance([s for x in good.los for s in x.source_ids], good)
     data = json.loads(r.model_dump_json())
-    assert set(data) >= {"ok", "errors", "warnings", "cycles"}
+    assert set(data) >= {"ok", "errors", "warnings", "missing"}
 
 
 # --- validate -----------------------------------------------------------------------------------
@@ -206,149 +198,6 @@ def test_provenance_accepts_models_with_ids(good):
     assert check_provenance(raw, good).ok
 
 
-# --- cycles -------------------------------------------------------------------------------------
-
-
-def test_no_cycles(good):
-    r = check_cycles(good.los)
-    assert r.ok and r.cycles == []
-
-
-def test_cycle_reported_with_path():
-    los = [lo("c", deps=["a"]), lo("a", deps=["b"]), lo("b", deps=["c"]), lo("d", deps=["a"])]
-    r = check_cycles(los)
-    assert not r.ok
-    assert r.cycles == [["a", "b", "c"]]  # a depends on b depends on c depends on a
-    assert "a depends on b depends on c depends on a" in r.errors[0].message
-
-
-def test_two_cycles_sorted_and_unknown_deps_ignored():
-    los = [
-        lo("x", deps=["y", "ghost"]),
-        lo("y", deps=["x"]),
-        lo("p", deps=["q"]),
-        lo("q", deps=["p"]),
-    ]
-    r = check_cycles(los)
-    assert r.cycles == [["p", "q"], ["x", "y"]]
-
-
-# --- module order -------------------------------------------------------------------------------
-
-
-def test_module_order_ok(good):
-    r = check_module_order(good.modules, good.los)
-    assert r.ok and r.warnings == []
-
-
-def test_module_depends_on_later_module():
-    mods = [mod("m1", 1, ["a"], deps=["m2"]), mod("m2", 2, ["b"])]
-    r = check_module_order(mods, [lo("a"), lo("b")])
-    assert codes(r) == ["module_depends_on_later_module"]
-    assert r.errors[0].ids == ["m1", "m2"]
-
-
-def test_lo_depends_on_later_module_and_later_lo():
-    los = [lo("a", deps=["b"]), lo("a2", deps=["a3"]), lo("a3"), lo("b")]
-    mods = [mod("m1", 1, ["a", "a2", "a3"]), mod("m2", 2, ["b"])]
-    r = check_module_order(mods, los)
-    assert sorted(codes(r)) == ["lo_depends_on_later_lo", "lo_depends_on_later_module"]
-
-
-def test_order_uses_order_field_not_list_position():
-    mods = [mod("m2", 2, ["b"]), mod("m1", 1, ["a"], deps=["m2"])]
-    r = check_module_order(mods, [lo("a"), lo("b")])
-    assert codes(r) == ["module_depends_on_later_module"]
-
-
-def test_bloom_order_is_not_checked():
-    """Plan v2: Bloom level is not a learning order."""
-    los = [lo("a", bloom="C3"), lo("b", bloom="C1"), lo("c", bloom="C4")]
-    r = check_module_order([mod("m1", 1, ["a", "b", "c"])], los)
-    assert r.ok and not r.warnings
-
-
-# --- module graph -------------------------------------------------------------------------------
-
-
-def test_build_module_graph_aggregates_lo_edges():
-    los = [
-        lo("a1"),
-        lo("a2"),
-        lo("b1", deps=["a1", "a2"]),
-        lo("c1", deps=["b1"]),
-        lo("x", deps=["c1"]),
-    ]
-    mods = [
-        mod("m1", 1, ["a1", "a2"]),
-        mod("m2", 2, ["b1"], deps=["m1"]),
-        mod("m3", 3, ["c1"], deps=["m1"]),  # declared m1 without evidence; m2 undeclared
-    ]
-    r = build_module_graph(mods, los)
-    edges = {(e.from_module, e.to_module): e for e in r.edges}
-    assert set(edges) == {("m2", "m1"), ("m3", "m1"), ("m3", "m2")}
-    assert edges[("m2", "m1")].lo_edges == [("b1", "a1"), ("b1", "a2")]
-    assert edges[("m2", "m1")].declared
-    assert edges[("m3", "m1")].lo_edges == [] and edges[("m3", "m1")].declared
-    assert not edges[("m3", "m2")].declared
-    assert r.ok
-    assert sorted(codes(r, "warnings")) == [
-        "declared_without_lo_evidence",
-        "dependency_outside_modules",  # x is in no module
-        "undeclared_module_dependency",
-    ]
-
-
-def test_intra_module_edges_are_not_module_edges():
-    r = build_module_graph([mod("m1", 1, ["a", "b"])], [lo("a"), lo("b", deps=["a"])])
-    assert r.edges == []
-
-
-# --- topological sort ---------------------------------------------------------------------------
-
-
-def test_topo_sort_unique_order():
-    mods = [mod("m1", 1, [], deps=["m3"]), mod("m2", 2, [], deps=["m1"]), mod("m3", 3, [])]
-    r = topo_sort_modules(mods)
-    assert r.ok
-    assert r.order == ["m3", "m1", "m2"]
-    assert r.unique and r.ties == []
-    assert not r.matches_current_order
-
-
-def test_topo_sort_reports_ties():
-    #   m1 <- m2, m1 <- m3, {m2, m3} <- m4 : m2 and m3 can go either way
-    mods = [
-        mod("m4", 4, [], deps=["m2", "m3"]),
-        mod("m3", 3, [], deps=["m1"]),
-        mod("m2", 2, [], deps=["m1"]),
-        mod("m1", 1, []),
-    ]
-    r = topo_sort_modules(mods)
-    assert r.order == ["m1", "m2", "m3", "m4"]  # tie broken by current order
-    assert not r.unique
-    assert [(t.position, t.candidates, t.chosen) for t in r.ties] == [(1, ["m2", "m3"], "m2")]
-    assert r.matches_current_order
-    # Deterministic regardless of input list order.
-    assert topo_sort_modules(list(reversed(mods))) == r
-
-
-def test_topo_sort_with_lo_edges():
-    mods = [mod("m1", 1, ["a"]), mod("m2", 2, ["b"])]
-    los = [lo("a", deps=["b"]), lo("b")]
-    assert topo_sort_modules(mods).order == ["m1", "m2"]
-    assert topo_sort_modules(mods, los).order == ["m2", "m1"]
-
-
-def test_topo_sort_cycle():
-    mods = [mod("m1", 1, [], deps=["m2"]), mod("m2", 2, [], deps=["m1"]), mod("m0", 0, [])]
-    r = topo_sort_modules(mods)
-    assert not r.ok
-    assert r.order == ["m0"]
-    assert codes(r) == ["module_cycle"]
-    assert sorted(r.errors[0].ids) == ["m1", "m2"]
-
-
 # --- tools never mutate inputs ------------------------------------------------------------------
 
 
@@ -357,10 +206,6 @@ def test_tools_do_not_mutate_inputs(good):
     raw = [s for x in good.los for s in x.source_ids]
     validate_output(good)
     check_provenance(raw, good)
-    check_cycles(good.los)
-    check_module_order(good.modules, good.los)
-    build_module_graph(good.modules, good.los)
-    topo_sort_modules(good.modules, good.los)
     assert good.model_dump() == before
 
 
@@ -380,12 +225,6 @@ def test_smoke_ppp_ground_truth():
     assert len(v.errors) == 22
 
     assert check_provenance(los, out).ok
-    assert check_cycles(out.los).ok
-    assert check_module_order(out.modules, out.los).ok
-    assert build_module_graph(out.modules, out.los).edges == []
-    t = topo_sort_modules(out.modules, out.los)
-    assert t.ok and t.matches_current_order
-    assert len(t.order) == 33 and len(t.ties) == 32  # no edges yet: every position is a tie
 
 
 def test_schema_error_names_the_item_id():

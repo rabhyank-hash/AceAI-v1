@@ -1,15 +1,14 @@
 """Copy experiment records into experiments/<name>/ for git, without any LO text.
 
-    python scripts/export_records.py v1 [--log runs/experiments.tsv]
+    python scripts/export_records.py <name> --log runs/v3_test.tsv
 
 runs/ is git-ignored and holds full run data, including course LO text (which, like data/, is
 kept out of git). This writes, per run listed in the log: config.json, result.json,
-comparison.json, id_map.json (input id -> raw id), usage.json (token counts per LLM call), and
-structure.json (the output with every
-text field removed: modules with ids, order, members and dependencies; LOs with ids, scope,
-parent, prerequisites, Bloom level and track; provenance). It also writes the log with paths
-rewritten, so scripts/analyze_experiments.py --log experiments/<name>/experiments.tsv reproduces
-the tables from git alone.
+comparison.json, checks.json, id_map.json (input id -> raw id), usage.json (token counts per LLM
+call), consensus.json, the asks without the model's free text, and structure.json (the output
+with every text field removed and module titles replaced by ids). It also writes the log with
+paths rewritten, so scripts/analyze_experiments.py --log experiments/<name>/experiments.tsv
+reproduces the tables from git alone.
 """
 
 from __future__ import annotations
@@ -60,10 +59,10 @@ def main() -> None:
             (dst / "usage.json").write_text(json.dumps(usage, indent=1) + "\n")
         else:  # v3 sub-runs: calls are counted in the parent run
             shutil.copy(src / "usage.json", dst / "usage.json")
-        for f in ("consensus.json", "module_edges.json", "checks.json", "split.json"):  # v2, v3
+        for f in ("consensus.json", "checks.json", "split.json"):
             if (src / f).exists():
                 shutil.copy(src / f, dst / f)
-        if (src / "split_asks.json").exists():  # v3 split asks: codes and cuts only
+        if (src / "split_asks.json").exists():  # split asks: codes and cuts only
             shutil.copy(src / "split_asks.json", dst / "split_asks.json")
         if (src / "asks.json").exists():  # drop the model's free text
             asks = json.loads((src / "asks.json").read_text())

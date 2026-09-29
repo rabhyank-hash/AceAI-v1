@@ -1,12 +1,13 @@
 import json
 
-from aceai.agents.sequencer import run_checks
 from aceai.agents.sequencer_v3 import (
     Ask,
     SplitAsk,
     ask_messages,
     ask_once,
-    consensus,
+    check_output,
+    checks_ok,
+    consensus_order,
     exact_duplicates,
     parse_answer,
     parse_split,
@@ -14,7 +15,6 @@ from aceai.agents.sequencer_v3 import (
     split_consensus,
     split_messages,
     split_once,
-    tolerant_cuts,
 )
 from aceai.config import ProviderConfig
 from aceai.ingest.agent1_input import Agent1Input, InputLO
@@ -28,11 +28,21 @@ def los(*texts):
     return [InputLO(id=f"LO-{i}", text=t) for i, t in enumerate(texts)]
 
 
+def client(sdk):
+    return LLMClient(PROVIDER, cache_dir=None, sdk=sdk)
+
+
+# --- 1. exact duplicates ------------------------------------------------------------------------
+
+
 def test_exact_duplicates_only_identical_text():
     items = los("Define X.", "Define  X. ", "define X.", "Use X.")
     survivors, merged = exact_duplicates(items)
     assert [s.id for s in survivors] == ["LO-0", "LO-2", "LO-3"]
     assert merged == {"LO-0": ["LO-1"]}  # whitespace differs; case-sensitive: LO-2 kept
+
+
+# --- 2. order asks ------------------------------------------------------------------------------
 
 
 def test_ask_messages_relabel_by_seed():
@@ -46,11 +56,10 @@ def test_ask_messages_relabel_by_seed():
 def test_parse_answer_reports_missing_repeated_unknown():
     labels = {"L1": "a", "L2": "b", "L3": "c"}
     reply = {"modules": [{"title": "t", "los": ["L1", "L2"]}, {"title": "u", "los": ["L2", "L9"]}]}
-    modules, _, problem = parse_answer(reply, labels)
-    assert problem == "missing L3; repeated L2; unknown labels L9"
+    assert parse_answer(reply, labels)[2] == "missing L3; repeated L2; unknown labels L9"
     ok = {"modules": [{"title": "t", "los": ["L3", "L1"]}, {"title": "u", "los": ["L2"]}]}
-    modules, titles, problem = parse_answer(ok, labels)
-    assert problem is None and modules == [["c", "a"], ["b"]] and titles == ["t", "u"]
+    order, titles, problem = parse_answer(ok, labels)
+    assert problem is None and order == ["c", "a", "b"] and titles == ["t", "u"]
 
 
 def test_ask_repairs_once_then_accepts():
@@ -59,59 +68,35 @@ def test_ask_repairs_once_then_accepts():
     first = {"modules": [{"title": "t", "los": ["L1"]}]}
     second = {"modules": [{"title": "t", "los": ["L2", "L1"]}]}
     sdk = FakeSDK([json.dumps(first), json.dumps(second)])
-    ask = ask_once(LLMClient(PROVIDER, cache_dir=None, sdk=sdk), items, 0, 100)
-    assert ask.valid and ask.repaired and ask.modules == [[labels["L2"], labels["L1"]]]
+    ask = ask_once(client(sdk), items, 0, 100)
+    assert ask.valid and ask.repaired and ask.order == [labels["L2"], labels["L1"]]
     assert "missing L2" in sdk.calls[1]["messages"][-1]["content"]
 
 
 def test_ask_excluded_when_repair_fails():
     items = los("a", "b")
     bad = json.dumps({"modules": [{"title": "t", "los": ["L1"]}]})
-    ask = ask_once(LLMClient(PROVIDER, cache_dir=None, sdk=FakeSDK([bad, bad])), items, 0, 100)
+    ask = ask_once(client(FakeSDK([bad, bad])), items, 0, 100)
     assert not ask.valid and "missing L2" in ask.error
 
 
-def test_consensus_mean_position_and_majority_boundaries():
+# --- 3. consensus order -------------------------------------------------------------------------
+
+
+def test_consensus_order_by_mean_position():
     labels = {"L1": "a", "L2": "b", "L3": "c", "L4": "d"}
     asks = [
-        Ask(0, labels, modules=[["a", "b"], ["c", "d"]]),
-        Ask(1, labels, modules=[["a", "b"], ["c", "d"]]),
-        Ask(2, labels, modules=[["b", "a", "c"], ["d"]]),
+        Ask(0, labels, order=["a", "b", "c", "d"]),
+        Ask(1, labels, order=["b", "a", "c", "d"]),
+        Ask(2, labels, order=["a", "c", "b", "d"]),
+        Ask(3, labels, error="bad"),
     ]
-    c = consensus(asks)
-    assert c.order == ["a", "b", "c", "d"]
-    # a|b never split; b|c split in 2 of 3 asks -> boundary; c|d split in 1 of 3 -> none.
-    assert c.modules == [["a", "b"], ["c", "d"]]
-    assert c.split_votes == [0.0, 2 / 3, 1 / 3]
+    order, mean_pos = consensus_order(asks)
+    assert order == ["a", "b", "c", "d"]
+    assert mean_pos["a"] == 1 / 9 and mean_pos["d"] == 1.0
 
 
-def test_sequence_v3_end_to_end_valid_and_deterministic():
-    items = los("Define A.", "Use A.", "Define B.", "Use B.", "Define A.")
-    payload = Agent1Input(course="T", los=items)
-
-    def answer(messages):
-        # Put A's LOs first, each topic its own module, whatever the shuffle.
-        text = messages[1]["content"]
-        rows = [line.split(": ", 1) for line in text.splitlines()[1:]]
-        a = [lab for lab, t in rows if "A." in t]
-        b = [lab for lab, t in rows if "B." in t]
-        return json.dumps({"modules": [{"title": "A", "los": a}, {"title": "B", "los": b}]})
-
-    outputs = []
-    for _ in range(2):
-        client = LLMClient(PROVIDER, cache_dir=None, sdk=FunctionSDK(answer))
-        outputs.append(sequence_v3(client, payload, [0, 1, 2, 3, 4]))
-    r = outputs[0]
-    assert r.merged == {"LO-0": ["LO-4"]}
-    assert [len(m.lo_ids) for m in r.output.modules] == [2, 2]
-    assert r.output.provenance_map()["LO-4"] == ["LO-0"]
-    checks = run_checks(json.loads(r.output.model_dump_json()), payload)
-    assert not [e for k, v in checks.items() if k != "skipped" for e in v.errors]
-    assert outputs[0].output == outputs[1].output
-    assert set(r.by_k) == {1, 3, 5}
-
-
-# --- split step (Amendment 2) -------------------------------------------------------------------
+# --- 4-5. split asks and modules ----------------------------------------------------------------
 
 
 def codes_in_order(labels):
@@ -143,9 +128,7 @@ def test_split_once_repairs_then_accepts():
     codes = codes_in_order(labels)
     bad = json.dumps({"modules": [{"los": [codes[1], codes[0], codes[2]]}]})
     good = json.dumps({"modules": [{"los": codes[:2]}, {"los": codes[2:]}]})
-    ask = split_once(
-        LLMClient(PROVIDER, cache_dir=None, sdk=FakeSDK([bad, good])), order, texts, 0, 100
-    )
+    ask = split_once(client(FakeSDK([bad, good])), order, texts, 0, 100)
     assert ask.valid and ask.repaired and ask.cuts == [1] and ask.n_modules == 2
 
 
@@ -157,22 +140,41 @@ def test_split_consensus_majority_cuts():
         SplitAsk(2, {}, cuts=[1, 2], n_modules=3),
         SplitAsk(3, {}, error="bad"),
     ]
-    modules, votes = split_consensus(asks, order, tolerance=0)
+    modules, votes = split_consensus(asks, order)
     assert modules == [["a", "b"], ["c", "d", "e"]]  # cut after b: 3/3; after c or d: 1/3
     assert votes == [0.0, 1.0, 1 / 3, 1 / 3]
 
 
-def test_tolerant_cuts_merge_near_misses():
-    # The example from the design discussion: 5 answers, boundary after LO 3, 4, 3, 4 or 5
-    # (0-based gaps 2, 3, 2, 3, 4). No exact majority; with tolerance 1, gap 3 (after LO 4) is
-    # within one position of all 5 answers.
-    answers = [{2}, {3}, {2}, {3}, {4}]
-    assert tolerant_cuts(answers, 7, 0) == []
-    assert tolerant_cuts(answers, 7, 1) == [3]
+# --- pipeline -----------------------------------------------------------------------------------
 
 
-def test_tolerant_cuts_do_not_reuse_a_cut():
-    # One answer's single cut cannot support two neighbouring boundaries.
-    answers = [{2, 4}, {3}, {3}]
-    assert tolerant_cuts(answers, 6, 1) == [3]
-    assert tolerant_cuts([{1, 5}, {1, 5}, {2}], 7, 1) == [1, 5]
+def topic_answer(messages):
+    """A fake model: A's LOs before B's, one module per topic, for both kinds of ask."""
+    rows = [line.split(": ", 1) for line in messages[1]["content"].splitlines()[1:]]
+    a = [code for code, text in rows if "A." in text]
+    b = [code for code, text in rows if "B." in text]
+    return json.dumps({"modules": [{"title": "A", "los": a}, {"title": "B", "los": b}]})
+
+
+def test_sequence_v3_end_to_end_valid_and_deterministic():
+    items = los("Define A.", "Use A.", "Define B.", "Use B.", "Define A.")
+    payload = Agent1Input(course="T", los=items)
+    results = [
+        sequence_v3(client(FunctionSDK(topic_answer)), payload, [0, 1, 2, 3, 4]) for _ in range(2)
+    ]
+    r = results[0]
+    assert r.stopped == "completed" and len(r.asks) == 5 and len(r.split_asks) == 5
+    assert r.merged == {"LO-0": ["LO-4"]}
+    assert [len(m.lo_ids) for m in r.output.modules] == [2, 2]
+    assert r.output.provenance_map()["LO-4"] == ["LO-0"]
+    assert checks_ok(check_output(json.loads(r.output.model_dump_json()), payload))
+    assert results[0].output == results[1].output
+
+
+def test_sequence_v3_stops_without_enough_valid_asks():
+    items = los("Define A.", "Use A.", "Define B.")
+    bad = json.dumps({"modules": [{"title": "t", "los": ["L1"]}]})
+    r = sequence_v3(
+        client(FakeSDK([bad] * 10)), Agent1Input(course="T", los=items), [0, 1, 2, 3, 4]
+    )
+    assert r.output is None and r.stopped == "0 valid order asks" and r.split_asks == []
