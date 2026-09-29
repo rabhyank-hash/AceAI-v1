@@ -8,12 +8,30 @@ Plan v1 is on branch `agent1-poc`, plan v2 on `agent_v2`, plan v3 on `agent_v3`
 Metrics: [evaluation.md](evaluation.md). Run records without LO text:
 `experiments/<version>/<experiment>/<course>_s<seed>/`.
 
+## Terms used in this report
+
+| Term | Meaning |
+|---|---|
+| LO | Learning objective: one line from a course CSV. |
+| The CSV structure | How the course authors grouped and ordered the LOs (units → modules → LOs). Used as the reference answer; it is one good answer, not the only one. |
+| Ask | One request to the model. |
+| Seed | A number that fixes how the LOs are shuffled before an ask. The same seed always gives the same result; different seeds test whether the input order changes the answer. |
+| Run | One complete pass of Agent 1 over a course. Two runs are "independent" when they share no asks. |
+| Consistency | Whether independent runs give the same course. |
+| Sequence agreement | Share of LO pairs that two orders put the same way round. 1 = identical order, 0.5 = no better than random. |
+| Order agreement | The same, counted only over LO pairs in different modules. |
+| ARI | How similar two groupings of LOs into modules are. 1 = identical, 0 = no better than random. |
+| BCubed F1 | How well the model's modules match the authors' modules, LO by LO. 1 = identical. Chosen because one very large module cannot inflate it. |
+| Target | A pass/fail threshold written down and committed before a test ran, so it could not be adjusted after seeing the results. |
+| v1 reference | The same test run with v1 on the same LOs, to compare against. |
+| Consensus / majority | Combining several asks by code: average position for the order; a module boundary where most asks put one. |
+
 ## Summary
 
 - v1 produces a valid module tree for a sample of every course.
 - v1 is not consistent: rerunning with the LOs in a different order gives a different course.
 - Plan v2 repeats small LLM judgments under different orders and aggregates them in code.
-- The v2 prototype ran on 27 September. It did not meet its pre-registered consistency targets.
+- The v2 prototype ran on 27 September. It did not meet the consistency targets we set before running it.
   It made DataEng more consistent (order agreement between runs 0.54 → 0.77) but not PPP.
   Grouping is the remaining source of variation.
 - Plan v3 limits Agent 1 to ordering the LOs and splitting the sequence into modules. Each ask
@@ -159,7 +177,7 @@ v1: 6 seeds per course (15 run pairs). v2: one pair of independent runs per cour
 | PPP | BCubed F1 vs CSV | 0.562 | 0.501 | ≥ 0.512 | no |
 | PPP | Valid runs | 5/6 | 2/2 | all | yes |
 
-A hypothesis holds only if it holds for both courses (pre-registration).
+A target counts as met only if it is met on both courses (decided before the run).
 
 - **H1a (order consistency): not met.** DataEng rose from 0.54 to 0.77; 1 of 15 v1 pairs reached
   0.77. PPP rose from 0.77 to 0.82; 4 of 15 v1 pairs scored higher.
@@ -167,7 +185,7 @@ A hypothesis holds only if it holds for both courses (pre-registration).
 - **H2 (quality): not met.** DataEng stayed within 0.05 of v1. PPP fell 0.06.
 - **H3 (validity): met.**
 
-### Exploratory observations (not pre-registered)
+### Further observations (not targets set in advance)
 
 - Grouping is the main remaining source of variation. Consensus of 3 unstable groupings is itself
   unstable: the two PPP runs produced 12 and 15 modules. Order agreement between runs is
@@ -202,8 +220,8 @@ A hypothesis holds only if it holds for both courses (pre-registration).
 
 ### Test
 
-Pre-registered (`d1637f3`), amended before any v3-2 run (`dd99ae2`), run at `272ed07` on 28
-September. Courses: DataEng, CloudAdmin, CloudNative, each limited to its first 3 CSV modules
+Targets written down and committed before running (`d1637f3`, revised before any v3-2 run in
+`dd99ae2`); run at `272ed07` on 28 September. Courses: DataEng, CloudAdmin, CloudNative, each limited to its first 3 CSV modules
 (11, 15 and 44 LOs; CloudNative has 16 exact duplicates). Reference: v1 on the same samples,
 seeds 0–2. v3: three independent runs per course (5 asks each). Same model and settings as v1.
 Records: `experiments/v3/`.
@@ -234,12 +252,12 @@ Cost: 3.5–8.5K tokens per v3 run, below v1 on the same samples (4.0–12.5K).
    averaging raises agreement from 0.87 (one ask) to 0.92 (five).
 2. **The module split is not, and over-splits.** Module counts rise with the number of asks
    (CloudNative: 4 modules at k = 1, 15 at k = 5; the CSV has 3). Averaging positions places LOs
-   between topics, and the majority rule then cuts too often. This was named as a threat in the
-   pre-registration.
+   between topics, and the majority rule then cuts too often. We had listed this as a risk before
+   running.
 3. **A consistent order exposes a clear disagreement with the authors.** On DataEng, every v3 run
    teaches the Data Landscape unit before the pandas unit; the authors do the reverse. v1 varied
    between both. Whether this is an error needs a label.
-4. **Exploratory (not pre-registered), on the saved asks:** setting the number of modules to the
+4. **Extra check, not planned in advance, on the saved answers:** setting the number of modules to the
    median across asks and cutting at the strongest split votes fixes the over-splitting
    (CloudNative BCubed 0.25 → 0.50) but not module consistency (ARI about 0.5).
 
@@ -334,7 +352,7 @@ Where the variation comes from, measured on the saved answers:
   parameters actually sent (commit `9e96fa0`); the parameters were identical. No results
   existed at that point.
 - The PPP v1 seed-3 run ended with 5 tool errors but placed every LO. It was used as a grouping
-  input for v2 run B, as the pre-registration requires all three seeds. It is counted as invalid
+  input for v2 run B, because the test plan required all three seeds. It is counted as invalid
   in the v1 quality mean.
 - v1 BCubed means are over valid runs only.
 - v3: the prompt was changed from v3-1 to v3-2 after 10 runs, and the test was reduced to three

@@ -53,7 +53,7 @@ v3 = order stage of E6 + split stage of E7 (same seeds per run). Against the
 ## v2: consensus of repeated judgments (branch `agent_v2`)
 
 ### E4: consensus grouping, voted module prerequisites
-- **Date / code:** 27 Sep; test design `docs/v2_preregistration.md` on `agent_v2` (committed
+- **Date / code:** 27 Sep; test plan `docs/v2_preregistration.md` on `agent_v2` (committed
   before running, `bdb43e6`); code `ebac3e6`; run at `9e96fa0`.
 - **Config:** DataEng, PPP; ≥20-LO sample. Two independent v2 runs per course: A = grouping from
   v1 seeds 0–2 + order asks with seeds 0–2; B = v1 seeds 3–5 + order asks 3–5. Order prompt
