@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# v3 Amendment 2 (docs/v3_preregistration.md): split the 9 Amendment-1 runs' consensus orders
+# v3 split step (plan v3 §4 step 5): split the 9 v3 runs' consensus orders
 # into modules with separate asks, then print the tables for all m3 runs.
 #   bash scripts/run_v3_segment_experiment.sh
 # Resumable: a label and course already in runs/experiments.tsv is skipped.

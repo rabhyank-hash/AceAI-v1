@@ -1,8 +1,8 @@
-"""v3 Amendment 2: split an existing v3 run's consensus order into modules with separate asks.
+"""v3 split step: split an existing v3 run's consensus order into modules with separate asks.
 
     python scripts/run_v3_segment.py --run runs/<v3 run> --label m3v3seg_s0
 
-Uses the run's consensus order and seeds (docs/v3_preregistration.md, Amendment 2). Writes a new
+Uses the run's consensus order and seeds (plan v3, §4 step 5). Writes a new
 run directory with the usual records plus split_asks.json and split.json, and appends it to
 runs/experiments.tsv.
 """
@@ -39,6 +39,7 @@ def main() -> None:
     ap.add_argument("--run", type=Path, required=True, help="a v3 run directory")
     ap.add_argument("--label", required=True)
     ap.add_argument("--max-tokens", type=int, default=3000)
+    ap.add_argument("--tolerance", type=int, default=0, help="boundary near-miss tolerance")
     args = ap.parse_args()
 
     src = json.loads((args.run / "config.json").read_text())
@@ -61,6 +62,7 @@ def main() -> None:
     config = {
         **src,
         "step": "split",
+        "tolerance": args.tolerance,
         "source_run": str(args.run),
         "order_prompt_version": src["prompt_version"],
         "prompt_version": SEGMENT_PROMPT_VERSION,
@@ -70,7 +72,7 @@ def main() -> None:
     output = None
     votes = None
     if n_valid >= MIN_VALID:
-        modules, votes = split_consensus(asks, order)
+        modules, votes = split_consensus(asks, order, tolerance=args.tolerance)
         output = build_output(modules, texts, merged)
     stopped = "all checks passed" if output else f"only {n_valid} valid split asks"
     cmp = write_result(run_dir, config, output, prepared, gt, stopped)

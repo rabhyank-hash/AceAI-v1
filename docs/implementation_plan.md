@@ -20,9 +20,9 @@
 > 4. **Only exactly identical LOs are merged, by code (§4).** No LLM judgment on duplicates.
 > 5. **Normalization (verb, Bloom level, track, target concept) leaves Agent 1.** It is only used
 >    by Agent 2 (depth scale) and moves there.
-> 6. **Amendment (28 September): modules are decided in a separate step on the fixed consensus
->    order (§4 step 5).** The first v3 test split modules inside the ordering asks and combined
->    them along the averaged order; that over-split and was not consistent (module ARI about 0.5).
+> 6. **Modules are decided in a separate step on the fixed consensus order (§4 step 5).**
+>    Splitting inside the ordering asks and combining along the averaged order over-split the
+>    course.
 > **Changes from v1 (in v2)**
 >
 > 1. **Consistency by construction (new principle, §2).** The v1 proof of concept showed that one

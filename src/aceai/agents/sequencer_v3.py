@@ -273,7 +273,7 @@ def asks_to_json(asks: list[Ask]) -> list[dict[str, Any]]:
     ]
 
 
-# --- 5. modules on the fixed order (Amendment 2) ------------------------------------------------
+# --- 5. modules on the fixed order ------------------------------------------------------------
 
 SEGMENT_PROMPT_VERSION = "v3-seg-1"
 
@@ -384,16 +384,49 @@ def split_once(
     return ask
 
 
-def split_consensus(asks: list[SplitAsk], order: list[str]) -> tuple[list[list[str]], list[float]]:
-    """Modules along `order`: a boundary after position i when a strict majority of valid asks
-    place one there. Returns the modules and the vote share per gap."""
+def tolerant_cuts(cut_sets: list[set[int]], n_gaps: int, tolerance: int) -> list[int]:
+    """Boundaries agreed by a strict majority of answers, where cuts up to `tolerance` positions
+    apart count as the same boundary (near misses). Greedy and deterministic: pick the gap whose
+    neighbourhood holds a cut from the most answers (ties: more exact cuts, then earlier gap);
+    keep it if that is a strict majority; each supporting answer then gives up its nearest cut
+    there, so no cut votes twice. With tolerance 0 this is the exact majority rule."""
+    remaining = [set(c) for c in cut_sets]
+    need = len(cut_sets) / 2
+    chosen: list[int] = []
+    while True:
+        best = None
+        for i in range(n_gaps):
+            near = [c for c in remaining if any(abs(j - i) <= tolerance for j in c)]
+            exact = sum(i in c for c in remaining)
+            key = (len(near), exact, -i)
+            if best is None or key > best[0]:
+                best = (key, i)
+        if best is None or best[0][0] <= need:
+            return sorted(chosen)
+        i = best[1]
+        chosen.append(i)
+        for c in remaining:
+            near = sorted((j for j in c if abs(j - i) <= tolerance), key=lambda j: (abs(j - i), j))
+            if near:
+                c.discard(near[0])
+
+
+def split_consensus(
+    asks: list[SplitAsk], order: list[str], tolerance: int = 0
+) -> tuple[list[list[str]], list[float]]:
+    """Modules along `order`, from the boundaries a strict majority of valid asks agree on. v3
+    uses exact positions (tolerance 0); counting cuts up to `tolerance` positions apart as the
+    same boundary (see `tolerant_cuts`) was tested on the saved answers and changed nothing.
+    Returns the modules and the exact vote share per gap (for the record)."""
     valid = [a for a in asks if a.valid]
     if not valid:
         raise ValueError("no valid split asks")
-    votes = [sum(i in a.cuts for a in valid) / len(valid) for i in range(len(order) - 1)]
+    n_gaps = len(order) - 1
+    votes = [sum(i in a.cuts for a in valid) / len(valid) for i in range(n_gaps)]
+    cuts = set(tolerant_cuts([set(a.cuts) for a in valid], n_gaps, tolerance))
     modules = [[order[0]]]
     for i, lid in enumerate(order[1:]):
-        if votes[i] > 0.5:
+        if i in cuts:
             modules.append([lid])
         else:
             modules[-1].append(lid)

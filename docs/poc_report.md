@@ -242,10 +242,10 @@ Cost: 3.5–8.5K tokens per v3 run, below v1 on the same samples (4.0–12.5K).
    median across asks and cutting at the strongest split votes fixes the over-splitting
    (CloudNative BCubed 0.25 → 0.50) but not module consistency (ARI about 0.5).
 
-### Amendment 2: modules split in a separate step
+### Separate split step
 
 The module split moved to a separate step on the fixed consensus order (plan v3 §4 step 5;
-pre-registration Amendment 2, `6ca6661`; code `e140986`). Each of the 9 runs kept its order; 5
+pre-registered as Amendment 2, `6ca6661`; code `e140986`). Each of the 9 runs kept its order; 5
 split asks per run, codes shuffled per ask, the model deciding the number of modules; a boundary
 is kept where most asks place one. Order results are unchanged.
 
@@ -271,12 +271,41 @@ Before → after the separate split step; mean over 3 runs or run pairs.
   12 were fixed by the repair message, 1 ask was excluded.
 - **Cost:** 3–9K tokens per split run.
 
+### Near misses: tried, no effect
+
+Boundaries one position apart were counted as the same boundary when combining the split
+answers. This reused the saved answers; no new calls. Re-combining with tolerance 0 reproduced
+the runs above exactly.
+
+| Course | Module ARI between runs, exact → tolerant | BCubed F1 vs CSV, exact → tolerant |
+|---|---|---|
+| DataEng | 0.51 → 0.51 | 0.68 → 0.68 |
+| CloudAdmin | 0.85 → 0.81 | 0.53 → 0.52 |
+| CloudNative | 0.38 → 0.39 | 0.41 → 0.40 |
+
+The split answers disagree on boundaries, not by one position. v3 keeps the exact rule.
+
+Where the variation comes from, measured on the saved answers:
+
+| Course | ARI between single answers on the same sequence | Modules per answer | ARI between runs (combined) |
+|---|---|---|---|
+| DataEng | 0.59 (0.01–1.00) | 4–8 | 0.51 |
+| CloudAdmin | 0.68 (0.45–0.97) | 4–7 | 0.85 |
+| CloudNative | 0.63 (0.29–1.00) | 4–10 | 0.38 |
+
+- **The model is unsure where modules go.** Given the identical sequence, two answers agree at
+  ARI 0.59–0.68 and choose 4–10 modules.
+- **Small order differences move boundaries.** Runs split slightly different orders (sequence
+  agreement 0.92), and on DataEng and CloudNative the combined results agree less than single
+  answers on the same sequence.
+
 ### Next
 
-1. **Granularity is the remaining variation.** The model chooses between 4 and 10 modules for the
-   same sequence. Options: more split asks per run; treat boundaries one position apart as the
-   same; or measure how much people agree on such splits, to know what ARI is achievable.
-2. **Label the order.** 9 module-order pairs for the three test courses (sheets in
+1. **More split asks per run** (e.g. 9): a steadier majority against the model's uncertainty.
+   It does not address order differences.
+2. **Split before small order differences matter:** for example, agree on the module count
+   first (the median across asks), then place boundaries.
+3. **Label the order.** 9 module-order pairs for the three test courses (sheets in
    `annotations/`). This decides whether findings like DataEng's concept-first order are errors.
 
 ## Requirements
@@ -319,7 +348,8 @@ Before → after the separate split step; mean over 3 runs or run pairs.
 ```bash
 bash scripts/run_v2_experiment.sh                                 # v2 experiment
 bash scripts/run_v3_experiment.sh                                 # v3 experiment (amended)
-bash scripts/run_v3_segment_experiment.sh                         # v3 Amendment 2 split step
+bash scripts/run_v3_segment_experiment.sh                         # v3 split step
+python scripts/resplit_v3.py --run runs/<split run> --tolerance 1 --label <label>   # re-combine
 python scripts/run_poc.py --course DataEng --modules 3 --seed 0   # one v1 run
 python scripts/analyze_experiments.py --log experiments/v1/experiments.tsv
 python scripts/analyze_experiments.py --log experiments/v2/experiments.tsv   # v2 tables

@@ -14,6 +14,7 @@ from aceai.agents.sequencer_v3 import (
     split_consensus,
     split_messages,
     split_once,
+    tolerant_cuts,
 )
 from aceai.config import ProviderConfig
 from aceai.ingest.agent1_input import Agent1Input, InputLO
@@ -156,6 +157,22 @@ def test_split_consensus_majority_cuts():
         SplitAsk(2, {}, cuts=[1, 2], n_modules=3),
         SplitAsk(3, {}, error="bad"),
     ]
-    modules, votes = split_consensus(asks, order)
+    modules, votes = split_consensus(asks, order, tolerance=0)
     assert modules == [["a", "b"], ["c", "d", "e"]]  # cut after b: 3/3; after c or d: 1/3
     assert votes == [0.0, 1.0, 1 / 3, 1 / 3]
+
+
+def test_tolerant_cuts_merge_near_misses():
+    # The example from the design discussion: 5 answers, boundary after LO 3, 4, 3, 4 or 5
+    # (0-based gaps 2, 3, 2, 3, 4). No exact majority; with tolerance 1, gap 3 (after LO 4) is
+    # within one position of all 5 answers.
+    answers = [{2}, {3}, {2}, {3}, {4}]
+    assert tolerant_cuts(answers, 7, 0) == []
+    assert tolerant_cuts(answers, 7, 1) == [3]
+
+
+def test_tolerant_cuts_do_not_reuse_a_cut():
+    # One answer's single cut cannot support two neighbouring boundaries.
+    answers = [{2, 4}, {3}, {3}]
+    assert tolerant_cuts(answers, 6, 1) == [3]
+    assert tolerant_cuts([{1, 5}, {1, 5}, {2}], 7, 1) == [1, 5]
